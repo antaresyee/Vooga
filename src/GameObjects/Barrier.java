@@ -11,7 +11,7 @@ public class Barrier extends GameObject {
 		myImage = image;
 	}
 	
-	public class BarrierFactory extends GameObjectFactory{
+	public static class BarrierFactory extends GameObjectFactory{
 		
 		private String myName = "barrier";
 		
