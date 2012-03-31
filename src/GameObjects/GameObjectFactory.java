@@ -11,17 +11,12 @@ public abstract class GameObjectFactory {
 
 	public abstract GameObject makeObject();
 	
-<<<<<<< HEAD
 	public boolean isMyObject(String name) {
 		return myName.equals(name);
 	}
-=======
-	public abstract boolean isMyObject(String name);
-	
-	
+
     public String getMyName() {
         return myName;
     }
->>>>>>> 20ffa3ec8a442840efb900264717de8cb6d73974
 
 }
