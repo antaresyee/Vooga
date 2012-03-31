@@ -30,6 +30,7 @@ public class LevelSaver {
         FileWriter fw = new FileWriter("savedLevel.json");
         BufferedWriter bw = new BufferedWriter(fw);
         for (GameObjectFactory object : objectsToSave) {
+            
             String jsonString = gson.toJson(object);
             bw.write(jsonString);
             bw.write("\n");

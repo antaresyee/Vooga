@@ -1,5 +1,6 @@
 package gameObjects;
 import java.awt.image.BufferedImage;
+import GameObject;
 
 
 
@@ -13,10 +14,9 @@ public class Barrier extends GameObject {
 	
 	public static class BarrierFactory extends GameObjectFactory{
 		
-		private String myName = "barrier";
-		
 		public BarrierFactory(double x, double y, BufferedImage image){
-			myX = x;
+			super.myName = "barrier";
+		    myX = x;
 			myY = y;
 			myImage = image;
 		}
