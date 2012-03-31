@@ -16,10 +16,9 @@ public class Player extends GameObject {
 	
 	public static class PlayerFactory extends GameObjectFactory{
 		
-		private String myName = "player";
-		
 		public PlayerFactory(double x, double y, BufferedImage image){
-			myX = x;
+			super.myName = "player";
+		    myX = x;
 			myY = y;
 			myImage = image;
 		}
