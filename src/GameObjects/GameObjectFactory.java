@@ -14,7 +14,6 @@ public abstract class GameObjectFactory {
 		return myName.equals(name);
 	}
 	
-	
     public String getMyName() {
         return myName;
     }
