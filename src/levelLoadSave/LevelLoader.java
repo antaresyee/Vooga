@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-<<<<<<< HEAD
-import gameObjects.Barrier;
-=======
->>>>>>> fa201b4e64ced324a35da489c52f193fbc55d511
 import gameObjects.GameObjectFactory;
 import gameObjects.Barrier;
 import gameObjects.Player;
