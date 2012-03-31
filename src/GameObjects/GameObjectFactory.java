@@ -9,5 +9,7 @@ public abstract class GameObjectFactory {
 	protected double myY;
 
 	public abstract GameObject makeObject();
+	
+	public abstract boolean isMyObject(String name);
 
 }
