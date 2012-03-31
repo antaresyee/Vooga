@@ -2,9 +2,6 @@ package gameObjects;
 import java.awt.image.BufferedImage;
 
 
-import com.golden.gamedev.Game;
-
-
 public class Player extends GameObject {
 	
 	public Player(double x, double y, BufferedImage image){
