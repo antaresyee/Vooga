@@ -1,6 +1,5 @@
 package gameObjects;
 import java.awt.image.BufferedImage;
-import GameObject;
 
 
 
