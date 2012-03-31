@@ -14,7 +14,7 @@ public class Player extends GameObject {
 	}
 
 	
-	public class PlayerFactory extends GameObjectFactory{
+	public static class PlayerFactory extends GameObjectFactory{
 		
 		private String myName = "player";
 		
