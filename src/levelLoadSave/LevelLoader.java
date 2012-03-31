@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import GameObjects.GameObjectFactory;
 import game.Barrier;
+import gameObjects.GameObjectFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -44,6 +44,6 @@ public class LevelLoader {
         LevelLoader ll = new LevelLoader();
         
         List<GameObjectFactory> objectsToSave = new ArrayList<GameObjectFactory>();
-        objectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null));
+        objectsToSave.add(new gameObjects.Barrier.BarrierFactory(1.5, 2.0, null));
     }
 }
