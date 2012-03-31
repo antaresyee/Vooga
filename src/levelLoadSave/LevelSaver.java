@@ -1,4 +1,6 @@
 package levelLoadSave;
+import gameObjects.GameObjectFactory;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -8,9 +10,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Scanner;
 
-import GameObjects.GameObjectFactory;
 
-import GameObjects.GameObjectFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
