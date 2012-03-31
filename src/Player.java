@@ -1,3 +1,5 @@
+import game.GameObject;
+
 import java.awt.image.BufferedImage;
 
 import com.golden.gamedev.Game;
