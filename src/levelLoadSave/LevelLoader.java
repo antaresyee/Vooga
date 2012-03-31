@@ -44,6 +44,6 @@ public class LevelLoader {
         LevelLoader ll = new LevelLoader();
         
         List<GameObjectFactory> objectsToSave = new ArrayList<GameObjectFactory>();
-        objectsToSave.add(new (1.5, 2.0, null));
+        objectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null));
     }
 }

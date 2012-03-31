@@ -23,7 +23,7 @@ public class Barrier extends GameObject {
 		}
 
 		@Override
-		public GameObject makeObject() {
+		public static GameObject makeObject() {
 			return new Barrier(myX, myY, myImage);
 		}
 		
