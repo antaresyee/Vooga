@@ -1,7 +1,6 @@
 package gameObjects;
 import java.awt.image.BufferedImage;
 
-
 public abstract class GameObjectFactory {
 
 	protected BufferedImage myImage;
@@ -14,7 +13,7 @@ public abstract class GameObjectFactory {
 	public boolean isMyObject(String name) {
 		return myName.equals(name);
 	}
-
+	
     public String getMyName() {
         return myName;
     }
