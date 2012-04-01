@@ -10,7 +10,7 @@ public abstract class GameObject extends Sprite {
     protected double myY;
 
 
-
+    public abstract void makeObj(double x, double y, BufferedImage image);
 
 
 }

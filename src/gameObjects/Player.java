@@ -5,9 +5,7 @@ import java.awt.image.BufferedImage;
 public class Player extends GameObject {
 
     public Player(double x, double y, BufferedImage image){
-        myX = x;
-        myY = y;
-        myImage = image;
+        makeObj(x,y,image);
     }
 
 
@@ -31,5 +29,14 @@ public class Player extends GameObject {
         }
 
     }
+
+
+	@Override
+	public void makeObj(double x, double y, BufferedImage image) {
+		// TODO Auto-generated method stub
+		myX = x;
+        myY = y;
+        myImage = image;
+	}
 
 }
