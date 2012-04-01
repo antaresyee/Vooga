@@ -5,11 +5,14 @@ import gameObjects.GameObject;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import levelLoadSave.LevelSaver;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.background.TileBackground;
@@ -76,12 +79,36 @@ public class LevelGUI extends Game{
 		if(keyPressed(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S))
 		{
 			for(int i = 0; i<row; i++)
+			{
 				for(int j = 0; j<col; j++)
 				{
-					GameObject go = (GameObject) Class.forName(imageNames[tiles[i][j]]).newInstance();
-					
-					myObjects.add(Class.forName(imageNames[tiles[i][j]]).newInstance());
+					GameObject go;
+					try {
+						int tile = tiles[i][j];
+						if(tile<black)
+						{
+							go = (GameObject) Class.forName(imageNames[tile]).newInstance();
+							go.makeObj(j*getWidth()/col,i*getHeight()/row,tileImages[tile]);
+							myObjects.add(go);
+						}
+					} catch (InstantiationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IllegalAccessException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+			}
+			try {
+				LevelSaver.save(myObjects);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
