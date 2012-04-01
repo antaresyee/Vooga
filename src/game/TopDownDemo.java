@@ -6,13 +6,12 @@ import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import levelLoadSave.LevelLoader;
 
 import com.golden.gamedev.Game;
-import com.golden.gamedev.GameObject;
+import com.golden.gamedev.object.CollisionManager;
 import com.golden.gamedev.object.SpriteGroup;
 
 
@@ -21,6 +20,7 @@ public class TopDownDemo extends Game {
 	private Player myPlayer;
 	private SpriteGroup playerGroup;
 	private SpriteGroup barrierGroup;
+	private CollisionManager playerToBarrier;
 
 	@Override
 	public void initResources() {
@@ -42,20 +42,43 @@ public class TopDownDemo extends Game {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		
-	}
-
-	@Override
-	public void render(Graphics2D arg0) {
-		// TODO Auto-generated method stub
+		initCollisions();
 		
 	}
 
 	@Override
-	public void update(long arg0) {
-		// TODO Auto-generated method stub
+	public void render(Graphics2D pen) {
+		myPlayer.render(pen);
+		barrierGroup.render(pen);
 		
+	}
+
+	@Override
+	public void update(long elapsedTime) {
+		myPlayer.update(elapsedTime);
+		barrierGroup.update(elapsedTime);
+		playerMovement();
+		playerToBarrier.checkCollision();
+	}
+	
+	public void playerMovement(){
+		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
+			myPlayer.moveX(-3);
+		}
+		if (myPlayer.getX() < 800 && keyDown(java.awt.event.KeyEvent.VK_D)){
+			myPlayer.moveX(3);
+		}
+		if (myPlayer.getY() > 0 && keyDown(java.awt.event.KeyEvent.VK_W)){
+			myPlayer.moveY(-3);
+		}
+		if (myPlayer.getY() < 600 && keyDown(java.awt.event.KeyEvent.VK_S)){
+			myPlayer.moveY(3);
+		}
+	}
+	
+	public void initCollisions(){
+		playerToBarrier = new PlayerBarrierCollision();
+		playerToBarrier.setCollisionGroup(playerGroup, barrierGroup);
 	}
 
 }
