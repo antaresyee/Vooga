@@ -1,3 +1,4 @@
 #Files/Directories to be ignored#
 #################################
 bin/
+.DS_Store
