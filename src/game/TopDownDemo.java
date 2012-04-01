@@ -1,5 +1,6 @@
 package game;
 import gameObjects.Barrier;
+
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
