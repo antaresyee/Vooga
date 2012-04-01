@@ -17,5 +17,9 @@ public abstract class GameObjectFactory {
     public String getMyName() {
         return myName;
     }
+    
+    public String toString() {
+        return myName + " " + myX + " " + myY;
+    }
 
 }
