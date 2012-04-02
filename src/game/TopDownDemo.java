@@ -15,6 +15,7 @@ import levelLoadSave.LevelLoader;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.CollisionManager;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.object.background.ImageBackground;
 
 
 public class TopDownDemo extends Game {

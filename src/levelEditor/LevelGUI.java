@@ -151,6 +151,7 @@ public class LevelGUI extends Game{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+						}
 //							String name = imageNames[tile];
 //							for(GameObjectFactory f:myFactories)
 //							{
@@ -168,7 +169,6 @@ public class LevelGUI extends Game{
 //									}
 //								}
 //							}
-						}
 				}
 			}
 			try {
