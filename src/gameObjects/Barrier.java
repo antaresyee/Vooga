@@ -53,7 +53,7 @@ public class Barrier extends GameObject {
         myImage = image;
         pathToImage = path;
         myName = "Barrier";
-	}
+    }
 
 	@Override
 	public void setImage(BufferedImage image) {

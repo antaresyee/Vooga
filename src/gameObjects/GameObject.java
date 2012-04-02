@@ -11,6 +11,7 @@ public abstract class GameObject extends Sprite {
     protected double myX;
     protected double myY;
 
+    public GameObject(){}
 
     public abstract void makeObj(double x, double y, String path, BufferedImage image);
     public abstract String getPath();

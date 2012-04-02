@@ -18,7 +18,7 @@ public class LevelEditorSaver {
         //write objects to file
         FileWriter fw = new FileWriter("savedLevel.json");
         BufferedWriter bw = new BufferedWriter(fw);
-        String jsonString = gson.toJson(objectsToSave, new TypeToken<List<GameObject>>(){}.getType());
+        String jsonString = gson.toJson(objectsToSave);
         bw.write(jsonString);
 //        for (GameObject object : objectsToSave) {
 ////            String objectType = object.getMyName();
