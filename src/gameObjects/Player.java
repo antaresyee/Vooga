@@ -5,14 +5,16 @@ import java.awt.image.BufferedImage;
 public class Player extends GameObject {
 
     public Player(double x, double y, String path){
-        makeObj(x,y,path);
+        myX = x;
+        myY = y;
+        myImgPath = path;
+        myName = "Player";
+        setLocation(myX, myY);
     }
     
-    public Player(){}
-    
-    public String getPath()
+    public String getImgPath()
     {
-    	return pathToImage;
+    	return myImgPath;
     }
 
     public static class PlayerFactory extends GameObjectFactory{
@@ -35,7 +37,6 @@ public class Player extends GameObject {
 
 		@Override
 		public void setFactory(double x, double y, String path) {
-			// TODO Auto-generated method stub
 			super.myName = "Player";
 			super.path = path;
             myX = x;
@@ -43,23 +44,4 @@ public class Player extends GameObject {
 		}
 
     }
-
-
-	@Override
-	public void makeObj(double x, double y, String path) {
-		// TODO Auto-generated method stub
-		myX = x;
-        myY = y;
-        pathToImage = path;
-        myName = "Player";
-        setLocation(myX, myY);
-//        super.setImage()
-	}
-
-//	@Override
-//	public void setImage(BufferedImage image) {
-//		// TODO Auto-generated method stub
-//		myImage = image;
-//	}
-
 }

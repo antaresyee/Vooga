@@ -64,12 +64,12 @@ public class TopDownDemo extends Game {
 				if (f.isMyObject(player)){
 					myPlayer = (Player) f.makeObject();
 //					System.out.println(myPlayer.getPath());
-					myPlayer.setImage(ImageUtil.resize(getImage(myPlayer.getPath()),f.getWidth(),f.getHeight()));
+					myPlayer.setImage(getImage(myPlayer.getImgPath()));
 					myPlayerGroup.add(myPlayer);
 				}
 				if (f.isMyObject(barrier)){
 					Barrier b = (Barrier) f.makeObject();
-					b.setImage(ImageUtil.resize(getImage(b.getPath()),f.getWidth(),f.getHeight()));
+					b.setImage(getImage(b.getImgPath()));
 //					System.out.println(b.getX() + "," + b.getY());
 					myBarrierGroup.add(b);
 				}
