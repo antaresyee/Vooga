@@ -1,6 +1,5 @@
 package levelEditor;
 
-
 import gameObjects.GameObject;
 import gameObjects.GameObjectFactory;
 

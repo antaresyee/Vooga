@@ -5,13 +5,16 @@ import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import levelLoadSave.LevelLoader;
 
 import com.golden.gamedev.Game;
+import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.CollisionManager;
+import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
@@ -19,16 +22,28 @@ import com.golden.gamedev.object.background.ImageBackground;
 public class TopDownDemo extends Game {
 	
 	private Player myPlayer;
-	private SpriteGroup playerGroup;
-	private SpriteGroup barrierGroup;
-	private CollisionManager playerToBarrier;
+	private SpriteGroup myPlayerGroup;
+	private SpriteGroup myBarrierGroup;
+	private Background myBackground;
+	private PlayField myPlayfield;
 
 	@Override
 	public void initResources() {
 	    
-	    barrierGroup = new SpriteGroup("barrier");
-	    playerGroup = new SpriteGroup("player");
+	    myBarrierGroup = new SpriteGroup("barrier");
+	    myPlayerGroup = new SpriteGroup("player");
+	    //init background
+	    myBackground = new ImageBackground(getImage("resources/black_background.jpg"));
+	    myPlayerGroup.setBackground(myBackground);
+	    myBarrierGroup.setBackground(myBackground);
 	    
+	    //init playfield
+	    myPlayfield = new PlayField(myBackground);
+	    myPlayfield.addGroup(myPlayerGroup);
+	    myPlayfield.addGroup(myBarrierGroup);
+	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
+	    
+	    //load level
 		LevelLoader l = new LevelLoader();
 		String player = "player";
 		String barrier = "barrier";
@@ -37,33 +52,29 @@ public class TopDownDemo extends Game {
 			for (GameObjectFactory f : factories){
 				if (f.isMyObject(player)){
 					myPlayer = (Player) f.makeObject();
-					playerGroup.add(myPlayer);
+					myPlayerGroup.add(myPlayer);
 				}
 				if (f.isMyObject(barrier)){
 					Barrier b = (Barrier) f.makeObject();
-					barrierGroup.add(b);
+					myBarrierGroup.add(b);
 				}
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		initCollisions();
 		
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
-		myPlayer.render(pen);
-		barrierGroup.render(pen);
+		myPlayfield.render(pen);
 		
 	}
 
 	@Override
 	public void update(long elapsedTime) {
-		myPlayer.update(elapsedTime);
-		barrierGroup.update(elapsedTime);
+		myPlayfield.update(elapsedTime);
 		playerMovement();
-		playerToBarrier.checkCollision();
 	}
 	
 	public void playerMovement(){
@@ -79,11 +90,6 @@ public class TopDownDemo extends Game {
 		if (myPlayer.getY() < 600 && keyDown(java.awt.event.KeyEvent.VK_S)){
 			myPlayer.moveY(3);
 		}
-	}
-	
-	public void initCollisions(){
-		playerToBarrier = new PlayerBarrierCollision();
-		playerToBarrier.setCollisionGroup(playerGroup, barrierGroup);
 	}
 
 }
