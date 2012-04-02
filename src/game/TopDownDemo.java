@@ -1,6 +1,7 @@
 package game;
 import gameObjects.Barrier;
 
+import gameObjects.GameObject;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
@@ -8,6 +9,7 @@ import java.awt.Graphics2D;
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import levelLoadSave.LevelEditorLoader;
 import levelLoadSave.LevelLoader;
 
 import com.golden.gamedev.Game;
@@ -24,24 +26,35 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void initResources() {
-		LevelLoader l = new LevelLoader();
-		String player = "player";
-		String barrier = "barrier";
+		LevelEditorLoader l = new LevelEditorLoader();
 		try {
-			List<GameObjectFactory> factories = l.load("savedLevel.json");
-			for (GameObjectFactory f : factories){
-				if (f.isMyObject(player)){
-					myPlayer = (Player) f.makeObject();
-					playerGroup.add(myPlayer);
-				}
-				if (f.isMyObject(barrier)){
-					Barrier b = (Barrier) f.makeObject();
-					barrierGroup.add(b);
-				}
+			List<GameObject> objs = l.load("savedLevel.json");
+			for(GameObject o : objs)
+			{
+				o.setImage(getImage(o.getPath()));
 			}
 		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//		LevelLoader l = new LevelLoader();
+//		String player = "player";
+//		String barrier = "barrier";
+//		try {
+//			List<GameObjectFactory> factories = l.load("savedLevel.json");
+//			for (GameObjectFactory f : factories){
+//				if (f.isMyObject(player)){
+//					myPlayer = (Player) f.makeObject();
+//					playerGroup.add(myPlayer);
+//				}
+//				if (f.isMyObject(barrier)){
+//					Barrier b = (Barrier) f.makeObject();
+//					barrierGroup.add(b);
+//				}
+//			}
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
 		initCollisions();
 		
 	}

@@ -29,7 +29,7 @@ public class LevelEditorLoader {
         
         Gson gson = new Gson();
         Scanner scanner = new Scanner(new File(filename));
-        Type classType = new TypeToken<ArrayList<GameObject>>(){}.getType();
+        Type classType = new TypeToken<List<GameObject>>(){}.getType();
         String wholeFile = scanner.useDelimiter("\\A").next();
         ArrayList<GameObject> gos = gson.fromJson(wholeFile, classType);
 //        Type strType = new TypeToken<String>(){}.getType();

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 public abstract class GameObjectFactory {
 
     protected BufferedImage myImage;
+    protected String path;
     protected double myX;
     protected double myY;
     protected String myName;
@@ -14,7 +15,7 @@ public abstract class GameObjectFactory {
         return myName.equals(name);
     }
     
-    public abstract void setFactory(double x, double y, BufferedImage image);
+    public abstract void setFactory(double x, double y, String path, BufferedImage image);
 
     public String getMyName() {
         return myName;

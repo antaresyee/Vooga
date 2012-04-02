@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class LevelEditorSaver {
 	public static void save(List<GameObject> objectsToSave) throws IOException {
@@ -17,7 +18,7 @@ public class LevelEditorSaver {
         //write objects to file
         FileWriter fw = new FileWriter("savedLevel.json");
         BufferedWriter bw = new BufferedWriter(fw);
-        String jsonString = gson.toJson(objectsToSave);
+        String jsonString = gson.toJson(objectsToSave, new TypeToken<List<GameObject>>(){}.getType());
         bw.write(jsonString);
 //        for (GameObject object : objectsToSave) {
 ////            String objectType = object.getMyName();

@@ -28,8 +28,8 @@ public class LevelLoader {
     
     public LevelLoader() {
         myAllFactories = new ArrayList<GameObjectFactory>();
-        myAllFactories.add(new Barrier.BarrierFactory(0,0,null));
-        myAllFactories.add(new Player.PlayerFactory(0, 0, null));
+        myAllFactories.add(new Barrier.BarrierFactory(0,0,null,null));
+        myAllFactories.add(new Player.PlayerFactory(0, 0, null,null));
     }
     
     /**
@@ -78,8 +78,8 @@ public class LevelLoader {
         LevelLoader ll = new LevelLoader();
         
         List<GameObjectFactory> objectsToSave = new ArrayList<GameObjectFactory>();
-        objectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null));
-        objectsToSave.add(new Player.PlayerFactory(3.0, 2.0, null));
+        objectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null, null));
+        objectsToSave.add(new Player.PlayerFactory(3.0, 2.0, null, null));
         
         ls.save(objectsToSave);
         System.out.println(ll.load("savedLevel.json"));
