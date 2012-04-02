@@ -31,16 +31,7 @@ public class TopDownDemo extends Game {
 	private PlayField myPlayfield;
 
 	@Override
-	public void initResources() {
-//<<<<<<< HEAD
-//		LevelEditorLoader l = new LevelEditorLoader();
-//		try {
-//			List<GameObject> objs = l.load("savedLevel.json");
-//			for(GameObject o : objs)
-//			{
-//				o.setImage(getImage(o.getPath()));
-//=======
-	    
+	public void initResources() {	    
 	    myBarrierGroup = new SpriteGroup("barrier");
 	    myPlayerGroup = new SpriteGroup("player");
 	    //init background
@@ -63,46 +54,19 @@ public class TopDownDemo extends Game {
 			for (GameObjectFactory f : factories){
 				if (f.isMyObject(player)){
 					myPlayer = (Player) f.makeObject();
-//					System.out.println(myPlayer.getPath());
 					myPlayer.setImage(ImageUtil.resize(getImage(myPlayer.getPath()),f.getWidth(),f.getHeight()));
 					myPlayerGroup.add(myPlayer);
 				}
 				if (f.isMyObject(barrier)){
 					Barrier b = (Barrier) f.makeObject();
 					b.setImage(ImageUtil.resize(getImage(b.getPath()),f.getWidth(),f.getHeight()));
-//					System.out.println(b.getX() + "," + b.getY());
 					myBarrierGroup.add(b);
 				}
-//>>>>>>> 8eaf5e55cdc2a6a0d484c8321e6834faed6a2915
 			}
-//			System.out.println(myPlayer.getX() + "," + myPlayer.getY());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-//<<<<<<< HEAD
-//		LevelLoader l = new LevelLoader();
-//		String player = "player";
-//		String barrier = "barrier";
-//		try {
-//			List<GameObjectFactory> factories = l.load("savedLevel.json");
-//			for (GameObjectFactory f : factories){
-//				if (f.isMyObject(player)){
-//					myPlayer = (Player) f.makeObject();
-//					playerGroup.add(myPlayer);
-//				}
-//				if (f.isMyObject(barrier)){
-//					Barrier b = (Barrier) f.makeObject();
-//					barrierGroup.add(b);
-//				}
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		initCollisions();
-//=======
-//>>>>>>> 8eaf5e55cdc2a6a0d484c8321e6834faed6a2915
-		
+		}		
 	}
 
 	@Override
@@ -114,7 +78,6 @@ public class TopDownDemo extends Game {
 	public void update(long elapsedTime) {
 		playerMovement();
 		myPlayfield.update(elapsedTime);
-//		System.out.println(myPlayer.getX() + "," + myPlayer.getY());
 	}
 	
 	public void playerMovement(){
