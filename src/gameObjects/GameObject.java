@@ -14,7 +14,7 @@ public abstract class GameObject extends Sprite {
     
     public GameObject(){}
 
-    public abstract void makeObj(double x, double y, String path, BufferedImage image);
+    public abstract void makeObj(double x, double y, String path);
     public abstract String getPath();
     public void setWidthHeight(int w, int h)
     {

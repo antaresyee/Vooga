@@ -3,7 +3,6 @@ import java.awt.image.BufferedImage;
 
 public abstract class GameObjectFactory {
 
-    protected BufferedImage myImage;
     protected String path;
     protected double myX;
     protected double myY;
@@ -32,7 +31,7 @@ public abstract class GameObjectFactory {
     	return h;
     }
     
-    public abstract void setFactory(double x, double y, String path, BufferedImage image);
+    public abstract void setFactory(double x, double y, String path);
 
     public String getMyName() {
         return myName;

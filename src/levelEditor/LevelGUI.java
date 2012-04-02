@@ -165,7 +165,7 @@ public class LevelGUI extends Game{
 							for(GameObjectFactory f:myFactories)
 							{
 								if(f.isMyObject(name)){
-									f.setFactory(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]),null);
+									f.setFactory(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]));
 									f.setWidthHegith(getWidth()/col, getHeight()/row);
 									myObjects.add(f);
 									myFactories = new ArrayList<GameObjectFactory>();

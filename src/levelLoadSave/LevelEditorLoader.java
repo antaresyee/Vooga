@@ -65,15 +65,4 @@ public class LevelEditorLoader {
         return gos;
     }
     
-    public static void main(String[] args) throws IOException {
-        LevelEditorLoader ll = new LevelEditorLoader();
-        
-        List<GameObject> objectsToSave = new ArrayList<GameObject>();
-        objectsToSave.add(new Barrier(1.5, 2.0, null,null));
-        objectsToSave.add(new Player(3.0, 2.0, null,null));
-        
-        LevelEditorSaver.save(objectsToSave);
-        System.out.println(ll.load("savedLevel.json"));
-        
-    }
 }
