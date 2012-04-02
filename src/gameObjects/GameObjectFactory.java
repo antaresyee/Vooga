@@ -13,6 +13,8 @@ public abstract class GameObjectFactory {
     public boolean isMyObject(String name) {
         return myName.equals(name);
     }
+    
+    public abstract void setFactory(double x, double y, BufferedImage image);
 
     public String getMyName() {
         return myName;

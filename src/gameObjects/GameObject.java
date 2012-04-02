@@ -5,6 +5,7 @@ import com.golden.gamedev.object.Sprite;
 
 public abstract class GameObject extends Sprite {
 
+	protected String myName;
     protected BufferedImage myImage;
     protected double myX;
     protected double myY;

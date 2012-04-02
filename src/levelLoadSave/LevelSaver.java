@@ -23,7 +23,7 @@ import com.google.gson.reflect.TypeToken;
 
 
 public class LevelSaver {
-    public void save(List<GameObjectFactory> objectsToSave) throws IOException {
+    public static void save(List<GameObjectFactory> objectsToSave) throws IOException {
         Gson gson = new Gson();
         
         //write objects to file
