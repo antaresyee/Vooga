@@ -30,7 +30,7 @@ import com.golden.gamedev.util.ImageUtil;
 public class LevelGUI extends Game{
 	
 //	private final String BLACK = "resource/Black.png";
-	private List<GameObject> myObjects;
+	private List<GameObjectFactory> myObjects;
 	private TileBackground tilesBack;
 	private BufferedImage[] tileImages;
 	private String[] imageNames;
@@ -43,7 +43,7 @@ public class LevelGUI extends Game{
 	
 	public void setInfo(BufferedImage[] tileImages, String[] imageNames, int row, int col)
 	{
-		myObjects = new ArrayList<GameObject>();
+		myObjects = new ArrayList<GameObjectFactory>();
 		this.row=row;
 		this.col=col;
 		this.imageNames = imageNames;
@@ -113,15 +113,17 @@ public class LevelGUI extends Game{
 			{
 				for(int j = 0; j<row; j++)
 				{
-					GameObject go;
+					GameObjectFactory go;
 					try {
 						int tile = tiles[i][j];
 						if(tile<black)
 						{
-//							go = (GameObjectFactory) Class.forName("gameObjects."+imageNames[tile]+"." + imageNames[tile] + "Factory").newInstance();
-//							go.setFactory(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
-							go = (GameObject) Class.forName("gameObjects."+imageNames[tile]).newInstance();
-							go.makeObj(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
+							go = (GameObjectFactory) Class.forName("gameObjects."+imageNames[tile]+"." + imageNames[tile] + "Factory").newInstance();
+							go.setFactory(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
+						 
+							//go = (GameObject) Class.forName("gameObjects."+imageNames[tile]).newInstance();
+							//go.makeObj(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
+							
 							myObjects.add(go);
 						}
 					} catch (InstantiationException e) {
@@ -137,7 +139,7 @@ public class LevelGUI extends Game{
 				}
 			}
 			try {
-				LevelEditorSaver.save(myObjects);
+				LevelSaver.save(myObjects);
 				finish();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

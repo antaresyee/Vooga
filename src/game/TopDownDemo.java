@@ -13,6 +13,7 @@ import levelLoadSave.LevelLoader;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.CollisionManager;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.object.background.ImageBackground;
 
 
 public class TopDownDemo extends Game {
@@ -24,6 +25,10 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void initResources() {
+	    
+	    barrierGroup = new SpriteGroup("barrier");
+	    playerGroup = new SpriteGroup("player");
+	    
 		LevelLoader l = new LevelLoader();
 		String player = "player";
 		String barrier = "barrier";

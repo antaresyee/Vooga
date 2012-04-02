@@ -7,6 +7,7 @@ import gameObjects.Player;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +63,17 @@ public class LevelEditorLoader {
 //        }
         
         return gos;
+    }
+    
+    public static void main(String[] args) throws IOException {
+        LevelEditorLoader ll = new LevelEditorLoader();
+        
+        List<GameObject> objectsToSave = new ArrayList<GameObject>();
+        objectsToSave.add(new Barrier(1.5, 2.0, null));
+        objectsToSave.add(new Player(3.0, 2.0, null));
+        
+        LevelEditorSaver.save(objectsToSave);
+        System.out.println(ll.load("savedLevel.json"));
+        
     }
 }
