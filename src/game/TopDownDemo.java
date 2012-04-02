@@ -121,13 +121,13 @@ public class TopDownDemo extends Game {
 		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
 			myPlayer.moveX(-3);
 		}
-		if (myPlayer.getX() < 800 && keyDown(java.awt.event.KeyEvent.VK_D)){
+		if (myPlayer.getX() < 800-myPlayer.getWidth()-3 && keyDown(java.awt.event.KeyEvent.VK_D)){
 			myPlayer.moveX(3);
 		}
 		if (myPlayer.getY() > 0 && keyDown(java.awt.event.KeyEvent.VK_W)){
 			myPlayer.moveY(-3);
 		}
-		if (myPlayer.getY() < 600 && keyDown(java.awt.event.KeyEvent.VK_S)){
+		if (myPlayer.getY() < 600-myPlayer.getHeight()-3 && keyDown(java.awt.event.KeyEvent.VK_S)){
 			myPlayer.moveY(3);
 		}
 	}
