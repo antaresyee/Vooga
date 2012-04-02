@@ -31,18 +31,53 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void initResources() {
-		LevelEditorLoader l = new LevelEditorLoader();
+//<<<<<<< HEAD
+//		LevelEditorLoader l = new LevelEditorLoader();
+//		try {
+//			List<GameObject> objs = l.load("savedLevel.json");
+//			for(GameObject o : objs)
+//			{
+//				o.setImage(getImage(o.getPath()));
+//=======
+	    
+	    myBarrierGroup = new SpriteGroup("barrier");
+	    myPlayerGroup = new SpriteGroup("player");
+	    //init background
+	    myBackground = new ImageBackground(getImage("resources/black_background.jpg"));
+	    myPlayerGroup.setBackground(myBackground);
+	    myBarrierGroup.setBackground(myBackground);
+	    
+	    //init playfield
+	    myPlayfield = new PlayField(myBackground);
+	    myPlayfield.addGroup(myPlayerGroup);
+	    myPlayfield.addGroup(myBarrierGroup);
+	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
+	    
+	    //load level
+		LevelLoader l = new LevelLoader();
+		String player = "Player";
+		String barrier = "Barrier";
 		try {
-			List<GameObject> objs = l.load("savedLevel.json");
-			for(GameObject o : objs)
-			{
-				o.setImage(getImage(o.getPath()));
-
+			List<GameObjectFactory> factories = l.load("savedLevel.json");
+			for (GameObjectFactory f : factories){
+				if (f.isMyObject(player)){
+					myPlayer = (Player) f.makeObject();
+//					System.out.println(myPlayer.getPath());
+					myPlayer.setImage(getImage(myPlayer.getPath()));
+					myPlayerGroup.add(myPlayer);
+				}
+				if (f.isMyObject(barrier)){
+					Barrier b = (Barrier) f.makeObject();
+					b.setImage(getImage(b.getPath()));
+					myBarrierGroup.add(b);
+				}
+//>>>>>>> 8eaf5e55cdc2a6a0d484c8321e6834faed6a2915
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+//<<<<<<< HEAD
 //		LevelLoader l = new LevelLoader();
 //		String player = "player";
 //		String barrier = "barrier";
@@ -61,13 +96,15 @@ public class TopDownDemo extends Game {
 //		} catch (FileNotFoundException e) {
 //			e.printStackTrace();
 //		}
+//		initCollisions();
+//=======
+//>>>>>>> 8eaf5e55cdc2a6a0d484c8321e6834faed6a2915
 		
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
-		
 	}
 
 	@Override

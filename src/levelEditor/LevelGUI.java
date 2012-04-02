@@ -35,7 +35,7 @@ import com.golden.gamedev.util.ImageUtil;
 public class LevelGUI extends Game{
 	
 //	private final String BLACK = "resource/Black.png";
-//	private List<GameObjectFactory> myFactories;
+	private List<GameObjectFactory> myFactories;
 	private TileBackground tilesBack;
 	private BufferedImage[] tileImages;
 	private String[] imageNames;
@@ -43,17 +43,17 @@ public class LevelGUI extends Game{
 	private int black;
 	private int row;
 	private int col;
-	private List<GameObject> myObjects;
+	private List<GameObjectFactory> myObjects;
 	private Map<BufferedImage,String> myImagePathMap;
 	
 //	public LevelGUI(){super();}
 	
 	public void setInfo(BufferedImage[] tileImages, String[] imageNames, int row, int col)
 	{
-//		myFactories = new ArrayList<GameObjectFactory>();
-//		myFactories.add(new Barrier.BarrierFactory());
-//		myFactories.add(new Player.PlayerFactory());
-		myObjects = new ArrayList<GameObject>();
+		myFactories = new ArrayList<GameObjectFactory>();
+		myFactories.add(new Barrier.BarrierFactory());
+		myFactories.add(new Player.PlayerFactory());
+		myObjects = new ArrayList<GameObjectFactory>();
 		this.row=row;
 		this.col=col;
 		this.imageNames = imageNames;
@@ -137,42 +137,43 @@ public class LevelGUI extends Game{
 //							Class f = c.getEnclosingClass();
 //							go = (GameObjectFactory) f.newInstance();
 //							go.setFactory(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
-							try {
-								go = (GameObject) Class.forName("gameObjects."+imageNames[tile]).newInstance();
-								go.makeObj(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]),null);
-								myObjects.add(go);
-							} catch (InstantiationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IllegalAccessException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ClassNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+//							try {
+//								go = (GameObject) Class.forName("gameObjects."+imageNames[tile]).newInstance();
+//								go.makeObj(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]),null);
+//								myObjects.add(go);
+//							} catch (InstantiationException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} catch (IllegalAccessException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							} catch (ClassNotFoundException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
+							String name = imageNames[tile];
+							for(GameObjectFactory f:myFactories)
+							{
+								if(f.isMyObject(name)){
+									f.setFactory(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]),null);
+									myObjects.add(f);
+									try {
+										f = f.getClass().newInstance();
+									} catch (InstantiationException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									} catch (IllegalAccessException e) {
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
 							}
 						}
-//							String name = imageNames[tile];
-//							for(GameObjectFactory f:myFactories)
-//							{
-//								if(f.isMyObject(name)){
-//									f.setFactory(i*getWidth()/col,j*getHeight()/row,tileImages[tile]);
-//									myObjects.add(f);
-//									try {
-//										f = f.getClass().newInstance();
-//									} catch (InstantiationException e) {
-//										// TODO Auto-generated catch block
-//										e.printStackTrace();
-//									} catch (IllegalAccessException e) {
-//										// TODO Auto-generated catch block
-//										e.printStackTrace();
-//									}
-//								}
-//							}
 				}
 			}
 			try {
-				LevelEditorSaver.save(myObjects);
+				LevelSaver.save(myObjects);
 				finish();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
