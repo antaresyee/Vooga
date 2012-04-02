@@ -53,12 +53,13 @@ public class Barrier extends GameObject {
         myImage = image;
         pathToImage = path;
         myName = "Barrier";
+        setLocation(myX,myY);
     }
 
-	@Override
-	public void setImage(BufferedImage image) {
-		// TODO Auto-generated method stub
-		myImage = image;
-	}
+//	@Override
+//	public void setImage(BufferedImage image) {
+//		// TODO Auto-generated method stub
+//		myImage = image;
+//	}
 
 }

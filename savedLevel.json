@@ -1,0 +1,6 @@
+"Barrier"
+{"path":"./resources/enemy.png","myX":300.0,"myY":200.0,"myName":"Barrier","w":100,"h":100}
+"Barrier"
+{"path":"./resources/enemy.png","myX":400.0,"myY":200.0,"myName":"Barrier","w":100,"h":100}
+"Player"
+{"path":"./resources/ship.png","myX":700.0,"myY":500.0,"myName":"Player","w":100,"h":100}

@@ -51,15 +51,17 @@ public class Player extends GameObject {
 		// TODO Auto-generated method stub
 		myX = x;
         myY = y;
-        this.pathToImage = path;
+        pathToImage = path;
         myImage = image;
         myName = "Player";
+        setLocation(myX, myY);
+//        super.setImage()
 	}
 
-	@Override
-	public void setImage(BufferedImage image) {
-		// TODO Auto-generated method stub
-		myImage = image;
-	}
+//	@Override
+//	public void setImage(BufferedImage image) {
+//		// TODO Auto-generated method stub
+//		myImage = image;
+//	}
 
 }

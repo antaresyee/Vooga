@@ -1,3 +1,11 @@
+/*
+ * author: Yumeng Fang and Hao Sun
+ * Level Editor Class, developer should extend this class and override initResources() method to include their own images, and names
+ * And once in the GUI, users click on grid to choose what to put down. And once done with all configurations, developer can simply press ctrl+s to save and quit.
+ * Then, developer can head to their own game class and load the saved data from saved json file.
+ */
+
+
 package levelEditor;
 
 
@@ -116,7 +124,7 @@ public class LevelGUI extends Game{
 		{
 			int r = getMouseY()/(getHeight()/row);
 			int c = getMouseX()/(getWidth()/col);
-			int option = JOptionPane.showOptionDialog(new JFrame(), "Choose object to place", "Options", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, imageNames, imageNames[0]);
+			int option = JOptionPane.showOptionDialog(new JFrame(), "Place Object on Grid "+r+","+c, "Options", JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE, null, imageNames, imageNames[0]);
 //			System.out.println(r + "," + c);
 			tiles[c][r]=option;
 			tilesBack.setTiles(tiles);
@@ -152,21 +160,17 @@ public class LevelGUI extends Game{
 //								e.printStackTrace();
 //							}
 //						}
+//							System.out.println(i+","+j);
 							String name = imageNames[tile];
 							for(GameObjectFactory f:myFactories)
 							{
 								if(f.isMyObject(name)){
 									f.setFactory(i*getWidth()/col,j*getHeight()/row,myImagePathMap.get(tileImages[tile]),null);
+									f.setWidthHegith(getWidth()/col, getHeight()/row);
 									myObjects.add(f);
-									try {
-										f = f.getClass().newInstance();
-									} catch (InstantiationException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									} catch (IllegalAccessException e) {
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
+									myFactories = new ArrayList<GameObjectFactory>();
+									myFactories.add(new Barrier.BarrierFactory());
+									myFactories.add(new Player.PlayerFactory());
 								}
 							}
 						}

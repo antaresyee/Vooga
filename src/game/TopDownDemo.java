@@ -19,6 +19,7 @@ import com.golden.gamedev.object.CollisionManager;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
+import com.golden.gamedev.util.ImageUtil;
 
 
 public class TopDownDemo extends Game {
@@ -63,16 +64,18 @@ public class TopDownDemo extends Game {
 				if (f.isMyObject(player)){
 					myPlayer = (Player) f.makeObject();
 //					System.out.println(myPlayer.getPath());
-					myPlayer.setImage(getImage(myPlayer.getPath()));
+					myPlayer.setImage(ImageUtil.resize(getImage(myPlayer.getPath()),f.getWidth(),f.getHeight()));
 					myPlayerGroup.add(myPlayer);
 				}
 				if (f.isMyObject(barrier)){
 					Barrier b = (Barrier) f.makeObject();
-					b.setImage(getImage(b.getPath()));
+					b.setImage(ImageUtil.resize(getImage(b.getPath()),f.getWidth(),f.getHeight()));
+//					System.out.println(b.getX() + "," + b.getY());
 					myBarrierGroup.add(b);
 				}
 //>>>>>>> 8eaf5e55cdc2a6a0d484c8321e6834faed6a2915
 			}
+//			System.out.println(myPlayer.getX() + "," + myPlayer.getY());
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -109,8 +112,9 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-		myPlayfield.update(elapsedTime);
 		playerMovement();
+		myPlayfield.update(elapsedTime);
+//		System.out.println(myPlayer.getX() + "," + myPlayer.getY());
 	}
 	
 	public void playerMovement(){
