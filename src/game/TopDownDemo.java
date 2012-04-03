@@ -1,6 +1,7 @@
 package game;
 import gameObjects.Barrier;
 
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
@@ -27,6 +28,7 @@ public class TopDownDemo extends Game {
 	private Player myPlayer;
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
+	private SpriteGroup myEnemyGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
 
@@ -34,33 +36,42 @@ public class TopDownDemo extends Game {
 	public void initResources() {	    
 	    myBarrierGroup = new SpriteGroup("barrier");
 	    myPlayerGroup = new SpriteGroup("player");
+	    myEnemyGroup = new SpriteGroup("enemy");
 	    //init background
 	    myBackground = new ImageBackground(getImage("resources/black_background.jpg"));
 	    myPlayerGroup.setBackground(myBackground);
 	    myBarrierGroup.setBackground(myBackground);
+	    myEnemyGroup.setBackground(myBackground);
 	    
 	    //init playfield
 	    myPlayfield = new PlayField(myBackground);
 	    myPlayfield.addGroup(myPlayerGroup);
 	    myPlayfield.addGroup(myBarrierGroup);
+	    myPlayfield.addGroup(myEnemyGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
 	    //load level
 		LevelLoader l = new LevelLoader();
 		String player = "Player";
 		String barrier = "Barrier";
+		String enemy = "Enemy";
 		try {
 			List<GameObjectFactory> factories = l.load("savedLevel.json");
 			for (GameObjectFactory f : factories){
 				if (f.isMyObject(player)){
 					myPlayer = (Player) f.makeObject();
-					myPlayer.setImage(ImageUtil.resize(getImage(myPlayer.getPath()),f.getWidth(),f.getHeight()));
+					myPlayer.setImage(getImage(myPlayer.getImgPath()));
 					myPlayerGroup.add(myPlayer);
 				}
 				if (f.isMyObject(barrier)){
 					Barrier b = (Barrier) f.makeObject();
-					b.setImage(ImageUtil.resize(getImage(b.getPath()),f.getWidth(),f.getHeight()));
+					b.setImage(getImage(b.getImgPath()));
 					myBarrierGroup.add(b);
+				}
+				if (f.isMyObject(enemy)){
+					Enemy e = (Enemy) f.makeObject();
+					e.setImage(getImage(e.getImgPath()));
+					myEnemyGroup.add(e);
 				}
 			}
 		} catch (FileNotFoundException e) {
