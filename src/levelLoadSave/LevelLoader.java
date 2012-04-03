@@ -40,49 +40,37 @@ public class LevelLoader {
         
         Gson gson = new Gson();
         Scanner scanner = new Scanner(new File(filename));
-        //Type classType = new TypeToken<Class<?>>(){}.getType();
-        Type strType = new TypeToken<String>(){}.getType();
+        
+        Type stringClass = new TypeToken<String>(){}.getType(); //tell json parser the object's type
         
         while (scanner.useDelimiter("\n").hasNext()) {       
             
-            String jsonTypeString = scanner.useDelimiter("\n").next();
-            //String jsonClassString = scanner.useDelimiter("\n").next();
-            String jsonObjectString = scanner.useDelimiter("\n").next();
+            String jsonGofTypeString = scanner.useDelimiter("\n").next();
+            String jsonGof = scanner.useDelimiter("\n").next();
             
-            //Class<?> parsedObjectClass = gson.fromJson(jsonClassString, classType);
-            //Type objectClassType = parsedObjectClass.getGenericSuperclass();
-            String parsedObjectType = gson.fromJson(jsonTypeString, strType);
-            
+            String parsedGofTypeString = gson.fromJson(jsonGofTypeString, stringClass);
             for (GameObjectFactory f : myAllFactories) {
-                if (f.isMyObject(parsedObjectType)) {
-                    Type objClass = f.getClass(); //get Type from Class<?>
-                    GameObjectFactory parsedObject = gson.fromJson(jsonObjectString, objClass);
-                    parsedObjects.add(parsedObject);
+                if (f.isMyObject(parsedGofTypeString)) {
+                    Type gofClass = f.getClass(); //tell json parser the object's type
+                    GameObjectFactory parsedGof = gson.fromJson(jsonGof, gofClass);
+                    parsedObjects.add(parsedGof);
                 }
                 
             }
-            
-            //Type objType = new TypeToken<String>(){}.getType();
-            //GameObjectFactory parsedObject = gson.fromJson(jsonObjectString, objectClassType);
-            
-            //if (parsedObjectType.isMyObject(parsedObjectType))
-            
-            //parsedObjects.add(parsedObject);
         }
         
         return parsedObjects;
     }
     
     public static void main(String[] args) throws IOException {
-        LevelSaver ls = new LevelSaver();
         LevelLoader ll = new LevelLoader();
         
         List<GameObjectFactory> objectsToSave = new ArrayList<GameObjectFactory>();
         objectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null));
         objectsToSave.add(new Player.PlayerFactory(3.0, 2.0, null));
         
-        ls.save(objectsToSave);
-        System.out.println(ll.load("savedLevel.json"));
+        LevelSaver.save(objectsToSave, "testLevel");
+        System.out.println(ll.load("testLevel.json"));
         
     }
 }
