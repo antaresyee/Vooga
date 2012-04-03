@@ -7,12 +7,15 @@ import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.List;
 
 import levelLoadSave.LevelEditorLoader;
 import levelLoadSave.LevelLoader;
+import movement.BackForthMovement;
+import movement.TargetedMovement;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
@@ -26,6 +29,7 @@ import com.golden.gamedev.util.ImageUtil;
 public class TopDownDemo extends Game {
 	
 	private Player myPlayer;
+	private Enemy myEnemy;
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -54,7 +58,6 @@ public class TopDownDemo extends Game {
 		LevelLoader l = new LevelLoader();
 		String player = "Player";
 		String barrier = "Barrier";
-		String enemy = "Enemy";
 		try {
 			List<GameObjectFactory> factories = l.load("savedLevel.json");
 			for (GameObjectFactory f : factories){
@@ -68,27 +71,30 @@ public class TopDownDemo extends Game {
 					b.setImage(getImage(b.getImgPath()));
 					myBarrierGroup.add(b);
 				}
-				if (f.isMyObject(enemy)){
-					Enemy e = (Enemy) f.makeObject();
-					e.setImage(getImage(e.getImgPath()));
-					myEnemyGroup.add(e);
-				}
 			}
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
+//this is for testing enemy movement
+		Enemy e = new Enemy (400, 400, "resources/enemy.png", new TargetedMovement(new Point(800, 600)));
+		e.setImage(getImage(e.getImgPath()));
+		myEnemy = e;
+		myEnemyGroup.add(myEnemy);
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
+//		this is for testing enemy movement
+		myEnemy.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		playerMovement();
 		myPlayfield.update(elapsedTime);
+// this is for testing enemy movement
+		myEnemy.update();
 	}
 	
 	public void playerMovement(){
