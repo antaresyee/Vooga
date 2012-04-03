@@ -1,17 +1,15 @@
 package gameObjects;
 
-import java.awt.image.BufferedImage;
-
-import movement.Movement;
+import gameObjects.Movement;
 
 public class Enemy extends GameObject {
 	
 	private Movement myMovementType;
 	
-	public Enemy(double x, double y, String path, Movement m){
+	public Enemy(double x, double y, String imgPath, Movement m){
 		myX = x;
         myY = y;
-        myImgPath = path;
+        myImgPath = imgPath;
         myMovementType = m;
         myName = "Enemy";
         setLocation(myX,myY);
@@ -50,5 +48,14 @@ public class Enemy extends GameObject {
 
 		
 	}
+
+	@Override
+    public GameObject makeGameObject(GameObjectData god) {
+        Double x = god.getX();
+        Double y = god.getY();
+        String imgPath = god.getImgPath();
+        Movement movement = god.getMovement();
+        return new Enemy(x, y, imgPath, movement);
+    }
 
 }

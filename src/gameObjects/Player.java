@@ -1,6 +1,8 @@
 package gameObjects;
 import java.awt.image.BufferedImage;
 
+import movement.Movement;
+
 
 public class Player extends GameObject {
 
@@ -33,5 +35,13 @@ public class Player extends GameObject {
             return new Player(myX, myY, myImgPath);
         }
 
+    }
+
+    @Override
+    public GameObject makeGameObject(GameObjectData god) {
+        Double x = god.getX();
+        Double y = god.getY();
+        String imgPath = god.getImgPath();
+        return new Player(x, y, imgPath);
     }
 }
