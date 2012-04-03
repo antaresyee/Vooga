@@ -34,17 +34,17 @@ public class Enemy extends GameObject {
 		
 		Movement myMovementType;
 
-		public EnemyFactory(double x, double y, String path, Movement m){
+		public EnemyFactory(double x, double y, String imgPath, Movement m){
 			myName = "Enemy";
     	    myX = x;
             myY = y;
             myMovementType = m;
-            super.path = path;
+            super.myImgPath = imgPath;
 		}
 		
 		@Override
 		public GameObject makeObject() {
-			return new Enemy(myX, myY, path, myMovementType);
+			return new Enemy(myX, myY, myImgPath, myMovementType);
 		}
 
 

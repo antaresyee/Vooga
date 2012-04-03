@@ -4,10 +4,10 @@ import java.awt.image.BufferedImage;
 
 public class Player extends GameObject {
 
-    public Player(double x, double y, String path){
+    public Player(double x, double y, String imgPath){
         myX = x;
         myY = y;
-        myImgPath = path;
+        myImgPath = imgPath;
         myName = "Player";
         setLocation(myX, myY);
     }
@@ -19,9 +19,9 @@ public class Player extends GameObject {
 
     public static class PlayerFactory extends GameObjectFactory{
 
-        public PlayerFactory(double x, double y, String path){
+        public PlayerFactory(double x, double y, String imgPath){
         	super.myName = "Player";
-			super.path = path;
+			super.myImgPath = imgPath;
             myX = x;
             myY = y;
         }
@@ -30,7 +30,7 @@ public class Player extends GameObject {
 
         @Override
         public GameObject makeObject() {
-            return new Player(myX, myY, path);
+            return new Player(myX, myY, myImgPath);
         }
 
     }

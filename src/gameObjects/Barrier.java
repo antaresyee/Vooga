@@ -24,12 +24,12 @@ public class Barrier extends GameObject {
     	    myName = "Barrier";
     	    myX = x;
             myY = y;
-            super.path = path;
+            super.myImgPath = path;
     	}
 
         @Override
         public GameObject makeObject() {
-            return new Barrier(myX, myY, path);
+            return new Barrier(myX, myY, myImgPath);
         }
 
 
