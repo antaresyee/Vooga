@@ -35,11 +35,11 @@ public class LevelLoader {
     /**
      * load json file with GameObjectFactory objects delimited by newlines
      */
-    public List<GameObjectFactory> load(String filename) throws FileNotFoundException {
+    public List<GameObjectFactory> load(String fileName) throws FileNotFoundException {
         List<GameObjectFactory> parsedObjects = new ArrayList<GameObjectFactory>();
         
         Gson gson = new Gson();
-        Scanner scanner = new Scanner(new File(filename));
+        Scanner scanner = new Scanner(new File(fileName));
         
         Type stringClass = new TypeToken<String>(){}.getType(); //tell json parser the object's type
         
