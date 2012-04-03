@@ -1,44 +1,53 @@
 package movement;
 
-import java.awt.Point;
 
 import gameObjects.GameObject;
 
 public class TargetedMovement extends Movement {
 	
-	Point myTarget;
+	private GameObject myTarget;
 	
-	public TargetedMovement(Point t){
-		myTarget = t;
+	public TargetedMovement(GameObject o, double s){
+		myTarget = o;
+		speed = s;
 	}
 
 	@Override
 	public void move(GameObject o) {
-		if (o.getX() < myTarget.x){
-			o.setHorizontalSpeed(.3);
+		double myY = o.getY();
+		double myX = o.getX();
+		double targetY = myTarget.getY();
+		double targetX = myTarget.getX();
+		if (myY < targetY){
+			o.setVerticalSpeed(speed);
 		}
-		if (o.getX() > myTarget.x){
-			o.setHorizontalSpeed(-.3);
+		if (myY > targetY){
+			o.setVerticalSpeed(-speed);
 		}
-		if (o.getY() < myTarget.y){
-			o.setVerticalSpeed(.3);
+		if (myX < targetX){
+			o.setHorizontalSpeed(speed);
 		}
-		if (o.getY() > myTarget.y){
-			o.setVerticalSpeed(-.3);
+		if (myX > targetX){
+			o.setHorizontalSpeed(-speed);
 		}
-		if (o.getX() > myTarget.x && o.getX() < myTarget.x + 3){
+		
+		if (myX > targetX && myX < targetX + 5){
 			o.setHorizontalSpeed(0);
 		}
-		if (o.getX() < myTarget.x && o.getX() > myTarget.x - 3){
+		if (myX < targetX && myX > targetX - 5){
 			o.setHorizontalSpeed(0);
 		}
-		if (o.getY() > myTarget.y && o.getY() < myTarget.y + 3){
+		if (myY > targetY && myY < targetY + 5){
 			o.setVerticalSpeed(0);
 		}
-		if (o.getY() < myTarget.y && o.getY() > myTarget.y - 3){
+		if (myY < targetY && myY > targetY - 5){
 			o.setVerticalSpeed(0);
 		}
 		
+	}
+	
+	public void changeTarget(GameObject o){
+		myTarget = o;
 	}
 
 }

@@ -1,7 +1,5 @@
 package gameObjects;
 
-import java.awt.image.BufferedImage;
-
 import movement.Movement;
 
 public class Enemy extends GameObject {
