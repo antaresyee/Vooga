@@ -8,6 +8,8 @@ public abstract class GameObject extends Sprite {
 	protected String myImgPath;
     protected double myX;
     protected double myY;
+    
     public abstract String getImgPath();
+    public abstract GameObject makeGameObject(GameObjectData god);
 
 }

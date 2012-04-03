@@ -3,7 +3,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class GameObjectFactory {
 
-    protected String path;
+    protected String myImgPath;
     protected double myX;
     protected double myY;
     protected String myName;

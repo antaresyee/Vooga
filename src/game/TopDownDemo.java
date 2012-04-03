@@ -1,29 +1,24 @@
 package game;
 import gameObjects.Barrier;
 
+
 import gameObjects.Enemy;
-import gameObjects.GameObject;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import levelLoadSave.LevelEditorLoader;
 import levelLoadSave.LevelLoader;
-import movement.BackForthMovement;
 import movement.TargetedMovement;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
-import com.golden.gamedev.object.CollisionManager;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
-import com.golden.gamedev.util.ImageUtil;
 
 
 public class TopDownDemo extends Game {

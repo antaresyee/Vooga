@@ -4,10 +4,10 @@ package gameObjects;
 
 public class Barrier extends GameObject {
 	
-    public Barrier(double x, double y, String path){
+    public Barrier(double x, double y, String imgPath){
         myX = x;
         myY = y;
-        myImgPath = path;
+        myImgPath = imgPath;
         myName = "Barrier";
         setLocation(myX,myY);
     }
@@ -20,18 +20,27 @@ public class Barrier extends GameObject {
 
     public static class BarrierFactory extends GameObjectFactory{
     	
-    	public BarrierFactory(double x, double y, String path){
+    	public BarrierFactory(double x, double y, String imgPath){
     	    myName = "Barrier";
     	    myX = x;
             myY = y;
-            super.path = path;
+            super.myImgPath = imgPath;
     	}
 
         @Override
         public GameObject makeObject() {
-            return new Barrier(myX, myY, path);
+            return new Barrier(myX, myY, myImgPath);
         }
 
 
+    }
+
+
+    @Override
+    public GameObject makeGameObject(GameObjectData god) {
+        Double x = god.getX();
+        Double y = god.getY();
+        String imgPath = god.getImgPath();
+        return new Barrier(x, y, imgPath);
     }
 }

@@ -6,10 +6,10 @@ public class Enemy extends GameObject {
 	
 	private Movement myMovementType;
 	
-	public Enemy(double x, double y, String path, Movement m){
+	public Enemy(double x, double y, String imgPath, Movement m){
 		myX = x;
         myY = y;
-        myImgPath = path;
+        myImgPath = imgPath;
         myMovementType = m;
         myName = "Enemy";
         setLocation(myX,myY);
@@ -32,21 +32,30 @@ public class Enemy extends GameObject {
 		
 		Movement myMovementType;
 
-		public EnemyFactory(double x, double y, String path, Movement m){
+		public EnemyFactory(double x, double y, String imgPath, Movement m){
 			myName = "Enemy";
     	    myX = x;
             myY = y;
             myMovementType = m;
-            super.path = path;
+            super.myImgPath = imgPath;
 		}
 		
 		@Override
 		public GameObject makeObject() {
-			return new Enemy(myX, myY, path, myMovementType);
+			return new Enemy(myX, myY, myImgPath, myMovementType);
 		}
 
 
 		
 	}
+
+	@Override
+    public GameObject makeGameObject(GameObjectData god) {
+        Double x = god.getX();
+        Double y = god.getY();
+        String imgPath = god.getImgPath();
+        Movement movement = god.getMovement();
+        return new Enemy(x, y, imgPath, movement);
+    }
 
 }
