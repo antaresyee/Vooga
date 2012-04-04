@@ -24,6 +24,23 @@ import com.google.gson.reflect.TypeToken;
 
 public class LevelSaver {
     public static void save(List<GameObjectFactory> objectsToSave, String levelName) throws IOException {
+//        Gson gson = new Gson();
+//        
+//        //write objects to file
+//        FileWriter fw = new FileWriter(levelName + ".json");
+//        BufferedWriter bw = new BufferedWriter(fw);
+//        for (GameObjectFactory object : objectsToSave) {
+//            String gofTypeString = object.getMyName();
+//            String jsonGofTypeString = gson.toJson(gofTypeString);
+//            String jsonGof = gson.toJson(object);
+//            
+//            bw.write(jsonGofTypeString);
+//            bw.write("\n");
+//            bw.write(jsonGof);
+//            bw.write("\n");
+//        }
+//        bw.close();
+        
         Gson gson = new Gson();
         
         //write objects to file

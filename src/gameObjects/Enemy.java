@@ -1,6 +1,6 @@
 package gameObjects;
 
-import gameObjects.Movement;
+import movement.Movement;
 
 public class Enemy extends GameObject {
 	
@@ -11,7 +11,7 @@ public class Enemy extends GameObject {
         myY = y;
         myImgPath = imgPath;
         myMovementType = m;
-        myName = "Enemy";
+        myType = "Enemy";
         setLocation(myX,myY);
 	}
 
@@ -27,27 +27,7 @@ public class Enemy extends GameObject {
 	public void update(){
 		move();
 	}
-	
-	public static class EnemyFactory extends GameObjectFactory{
-		
-		Movement myMovementType;
 
-		public EnemyFactory(double x, double y, String imgPath, Movement m){
-			myName = "Enemy";
-    	    myX = x;
-            myY = y;
-            myMovementType = m;
-            super.myImgPath = imgPath;
-		}
-		
-		@Override
-		public GameObject makeObject() {
-			return new Enemy(myX, myY, myImgPath, myMovementType);
-		}
-
-
-		
-	}
 
 	@Override
     public GameObject makeGameObject(GameObjectData god) {
@@ -56,6 +36,16 @@ public class Enemy extends GameObject {
         String imgPath = god.getImgPath();
         Movement movement = god.getMovement();
         return new Enemy(x, y, imgPath, movement);
+    }
+    
+    /**
+     * Enemy() and getFactory() must be implemented by each game object; 
+     * they are used for the factory system.
+     */
+    private Enemy() {}
+    
+    public static GameObjectFactory getFactory() {
+        return new GameObjectFactory(new Enemy());
     }
 
 }

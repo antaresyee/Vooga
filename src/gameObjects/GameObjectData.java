@@ -2,6 +2,8 @@ package gameObjects;
 
 import java.util.TreeMap;
 
+import movement.Movement;
+
 /**
  * 
  * @author antaresyee

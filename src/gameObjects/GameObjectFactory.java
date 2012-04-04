@@ -1,25 +1,19 @@
 package gameObjects;
-import java.awt.image.BufferedImage;
 
-public abstract class GameObjectFactory {
+public class GameObjectFactory {
 
-    protected String myImgPath;
-    protected double myX;
-    protected double myY;
-    protected String myName;
-
-    public abstract GameObject makeObject();
-
-    public boolean isMyObject(String name) {
-        return myName.equals(name);
-    }
-
-    public String getMyName() {
-        return myName;
+    private GameObject myGameObject;
+    
+    public GameObjectFactory(GameObject go) {
+        myGameObject = go;
     }
     
-    public String toString() {
-        return myName + " " + myX + " " + myY;
+    public boolean isMyObject(GameObjectData god) {
+        return myGameObject.isMyObject(god);
+    }
+
+    public GameObject makeGameObject(GameObjectData god) {
+        return myGameObject.makeGameObject(god);
     }
 
 }

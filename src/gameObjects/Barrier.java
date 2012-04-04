@@ -2,13 +2,13 @@ package gameObjects;
 
 
 
-public class Barrier extends GameObject {
+public class Barrier extends GameObject{
 	
     public Barrier(double x, double y, String imgPath){
         myX = x;
         myY = y;
         myImgPath = imgPath;
-        myName = "Barrier";
+        myType = "Barrier";
         setLocation(myX,myY);
     }
     
@@ -17,25 +17,6 @@ public class Barrier extends GameObject {
     	return myImgPath;
     }
     
-
-    public static class BarrierFactory extends GameObjectFactory{
-    	
-    	public BarrierFactory(double x, double y, String imgPath){
-    	    myName = "Barrier";
-    	    myX = x;
-            myY = y;
-            super.myImgPath = imgPath;
-    	}
-
-        @Override
-        public GameObject makeObject() {
-            return new Barrier(myX, myY, myImgPath);
-        }
-
-
-    }
-
-
     @Override
     public GameObject makeGameObject(GameObjectData god) {
         Double x = god.getX();
@@ -43,4 +24,15 @@ public class Barrier extends GameObject {
         String imgPath = god.getImgPath();
         return new Barrier(x, y, imgPath);
     }
+    
+    /**
+     * Barrier() and getFactory() must be implemented by each game object; 
+     * they are used for the factory system.
+     */
+    private Barrier() {}
+    
+    public static GameObjectFactory getFactory() {
+        return new GameObjectFactory(new Barrier());
+    }
+    
 }

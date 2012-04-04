@@ -3,12 +3,14 @@ import gameObjects.Barrier;
 
 
 import gameObjects.Enemy;
+import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import levelLoadSave.LevelLoader;
@@ -49,27 +51,8 @@ public class TopDownDemo extends Game {
 	    myPlayfield.addGroup(myEnemyGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
-	    //load level
-		LevelLoader l = new LevelLoader();
-		String player = "Player";
-		String barrier = "Barrier";
-		try {
-			List<GameObjectFactory> factories = l.load("savedLevel.json");
-			for (GameObjectFactory f : factories){
-				if (f.isMyObject(player)){
-					myPlayer = (Player) f.makeObject();
-					myPlayer.setImage(getImage(myPlayer.getImgPath()));
-					myPlayerGroup.add(myPlayer);
-				}
-				if (f.isMyObject(barrier)){
-					Barrier b = (Barrier) f.makeObject();
-					b.setImage(getImage(b.getImgPath()));
-					myBarrierGroup.add(b);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	    loadLevelData();
+	    
 //this is for testing enemy movement
 		Enemy e = new Enemy (400, 400, "resources/enemy.png", new TargetedMovement(new Point(800, 600)));
 		e.setImage(getImage(e.getImgPath()));
@@ -105,6 +88,64 @@ public class TopDownDemo extends Game {
 		if (myPlayer.getY() < 600-myPlayer.getHeight()-3 && keyDown(java.awt.event.KeyEvent.VK_S)){
 			myPlayer.moveY(3);
 		}
+	}
+	
+	public void loadLevelData() {
+//	    //THIS IS IDEAL, BUT CAN'T BECAUSE MUST SET myPlayer, setImage(), etc.
+//	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
+//	    allFactories.add(Player.getFactory());
+//	    allFactories.add(Barrier.getFactory());
+//	    allFactories.add(Enemy.getFactory());
+//	    
+//        //load level
+//        LevelLoader l = new LevelLoader();
+//        try {
+//            List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+//            for (GameObjectData god : gameObjectDatas) {
+//                for (GameObjectFactory factory : allFactories) {
+//                    if (factory.isMyObject(god)) {
+//                        factory.makeGameObject(god);
+//                        break;
+//                    }
+//                }
+//            }
+//            
+//        }
+//        catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+	    
+      //load level
+      LevelLoader l = new LevelLoader();
+      try {
+          List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+          for (GameObjectData god : gameObjectDatas) {
+              
+              GameObjectFactory playerFactory = Player.getFactory();
+              GameObjectFactory barrierFactory = Barrier.getFactory();
+              GameObjectFactory enemyFactory = Barrier.getFactory();
+              
+              if (playerFactory.isMyObject(god)) {
+                  myPlayer = (Player) playerFactory.makeGameObject(god);
+                  myPlayer.setImage(getImage(myPlayer.getImgPath()));
+                  myPlayerGroup.add(myPlayer);
+              }
+              if (barrierFactory.isMyObject(god)) {
+                  Barrier b = (Barrier) barrierFactory.makeGameObject(god);
+                  b.setImage(getImage(b.getImgPath()));
+                  myBarrierGroup.add(b);
+              }
+              if (enemyFactory.isMyObject(god)) {
+                  Enemy e = (Enemy) enemyFactory.makeGameObject(god);
+                  e.setImage(getImage(e.getImgPath()));
+                  myEnemyGroup.add(e);
+              }
+          }
+          
+      }
+      catch (FileNotFoundException e) {
+          e.printStackTrace();
+      }
 	}
 
 }
