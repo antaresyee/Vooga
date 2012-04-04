@@ -1,8 +1,6 @@
 package tests;
 
-import gameObjects.Barrier;
-import gameObjects.GameObjectFactory;
-import gameObjects.Player;
+import gameObjects.GameObjectData;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,25 +18,38 @@ import static org.junit.Assert.*;
 public class LevelLoadSaveTest {
     
     LevelLoader myLevelLoader;
-    List<GameObjectFactory> myObjectsToSave;
+    List<GameObjectData> myObjectsToSave;
     
     @Before
     public void setUp() throws Exception {
         myLevelLoader = new LevelLoader();
+        myObjectsToSave = new ArrayList<GameObjectData>();
         
-        myObjectsToSave = new ArrayList<GameObjectFactory>();
-        myObjectsToSave.add(new Barrier.BarrierFactory(1.5, 2.0, null));
-        myObjectsToSave.add(new Player.PlayerFactory(3.0, 2.0, null));
+        GameObjectData barrierData = new GameObjectData("barrier");
+        barrierData.setX(1.5);
+        barrierData.setY(2.0);
+        myObjectsToSave.add(barrierData);
         
+        GameObjectData playerData = new GameObjectData("player");
+        playerData.setX(3.5);
+        playerData.setY(4.0);
+        myObjectsToSave.add(playerData);
     }
     
     @Test
     public void testLoadSave() throws IOException {
         LevelSaver.save(myObjectsToSave, "testLevel");
-        List<GameObjectFactory> parsedObjects = myLevelLoader.load("testLevel.json");
+        List<GameObjectData> parsedObjects = myLevelLoader.load("testLevel.json");
         
-        assertEquals(parsedObjects.get(0), new Barrier.BarrierFactory(1.5, 2.0, null));
-        assertEquals(parsedObjects.get(1), new Player.PlayerFactory(3.0, 2.0, null));
+        GameObjectData barrierData = new GameObjectData("barrier");
+        barrierData.setX(1.5);
+        barrierData.setY(2.0);
+        assertEquals(parsedObjects.get(0), barrierData);
+        
+        GameObjectData playerData = new GameObjectData("player");
+        playerData.setX(3.5);
+        playerData.setY(4.0);
+        assertEquals(parsedObjects.get(1), playerData);
         
     }
     

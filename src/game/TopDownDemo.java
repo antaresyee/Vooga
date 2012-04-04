@@ -91,7 +91,7 @@ public class TopDownDemo extends Game {
 	}
 	
 	public void loadLevelData() {
-//	    //THIS IS IDEAL, BUT CAN'T BECAUSE MUST SET myPlayer, setImage(), etc.
+//	    //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET myPlayer, setImage(), etc.
 //	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
 //	    allFactories.add(Player.getFactory());
 //	    allFactories.add(Barrier.getFactory());

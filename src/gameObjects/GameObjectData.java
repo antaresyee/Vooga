@@ -14,30 +14,27 @@ public class GameObjectData {
     
     private TreeMap<String, String> myData;
     
-    public GameObjectData() {
+    public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
+        myData.put("type", type);
     }
     
     
     //SETTERS
-    public void setType(String type) {
-        myData.put("type", type);
+    public void setX(Double x) {
+        myData.put("x", x.toString());
     }
     
-    public void setX(String x) {
-        myData.put("x", x);
-    }
-    
-    public void setY(String y) {
-        myData.put("y", y);
+    public void setY(Double y) {
+        myData.put("y", y.toString());
     }
     
     public void setImgPath(String imgPath) {
         myData.put("imgPath", imgPath);
     }
     
-    public void setMovement(String movement) {
-        myData.put("movement", movement);
+    public void setMovement(Movement movement) {
+        myData.put("movement", movement.toString());
     }
     
     
@@ -60,6 +57,20 @@ public class GameObjectData {
     
     public Movement getMovement() {
         return null;
+    }
+    
+    //JAVA OVERRIDES
+    public String toString() {
+        return myData.get("type") + " " + myData.get("imgPath") + " " + myData.get("x") + " " + myData.get("y");
+    }
+    
+    public boolean equals(GameObjectData other) {
+        if (! myData.equals(other.myData)) return false;
+        return true;
+    }
+    
+    public int hashCode() {
+        return myData.hashCode();
     }
     
 }
