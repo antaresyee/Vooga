@@ -54,7 +54,7 @@ public class TopDownDemo extends Game {
 	    loadLevelData();
 	    
 //this is for testing enemy movement
-		Enemy e = new Enemy (400, 400, "resources/enemy.png", new TargetedMovement(new Point(800, 600)));
+		Enemy e = new Enemy (400, 400, "resources/enemy.png", new TargetedMovement(myPlayer, .2));
 		e.setImage(getImage(e.getImgPath()));
 		myEnemy = e;
 		myEnemyGroup.add(myEnemy);
