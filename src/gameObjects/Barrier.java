@@ -29,7 +29,9 @@ public class Barrier extends GameObject{
      * Barrier() and getFactory() must be implemented by each game object; 
      * they are used for the factory system.
      */
-    private Barrier() {}
+    private Barrier() {
+        myType = "barrier";
+    }
     
     public static GameObjectFactory getFactory() {
         return new GameObjectFactory(new Barrier());

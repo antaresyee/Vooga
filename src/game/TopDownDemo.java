@@ -118,12 +118,12 @@ public class TopDownDemo extends Game {
       //load level
       LevelLoader l = new LevelLoader();
       try {
-          List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+          List<GameObjectData> gameObjectDatas = l.load("testLevel.json");
           for (GameObjectData god : gameObjectDatas) {
               
               GameObjectFactory playerFactory = Player.getFactory();
               GameObjectFactory barrierFactory = Barrier.getFactory();
-              GameObjectFactory enemyFactory = Barrier.getFactory();
+              GameObjectFactory enemyFactory = Enemy.getFactory();
               
               if (playerFactory.isMyObject(god)) {
                   myPlayer = (Player) playerFactory.makeGameObject(god);

@@ -42,7 +42,9 @@ public class Enemy extends GameObject {
      * Enemy() and getFactory() must be implemented by each game object; 
      * they are used for the factory system.
      */
-    private Enemy() {}
+    private Enemy() {
+        myType = "Enemy";
+    }
     
     public static GameObjectFactory getFactory() {
         return new GameObjectFactory(new Enemy());

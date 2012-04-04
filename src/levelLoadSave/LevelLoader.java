@@ -51,11 +51,13 @@ public class LevelLoader {
         GameObjectData barrierData = new GameObjectData("barrier");
         barrierData.setX(1.5);
         barrierData.setY(2.0);
+        barrierData.setImgPath("./resources/triangle.png");
         objectsToSave.add(barrierData);
         
         GameObjectData playerData = new GameObjectData("player");
         playerData.setX(3.5);
         playerData.setY(4.0);
+        playerData.setImgPath("./resources/enemy.png");
         objectsToSave.add(playerData);
        
         LevelSaver.save(objectsToSave, "testLevel");

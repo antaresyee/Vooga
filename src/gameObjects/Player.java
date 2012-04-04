@@ -31,7 +31,9 @@ public class Player extends GameObject {
      * Player() and getFactory() must be implemented by each game object; 
      * they are used for the factory system.
      */
-    private Player() {}
+    private Player() {
+        myType = "player";
+    }
     
     public static GameObjectFactory getFactory() {
         return new GameObjectFactory(new Player());
