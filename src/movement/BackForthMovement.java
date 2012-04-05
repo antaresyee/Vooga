@@ -4,10 +4,10 @@ import gameObjects.GameObject;
 
 public class BackForthMovement extends Movement {
 
-	int leftBound;
-	int rightBound;
+	private double leftBound;
+	private double rightBound;
 	
-	public BackForthMovement(int l, int r, double s){
+	public BackForthMovement(double l, double r, double s){
 		leftBound = l;
 		rightBound = r;
 		speed = s;
@@ -15,11 +15,11 @@ public class BackForthMovement extends Movement {
 
 	@Override
 	public void move(GameObject o) {
-		System.out.println(o.getX());
+		//System.out.println(o.getX());
 		if (o.getX() >= rightBound){
 			o.setHorizontalSpeed(-speed);
 		}
-		else if (o.getX() < leftBound){
+		else if (o.getX() <= leftBound){
 			o.setHorizontalSpeed(speed);
 		}
 	}
