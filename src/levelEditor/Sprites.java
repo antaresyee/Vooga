@@ -32,15 +32,16 @@ public abstract class Sprites {
 	
 	public abstract int newID();
 	
-	public abstract GameObjectData makeGameObject(Sprite spr);
 	
 	public abstract static class Factory {
 
 		public abstract boolean isType(int id);
 		
 		public abstract Sprites makeSprite();
-			
+		
+		public abstract GameObjectData makeGameObject(Sprite spr);
 
+		public abstract String getID();
 	}
 
 }

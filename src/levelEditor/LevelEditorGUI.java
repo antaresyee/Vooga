@@ -5,6 +5,7 @@ import gameObjects.GameObjectData;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.geom.Line2D;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -34,6 +35,8 @@ public class LevelEditorGUI extends Game {
 	private int barrierX = 130;
 	private int enemyX = 230;
 	private int powerupX = 330;
+	private int counter = 0;
+	private int totalSprites=4;
 
 	@Override
 	public void initResources() {
@@ -100,7 +103,7 @@ public class LevelEditorGUI extends Game {
 			current.moveY(-current.getHeight() / 2);
 			if (click() && time != count) {
 				String input = yesOrNo();
-				
+
 				ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
 				factory.add(new EnemySprite.Factory());
 				factory.add(new BarrierSprite.Factory());
@@ -109,13 +112,13 @@ public class LevelEditorGUI extends Game {
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						Sprites newSpr = check.makeSprite();
-
 						if (input.equals("Yes")) {
 							Sprite new1 = new Sprite(
 									getImage(newSpr.getPath()),
 									newSpr.getStartX(), newSpr.getStartY());
 							new1.setID(newSpr.newID());
 							ALL.add(new1);
+							totalSprites++;
 							list.add(new1);
 						} else {
 							current.setLocation(newSpr.getStartX(),
@@ -129,26 +132,38 @@ public class LevelEditorGUI extends Game {
 			}
 		}
 		count++;
+		if (keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S)) {
+			Sprite[] allSprite = new Sprite[ALL.getSize()];
+			allSprite = ALL.getSprites();
+			List<GameObjectData> level = make(allSprite);
+			for (GameObjectData f : level) {
+				System.out.print(f.getImgPath());
+				System.out.print(" ");
+				System.out.print(f.getX());
+				System.out.print(" ");
+				System.out.println(f.getY());
+			}
+		}
 
 	}
 
 	private String yesOrNo() {
 		Object[] options = { "Yes", "No" };
 
-		String input = (String) JOptionPane.showInputDialog(
-				new JFrame(),
+		String input = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Would you like to place the Game Object here?",
-				"Level Editor'", JOptionPane.PLAIN_MESSAGE, null,
-				options, options[0]);
+				"Level Editor'", JOptionPane.PLAIN_MESSAGE, null, options,
+				options[0]);
 		return input;
 	}
-//	private GameObjectData makeGameObject(Sprite spr){
-//		GameObjectData temp = new GameObjectData("hey");
-//		temp.setX(spr.getX());
-//		temp.setY(spr.getY());
-//		temp.setImgPath("resources/duke.png");
-//
-//	}
+
+	// private GameObjectData makeGameObject(Sprite spr){
+	// GameObjectData temp = new GameObjectData("hey");
+	// temp.setX(spr.getX());
+	// temp.setY(spr.getY());
+	// temp.setImgPath("resources/duke.png");
+	//
+	// }
 	private Sprite clicked() {
 		Sprite temp = null;
 
@@ -159,6 +174,33 @@ public class LevelEditorGUI extends Game {
 			}
 		}
 		return temp;
+	}
+
+	private List<GameObjectData> make(Sprite[] sprites) {
+		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
+		ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
+		factory.add(new EnemySprite.Factory());
+		factory.add(new BarrierSprite.Factory());
+		factory.add(new PowerUpSprite.Factory());
+		factory.add(new PlayerSprite.Factory());
+		for (Sprite elem : sprites) {
+			if (counter < totalSprites) {
+				for (Sprites.Factory check : factory) {
+
+					if (check.isType(elem.getID()) && elem.getY() < 580) {
+
+						GameObjectData god = new GameObjectData(check.getID());
+						god = check.makeGameObject(elem);
+						temp.add(god);
+
+					}
+				}
+				counter++;
+			} else
+				break;
+		}
+		return temp;
+
 	}
 
 	public static void main(String[] args) throws MalformedURLException,

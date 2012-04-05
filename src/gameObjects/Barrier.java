@@ -30,7 +30,7 @@ public class Barrier extends GameObject{
      * they are used for the factory system.
      */
     private Barrier() {
-        myType = "barrier";
+        myType = "Barrier";
     }
     
     public static GameObjectFactory getFactory() {

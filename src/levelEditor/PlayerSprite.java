@@ -23,17 +23,13 @@ public class PlayerSprite extends Sprites {
 		playerCount++;
 		return playerCount;
 	}
-	@Override
-	public GameObjectData makeGameObject(Sprite spr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public static class Factory extends Sprites.Factory{
         
 		private final String imagePath = "resources/ship.png";
 		private final int startX = 30;
-		private final int startY = 629;
-		
+		private final int startY = 629;	
+		private final String myType = "Player";
 		@Override
 		public boolean isType(int id) {
 			return id>3000;
@@ -45,7 +41,21 @@ public class PlayerSprite extends Sprites {
 			return new PlayerSprite(imagePath, startX, startY);
 		}
 
+	
 
+		public GameObjectData makeGameObject(Sprite spr) {
+			GameObjectData god = new GameObjectData(myType);
+			god.setX(spr.getX());
+			god.setY(spr.getY());
+			god.setImgPath(imagePath);
+			return god;
+		}
+
+		@Override
+		public String getID() {
+			// TODO Auto-generated method stub
+			return myType;
+		}
 
 
 		
