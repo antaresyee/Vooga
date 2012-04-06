@@ -1,5 +1,6 @@
 package levelEditor;
 
+import innerGameGUI.TabGUIExample;
 import gameObjects.GameObjectData;
 
 import com.golden.gamedev.object.Sprite;
@@ -15,7 +16,6 @@ public class PlayerSprite extends Sprites {
 
 	@Override
 	public void askQuestions() {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
@@ -23,16 +23,13 @@ public class PlayerSprite extends Sprites {
 		playerCount++;
 		return playerCount;
 	}
-	@Override
-	public GameObjectData makeGameObject(Sprite spr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public static class Factory extends Sprites.Factory{
         
 		private final String imagePath = "resources/ship.png";
 		private final int startX = 30;
-		private final int startY = 629;
+		private final int startY = 629;	
+		private final String myType = "Player";
 		
 		@Override
 		public boolean isType(int id) {
@@ -42,10 +39,26 @@ public class PlayerSprite extends Sprites {
 		@Override
 		public Sprites makeSprite() {
 			// TODO Auto-generated method stub
-			return new PlayerSprite(imagePath, startX, startY);
+			
+			return new PlayerSprite(imagePath, startX, startY);			
+			
 		}
 
+	
 
+		public GameObjectData makeGameObject(Sprite spr) {
+			GameObjectData god = new GameObjectData(myType);
+			god.setX(spr.getX());
+			god.setY(spr.getY());
+			god.setImgPath(imagePath);
+			return god;
+		}
+
+		@Override
+		public String getType() {
+			// TODO Auto-generated method stub
+			return myType;
+		}
 
 
 		
