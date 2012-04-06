@@ -41,7 +41,7 @@ public abstract class Sprites {
 		
 		public abstract GameObjectData makeGameObject(Sprite spr);
 
-		public abstract String getID();
+		public abstract String getType();
 	}
 
 }
