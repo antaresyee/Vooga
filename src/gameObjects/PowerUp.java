@@ -1,14 +1,13 @@
 package gameObjects;
 
 
-
-public class Barrier extends GameObject{
+public class PowerUp extends GameObject{
 	
-    public Barrier(double x, double y, String imgPath){
+    public PowerUp(double x, double y, String imgPath){
         myX = x;
         myY = y;
         myImgPath = imgPath;
-        myType = "Barrier";
+        myType = "PowerUp";
         setLocation(myX,myY);
     }
     
@@ -29,12 +28,12 @@ public class Barrier extends GameObject{
      * Barrier() and getFactory() must be implemented by each game object; 
      * they are used for the factory system.
      */
-    private Barrier() {
-        myType = "Barrier";
+    private PowerUp() {
+        myType = "PowerUp";
     }
     
     public static GameObjectFactory getFactory() {
-        return new GameObjectFactory(new Barrier());
+        return new GameObjectFactory(new PowerUp());
     }
     
 }

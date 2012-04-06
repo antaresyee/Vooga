@@ -24,17 +24,14 @@ public class PowerUpSprite extends Sprites {
 		powerUpCount++;
 		return powerUpCount;
 	}
-	@Override
-	public GameObjectData makeGameObject(Sprite spr) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 	public static class Factory extends Sprites.Factory{
         
 		private final String imagePath = "resources/powerup.png";
 		private final int startX = 330;
 		private final int startY = 629;
-		
+		private final String myType = "PowerUp";
+
 		@Override
 		public boolean isType(int id) {
 			return 2000<id &&id<3001;
@@ -46,7 +43,20 @@ public class PowerUpSprite extends Sprites {
 			return new PowerUpSprite(imagePath, startX, startY);
 		}
 
+		@Override
+		public GameObjectData makeGameObject(Sprite spr) {
+			GameObjectData god = new GameObjectData(myType);
+			god.setX(spr.getX());
+			god.setY(spr.getY());
+			god.setImgPath(imagePath);
+			return god;
+		}
 
+		@Override
+		public String getID() {
+			// TODO Auto-generated method stub
+			return myType;
+		}
 
 
 		
