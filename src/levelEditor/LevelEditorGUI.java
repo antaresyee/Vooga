@@ -44,6 +44,7 @@ public class LevelEditorGUI extends Game {
 	private int powerupX = 330;
 	private String powerupImgPath = "resources/powerup.png";
 	
+	private boolean bool =true;
 	private int counter = 0;
 	private int totalSprites=4;
 	public List<GameObjectData> level;
@@ -115,10 +116,12 @@ public class LevelEditorGUI extends Game {
 				factory.add(new EnemySprite.Factory());
 				factory.add(new BarrierSprite.Factory());
 				factory.add(new PowerUpSprite.Factory());
+				factory.add(new PlayerSprite.Factory());
 
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						Sprites newSpr = check.makeSprite();
+						if (check.getType().equals("Player")) break;
 						if (input.equals("Yes")) {
 							Sprite new1 = new Sprite(
 									getImage(newSpr.getPath()),
@@ -189,7 +192,7 @@ public class LevelEditorGUI extends Game {
 
 					if (check.isType(elem.getID()) && elem.getY() < 580) {
 
-						GameObjectData god = new GameObjectData(check.getID());
+						GameObjectData god = new GameObjectData(check.getType());
 						god = check.makeGameObject(elem);
 						temp.add(god);
 

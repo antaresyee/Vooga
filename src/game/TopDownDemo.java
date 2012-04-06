@@ -33,6 +33,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
+	private SpriteGroup myProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
 	
@@ -45,6 +46,7 @@ public class TopDownDemo extends Game {
 	    myBarrierGroup = new SpriteGroup("barrier");
 	    myPlayerGroup = new SpriteGroup("player");
 	    myEnemyGroup = new SpriteGroup("enemy");
+	    myProjectileGroup = new SpriteGroup("projectile");
 	   
 	    //init background using the new Map class
 	    myBackImage = getImage("resources/Back2.png"); 
@@ -54,6 +56,7 @@ public class TopDownDemo extends Game {
 	    myPlayerGroup.setBackground(myBackground);
 	    myBarrierGroup.setBackground(myBackground);
 	    myEnemyGroup.setBackground(myBackground);
+	    myProjectileGroup.setBackground(myBackground);
 	    
 	    
 	    
@@ -63,6 +66,7 @@ public class TopDownDemo extends Game {
 	    myPlayfield.addGroup(myPlayerGroup);
 	    myPlayfield.addGroup(myBarrierGroup);
 	    myPlayfield.addGroup(myEnemyGroup);
+	    myPlayfield.addGroup(myProjectileGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
 	    loadLevelData();
