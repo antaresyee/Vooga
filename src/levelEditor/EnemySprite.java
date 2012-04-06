@@ -54,7 +54,7 @@ public class EnemySprite extends Sprites {
 		}
 
 		@Override
-		public String getID() {
+		public String getType() {
 			// TODO Auto-generated method stub
 			return myType;
 		}

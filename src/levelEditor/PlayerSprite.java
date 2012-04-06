@@ -1,5 +1,6 @@
 package levelEditor;
 
+import innerGameGUI.TabGUIExample;
 import gameObjects.GameObjectData;
 
 import com.golden.gamedev.object.Sprite;
@@ -15,7 +16,6 @@ public class PlayerSprite extends Sprites {
 
 	@Override
 	public void askQuestions() {
-		// TODO Auto-generated method stub
 		
 	}
 	@Override
@@ -30,6 +30,7 @@ public class PlayerSprite extends Sprites {
 		private final int startX = 30;
 		private final int startY = 629;	
 		private final String myType = "Player";
+		
 		@Override
 		public boolean isType(int id) {
 			return id>3000;
@@ -38,7 +39,9 @@ public class PlayerSprite extends Sprites {
 		@Override
 		public Sprites makeSprite() {
 			// TODO Auto-generated method stub
-			return new PlayerSprite(imagePath, startX, startY);
+			
+			return new PlayerSprite(imagePath, startX, startY);			
+			
 		}
 
 	
@@ -52,7 +55,7 @@ public class PlayerSprite extends Sprites {
 		}
 
 		@Override
-		public String getID() {
+		public String getType() {
 			// TODO Auto-generated method stub
 			return myType;
 		}
