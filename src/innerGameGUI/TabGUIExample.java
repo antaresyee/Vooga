@@ -12,7 +12,8 @@ import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 
 public class TabGUIExample extends Game {
-	private TabGUI tab1;
+	private TabGUI tab1, tab2;
+	
 	
 	@Override
 	public void initResources() {
@@ -24,21 +25,33 @@ public class TabGUIExample extends Game {
 			p.setImage(getImage("resources/ship" + i + ".png"));
 			gob.add(p);
 		}
-		
 		tab1 = new TabGUI(this, gob, "ships", 0, 0);
+		
+		List<GameObject> gob2 = new ArrayList<GameObject>();
+		Player p2 = new Player(0, 0, "");
+		p2.setImage(getImage("resources/Black.png"));
+		gob2.add(p2);
+		
+		Player p3 = new Player(0, 0, "");
+		p3.setImage(getImage("resources/shieldbubble.jpg"));
+		gob2.add(p3);
+		
+		tab2 = new TabGUI(this, gob2, "weapons", 110, 0);
+		
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		// TODO Auto-generated method stub
 		tab1.render(pen);
+		tab2.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		// TODO Auto-generated method stub
 		tab1.update(elapsedTime);
-		
+		tab2.update(elapsedTime);
 	}
 	
 	public static void main(String[] arg0)
