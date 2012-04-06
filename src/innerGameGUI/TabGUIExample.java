@@ -18,6 +18,7 @@ public class TabGUIExample extends Game {
 	@Override
 	public void initResources() {
 		// TODO Auto-generated method stub
+		List<TabGUI> tg = new ArrayList<TabGUI>();
 		List<GameObject> gob = new ArrayList<GameObject>();
 		for(int i = 1; i < 9; i++)
 		{
@@ -25,7 +26,7 @@ public class TabGUIExample extends Game {
 			p.setImage(getImage("resources/ship" + i + ".png"));
 			gob.add(p);
 		}
-		tab1 = new TabGUI(this, gob, "ships", 0, 0);
+		tab1 = new TabGUI(this, gob, "ships", tg, 0, 0);
 		
 		List<GameObject> gob2 = new ArrayList<GameObject>();
 		Player p2 = new Player(0, 0, "");
@@ -36,15 +37,20 @@ public class TabGUIExample extends Game {
 		p3.setImage(getImage("resources/shieldbubble.jpg"));
 		gob2.add(p3);
 		
-		tab2 = new TabGUI(this, gob2, "weapons", 110, 0);
+		tab2 = new TabGUI(this, gob2, "weapons", tg, tab1.getX() + tab1.getWidth(), tab1.getY());
 		
+		tg.add(tab1);
+		tg.add(tab2);
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		// TODO Auto-generated method stub
+		
 		tab1.render(pen);
 		tab2.render(pen);
+
+		
 	}
 
 	@Override

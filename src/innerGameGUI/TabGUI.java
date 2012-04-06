@@ -42,8 +42,10 @@ public class TabGUI {
 	
 	private boolean isClicked;
 	private GameObject myCurrentObject;
+	
+	private List<TabGUI> myNeighbors;
 
-	public TabGUI(Game game, List<GameObject> gos, String name, int x, int y) {
+	public TabGUI(Game game, List<GameObject> gos, String name, List<TabGUI> neighbors, int x, int y) {
 		myGame = game;
 		myTabname = name;
 
@@ -55,6 +57,8 @@ public class TabGUI {
 				Color.ORANGE);
 		isClicked = false;
 
+		myNeighbors = neighbors;
+		
 		myObjects = gos;
 		if(gos != null)
 		{
@@ -94,14 +98,18 @@ public class TabGUI {
 				&& myGame.getMouseX() < myX + MY_TAB_WIDTH
 				&& myGame.getMouseY() > myY
 				&& myGame.getMouseY() < myY + MY_TAB_HEIGHT) {
+			for(TabGUI tg : myNeighbors){
+				tg.resetIsClicked();
+			}
 			isClicked = true;
+			
 		}
-
-		if (myGame.keyPressed(KeyEvent.VK_RIGHT) && myObjects != null) {
+		
+		if (myGame.keyPressed(KeyEvent.VK_RIGHT) && myObjects != null && isClicked) {
 			shiftRight();
 		}
 		
-		if (myGame.keyPressed(KeyEvent.VK_LEFT) && myObjects != null) {
+		if (myGame.keyPressed(KeyEvent.VK_LEFT) && myObjects != null && isClicked) {
 			shiftLeft();
 		}
 		
@@ -166,5 +174,9 @@ public class TabGUI {
 
 	public int getHeight() {
 		return MY_TAB_HEIGHT;
+	}
+
+	public void resetIsClicked(){
+		isClicked = false;
 	}
 }
