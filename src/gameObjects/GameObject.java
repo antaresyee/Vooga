@@ -15,5 +15,9 @@ public abstract class GameObject extends Sprite {
     public boolean isMyObject(GameObjectData god) {
         return myType.equals(god.getType());
     }
+    
+    public String getType(){
+    	return myType;
+    }
 
 }
