@@ -1,15 +1,3 @@
-/*
- * This is part one of innerGame GUI, tab for all the innerGameGUI including purchasing screen
- * (selecting ships or weapons) or load save current game, as well as Boss editor where each tab
- * represents different stages.
- * 
- * More features to be implemented. For a sample, run TabGUIExample.java.
- * 
- * Author: Kaitlyn F.
- * 
- */
-
-
 package innerGameGUI;
 
 import java.awt.Color;
@@ -18,15 +6,28 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.font.SystemFont;
 import com.golden.gamedev.util.ImageUtil;
 
 import gameObjects.GameObject;
 
+/**
+ * This is part one of innerGame GUI, tab for all the innerGameGUI including purchasing screen
+ * (selecting ships or weapons) or load save current game, as well as Boss editor where each tab
+ * represents different stages.
+ * 
+ * More features to be implemented. For a sample, run TabGUIExample.java.
+ * 
+ * @author Kaitlyn F.
+ * 
+ */
 public class TabGUI {
 	private Game myGame;
-	private String myTabname; // the name of each tab
+	private String myTabname; 
 	private List<GameObject> myObjects;
 	private SystemFont myFont;
 	private int myX, myY, myWindowWidth, myWindowHeight;
@@ -41,8 +42,10 @@ public class TabGUI {
 	
 	private boolean isClicked;
 	private GameObject myCurrentObject;
+	
+	private List<TabGUI> myNeighbors;
 
-	public TabGUI(Game game, List<GameObject> gos, String name, int x, int y) {
+	public TabGUI(Game game, List<GameObject> gos, String name, List<TabGUI> neighbors, int x, int y) {
 		myGame = game;
 		myTabname = name;
 
@@ -54,6 +57,8 @@ public class TabGUI {
 				Color.ORANGE);
 		isClicked = false;
 
+		myNeighbors = neighbors;
+		
 		myObjects = gos;
 		if(gos != null)
 		{
@@ -93,15 +98,33 @@ public class TabGUI {
 				&& myGame.getMouseX() < myX + MY_TAB_WIDTH
 				&& myGame.getMouseY() > myY
 				&& myGame.getMouseY() < myY + MY_TAB_HEIGHT) {
+			for(TabGUI tg : myNeighbors){
+				tg.resetIsClicked();
+			}
 			isClicked = true;
+			
 		}
-
-		if (myGame.keyPressed(KeyEvent.VK_RIGHT)) {
+		
+		if (myGame.keyPressed(KeyEvent.VK_RIGHT) && myObjects != null && isClicked) {
 			shiftRight();
 		}
 		
-		if (myGame.keyPressed(KeyEvent.VK_LEFT)) {
+		if (myGame.keyPressed(KeyEvent.VK_LEFT) && myObjects != null && isClicked) {
 			shiftLeft();
+		}
+		
+		if (myGame.keyPressed(KeyEvent.VK_ENTER)){
+			//TODO pass to myPlayer
+			String[] options = {"yes","no"};   
+			int option = JOptionPane.showOptionDialog(new JFrame(), "Buy this one?", "Welcome to the shop!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			
+			if(option == 0)
+			{
+				JOptionPane.showMessageDialog(new JFrame(), "Thanks for choosing me! Further steps to be implemented");
+			} else {
+				JOptionPane.showMessageDialog(new JFrame(), "Ohhh...Why not me? Further steps to be implemented");
+			}
+			
 		}
 
 	}
@@ -151,5 +174,9 @@ public class TabGUI {
 
 	public int getHeight() {
 		return MY_TAB_HEIGHT;
+	}
+
+	public void resetIsClicked(){
+		isClicked = false;
 	}
 }

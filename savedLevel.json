@@ -8,3 +8,4 @@
 {"path":"./resources/ship.png","myX":400.0,"myY":300.0,"myName":"Player","w":100,"h":100}
 "Player"
 {"path":"./resources/ship.png","myX":500.0,"myY":300.0,"myName":"Player","w":100,"h":100}
+
