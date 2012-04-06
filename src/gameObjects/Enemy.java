@@ -6,6 +6,11 @@ import states.State;
 import movement.BackForthMovement;
 import movement.Movement;
 
+/**
+ * 
+ * @author James Pagliuca
+ * 
+ */
 public class Enemy extends GameObject {
 
 	private State fullHealthState;
@@ -19,8 +24,10 @@ public class Enemy extends GameObject {
 		myImgPath = imgPath;
 		myType = "Enemy";
 		setLocation(myX, myY);
-		fullHealthState = new FullHealthState(this, new BackForthMovement(getX(), getX() + 200, .2));
-		halfHealthState = new HalfHealthState(this, new BackForthMovement(getX(), getX() + 200, 1));
+		fullHealthState = new FullHealthState(this, new BackForthMovement(
+				getX(), getX() + 200, .2));
+		halfHealthState = new HalfHealthState(this, new BackForthMovement(
+				getX(), getX() + 200, 1));
 		currentState = fullHealthState;
 		currentHealth = 500;
 	}
@@ -33,7 +40,6 @@ public class Enemy extends GameObject {
 	public void move() {
 		currentState.move();
 		currentHealth--;
-		System.out.println(currentHealth);
 	}
 
 	public void update() {

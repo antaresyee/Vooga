@@ -2,6 +2,12 @@ package movement;
 
 import gameObjects.GameObject;
 
+/**
+ * 
+ * @author James Pagliuca
+ *
+ */
+
 public class BackForthMovement extends Movement {
 
 	private double leftBound;
