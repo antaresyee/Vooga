@@ -11,7 +11,7 @@ public class Main {
     
     public static void main(String[] args) {
         GameLoader game = new GameLoader();
-        game.setup(new TopDownDemo(), new Dimension(400,700), false);
+        game.setup(new TopDownDemo(), new Dimension(400,600), false);
         game.start();
     }
     
