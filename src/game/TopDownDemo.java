@@ -9,16 +9,19 @@ import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 import levelLoadSave.LevelLoader;
+import maps.Map;
 import movement.TargetedMovement;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
+import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
@@ -30,31 +33,46 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
+	private SpriteGroup myProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
+	
+	private BufferedImage myBackImage;
+	private Map myMap; 
+	
 
 	@Override
 	public void initResources() {	    
 	    myBarrierGroup = new SpriteGroup("barrier");
 	    myPlayerGroup = new SpriteGroup("player");
 	    myEnemyGroup = new SpriteGroup("enemy");
-	    //init background
-	    myBackground = new ImageBackground(getImage("resources/black_background.jpg"));
+	    myProjectileGroup = new SpriteGroup("projectile");
+	   
+	    //init background using the new Map class
+	    myBackImage = getImage("resources/Back2.png"); 
+	    myMap = new Map(myBackImage, 400, 600); 
+	    myMap.setSpeed(10);
+	    myBackground = myMap.getMyBack(); 
 	    myPlayerGroup.setBackground(myBackground);
 	    myBarrierGroup.setBackground(myBackground);
 	    myEnemyGroup.setBackground(myBackground);
+	    myProjectileGroup.setBackground(myBackground);
+	    
+	    
+	    
 	    
 	    //init playfield
 	    myPlayfield = new PlayField(myBackground);
 	    myPlayfield.addGroup(myPlayerGroup);
 	    myPlayfield.addGroup(myBarrierGroup);
 	    myPlayfield.addGroup(myEnemyGroup);
+	    myPlayfield.addGroup(myProjectileGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
 	    loadLevelData();
 	    
 //this is for testing enemy movement
-		Enemy e = new Enemy (100, 400, "resources/enemy.png");
+		Enemy e = new Enemy (100, 2400, "resources/enemy.png");
 		e.setImage(getImage(e.getImgPath()));
 		myEnemy = e;
 		myEnemyGroup.add(myEnemy);
@@ -69,8 +87,11 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
+		myMap.moveMap(elapsedTime); 
 		playerMovement();
 		myPlayfield.update(elapsedTime);
+	
+		
 // this is for testing enemy movement
 		myEnemy.update();
 	}
@@ -128,7 +149,9 @@ public class TopDownDemo extends Game {
               if (playerFactory.isMyObject(god)) {
                   myPlayer = (Player) playerFactory.makeGameObject(god);
                   myPlayer.setImage(getImage(myPlayer.getImgPath()));
+                  //myPlayer.setSpeed(0, 20); 
                   myPlayerGroup.add(myPlayer);
+               
               }
               if (barrierFactory.isMyObject(god)) {
                   Barrier b = (Barrier) barrierFactory.makeGameObject(god);

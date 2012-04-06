@@ -65,6 +65,10 @@ public class Enemy extends GameObject {
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
+	
+	public void sustainDamage(int damage){
+		currentHealth -= damage;
+	}
 
 	@Override
 	public GameObject makeGameObject(GameObjectData god) {
