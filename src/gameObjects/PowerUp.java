@@ -21,7 +21,7 @@ public class PowerUp extends GameObject{
         Double x = god.getX();
         Double y = god.getY();
         String imgPath = god.getImgPath();
-        return new Barrier(x, y, imgPath);
+        return new PowerUp(x, y, imgPath);
     }
     
     /**
