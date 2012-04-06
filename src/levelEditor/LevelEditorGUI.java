@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Line2D;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -15,11 +16,19 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import levelLoadSave.LevelSaver;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
+
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 public class LevelEditorGUI extends Game {
 	// private SpriteGroup ENEMIES;
 	private List<Sprite> list;
@@ -110,8 +119,8 @@ public class LevelEditorGUI extends Game {
 			current.moveX(-current.getWidth() / 2);
 			current.moveY(-current.getHeight() / 2);
 			if (click() && time != count) {
-				String input = yesOrNo();
-
+				
+				//create list of Sprite Factories
 				ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
 				factory.add(new EnemySprite.Factory());
 				factory.add(new BarrierSprite.Factory());
@@ -120,17 +129,25 @@ public class LevelEditorGUI extends Game {
 
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
+						int input = yesOrNo(check.getType());
 						Sprites newSpr = check.makeSprite();
-						if (check.getType().equals("Player")) break;
-						if (input.equals("Yes")) {
+						if (check.getType().equals("Player")&&input==0) {
+							newSpr.askQuestions();
+							break;		
+						}
+						//if user is happy with location make new sprite
+						if (input==0) {
 							Sprite new1 = new Sprite(
 									getImage(newSpr.getPath()),
 									newSpr.getStartX(), newSpr.getStartY());
 							new1.setID(newSpr.newID());
+							newSpr.askQuestions();
 							ALL.add(new1);
 							totalSprites++;
 							list.add(new1);
+							
 						} else {
+							//else send him back to original location
 							current.setLocation(newSpr.getStartX(),
 									newSpr.getStartY());
 						}
@@ -142,10 +159,18 @@ public class LevelEditorGUI extends Game {
 			}
 		}
 		count++;
+		
+		//when user presses control and s at same time, the game will create a list of GameObject Data
 		if (keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S)) {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
 			level = make(allSprite);
+			try {
+				LevelSaver.save(level, "savedLevel");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			for (GameObjectData f : level) {
 				System.out.print(f.getImgPath());
 				System.out.print(" ");
@@ -157,14 +182,17 @@ public class LevelEditorGUI extends Game {
 
 	}
 
-	private String yesOrNo() {
-		Object[] options = { "Yes", "No" };
-
-		String input = (String) JOptionPane.showInputDialog(new JFrame(),
-				"Would you like to place the Game Object here?",
-				"Level Editor'", JOptionPane.PLAIN_MESSAGE, null, options,
-				options[0]);
-		return input;
+	private int yesOrNo(String type) {
+		String[] options = {"yes","no"};
+		int option = JOptionPane.showOptionDialog(new JFrame(), "Would you like to place the "+type+ " here?", "Level Editor", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+		
+//		Object[] options = { "Yes", "No" };
+//
+//		String input = (String) JOptionPane.showInputDialog(new JFrame(),
+//				"Would you like to place the Game Object here?",
+//				"Level Editor'", JOptionPane.PLAIN_MESSAGE, null, options,
+//				options[0]);
+		return option;
 	}
 
 	private Sprite clicked() {
@@ -177,6 +205,10 @@ public class LevelEditorGUI extends Game {
 			}
 		}
 		return temp;
+	}
+	
+	public List<GameObjectData> getGODList(){
+		return level;
 	}
 
 	private List<GameObjectData> make(Sprite[] sprites) {
@@ -207,7 +239,7 @@ public class LevelEditorGUI extends Game {
 	}
 
 	public static void main(String[] args) throws MalformedURLException,
-			URISyntaxException {
+			URISyntaxException, IOException {
 		GameLoader game = new GameLoader();
 		game.setup(new LevelEditorGUI(), new Dimension(400, 700), false);
 		game.start();

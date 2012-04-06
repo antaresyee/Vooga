@@ -3,7 +3,11 @@ package levelEditor;
 import gameObjects.GameObjectData;
 
 import com.golden.gamedev.object.Sprite;
-
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 public class BarrierSprite extends Sprites {
 	int barrierCount=1001;
 	private final String imagePath = "resources/black.png";

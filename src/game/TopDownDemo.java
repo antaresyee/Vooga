@@ -72,17 +72,17 @@ public class TopDownDemo extends Game {
 	    loadLevelData();
 	    
 //this is for testing enemy movement
-		Enemy e = new Enemy (100, 2400, "resources/enemy.png");
-		e.setImage(getImage(e.getImgPath()));
-		myEnemy = e;
-		myEnemyGroup.add(myEnemy);
+//		Enemy e = new Enemy (100, 2400, "resources/enemy.png");
+//		e.setImage(getImage(e.getImgPath()));
+//		myEnemy = e;
+//		myEnemyGroup.add(myEnemy);
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
 //		this is for testing enemy movement
-		myEnemy.render(pen);
+		//myEnemy.render(pen);
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class TopDownDemo extends Game {
 	
 		
 // this is for testing enemy movement
-		myEnemy.update();
+		//myEnemy.update();
 	}
 	
 	public void playerMovement(){
@@ -139,7 +139,7 @@ public class TopDownDemo extends Game {
       //load level
       LevelLoader l = new LevelLoader();
       try {
-          List<GameObjectData> gameObjectDatas = l.load("testLevel.json");
+          List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
           for (GameObjectData god : gameObjectDatas) {
               
               GameObjectFactory playerFactory = Player.getFactory();

@@ -1,5 +1,7 @@
 import java.awt.Dimension;
 
+import levelEditor.LevelEditorGUI;
+
 
 
 import game.TopDownDemo;
@@ -14,6 +16,7 @@ public class Main {
         GameLoader game = new GameLoader();
         game.setup(new TopDownDemo(), new Dimension(400,700), false);
         game.start();
+       
     }
     
 }

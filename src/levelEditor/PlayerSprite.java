@@ -1,11 +1,18 @@
 package levelEditor;
 
+import java.awt.Dimension;
+
 import innerGameGUI.TabGUIExample;
 import gameObjects.GameObjectData;
 
+import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.Sprite;
 
-
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 
 public class PlayerSprite extends Sprites {
 	int playerCount=3001;
@@ -16,7 +23,10 @@ public class PlayerSprite extends Sprites {
 
 	@Override
 	public void askQuestions() {
-		
+//		TabGUIExample s=new TabGUIExample();
+//		GameLoader game = new GameLoader();
+//		game.setup(s, new Dimension(800, 600), false);
+//		game.start();
 	}
 	@Override
 	public int newID() {

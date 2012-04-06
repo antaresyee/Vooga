@@ -4,7 +4,11 @@ import gameObjects.GameObjectData;
 
 import com.golden.gamedev.object.Sprite;
 
-
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 
 public abstract class Sprites {
 

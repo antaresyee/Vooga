@@ -5,7 +5,11 @@ import gameObjects.GameObjectData;
 import com.golden.gamedev.object.Sprite;
 
 
-
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 public class EnemySprite extends Sprites {
 	 int enemyCount=1;
 	 private final String imagePath = "resources/enemy.png";

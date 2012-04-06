@@ -32,7 +32,7 @@ public class Player extends GameObject {
      * they are used for the factory system.
      */
     private Player() {
-        myType = "player";
+        myType = "Player";
     }
     
     public static GameObjectFactory getFactory() {

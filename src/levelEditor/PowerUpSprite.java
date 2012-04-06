@@ -3,7 +3,11 @@ package levelEditor;
 import gameObjects.GameObjectData;
 
 import com.golden.gamedev.object.Sprite;
-
+/**
+ * 
+ * @author Leo Rofe
+ *
+ */
 public class PowerUpSprite extends Sprites {
 	int powerUpCount=2001;
 	private final String imagePath = "resources/powerup.png";
