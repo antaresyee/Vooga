@@ -31,32 +31,43 @@ public class LevelEditorGUI extends Game {
 	private Sprite player;
 	private int count = 0;
 	private int time = 0;
+	//initialize player position and image path
 	private int playerX = 30;
+	private String playerImgPath = "resources/ship.png";
+	//initialize barrier position and image path
 	private int barrierX = 130;
+	private String barrierImgPath = "resources/black.png";
+	//initialize enemy position and image path
 	private int enemyX = 230;
+	private String enemyImgPath = "resources/enemy.png";
+	//initialize powerup position and image path
 	private int powerupX = 330;
+	private String powerupImgPath = "resources/powerup.png";
+	
 	private int counter = 0;
 	private int totalSprites=4;
+	public List<GameObjectData> level;
+
 
 	@Override
 	public void initResources() {
-		// TODO Auto-generated method stub
-		enemy = new Sprite(getImage("resources/enemy.png"), enemyX,
-				700 - getImage("resources/enemy.png").getHeight() - 40);
+		// create enemy sprite	
+		enemy = new Sprite(getImage(enemyImgPath), enemyX,
+				700 - getImage(enemyImgPath).getHeight() - 40);
 		enemy.setID(1);
-
-		barrier = new Sprite(getImage("resources/black.png"));
-		barrier.setLocation(barrierX, 700 - getImage("resources/black.png")
+		// create barrier sprite
+		barrier = new Sprite(getImage(barrierImgPath));
+		barrier.setLocation(barrierX, 700 - getImage(barrierImgPath)
 				.getHeight() - 40);
 		barrier.setID(1001);
-
-		powerup = new Sprite(getImage("resources/powerup.png"));
-		powerup.setLocation(powerupX, 700 - getImage("resources/powerup.png")
+		// create powerup sprite
+		powerup = new Sprite(getImage(powerupImgPath));
+		powerup.setLocation(powerupX, 700 - getImage(powerupImgPath)
 				.getHeight() - 40);
 		powerup.setID(2001);
-
-		player = new Sprite(getImage("resources/ship.png"));
-		player.setLocation(playerX, 700 - getImage("resources/ship.png")
+		// create player sprite
+		player = new Sprite(getImage(playerImgPath));
+		player.setLocation(playerX, 700 - getImage(playerImgPath)
 				.getHeight() - 40);
 		player.setID(3001);
 
@@ -80,10 +91,6 @@ public class LevelEditorGUI extends Game {
 		pen.setColor(Color.WHITE);
 		pen.fillRect(0, 0, getWidth(), getHeight());
 		ALL.render(pen);
-		// ENEMIES.render(pen);
-		// barrier.render(pen);
-		// powerup.render(pen);
-		// player.render(pen);
 		pen.setColor(Color.BLACK);
 		pen.draw(new Line2D.Double(0.0, 600.0, 400.0, 600.0));
 	}
@@ -135,7 +142,7 @@ public class LevelEditorGUI extends Game {
 		if (keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S)) {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
-			List<GameObjectData> level = make(allSprite);
+			level = make(allSprite);
 			for (GameObjectData f : level) {
 				System.out.print(f.getImgPath());
 				System.out.print(" ");
@@ -157,13 +164,6 @@ public class LevelEditorGUI extends Game {
 		return input;
 	}
 
-	// private GameObjectData makeGameObject(Sprite spr){
-	// GameObjectData temp = new GameObjectData("hey");
-	// temp.setX(spr.getX());
-	// temp.setY(spr.getY());
-	// temp.setImgPath("resources/duke.png");
-	//
-	// }
 	private Sprite clicked() {
 		Sprite temp = null;
 
