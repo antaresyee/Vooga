@@ -25,10 +25,15 @@ public class Map {
 	private int backHeight; 
 	private Timer timer; 
 	private int speed; 
-	private int counter = 2300; 
+	private int counter;
+	private int counterHold; 
+	private int frameSpeed = 5; 
+	
 
 	public Map(BufferedImage image,int width, int height){
 		myBack = new ImageBackground(image);
+		counter = image.getHeight() - height; 
+		counterHold = counter; 
 		init(width, height); 
 	}
 	
@@ -75,13 +80,13 @@ public class Map {
 	}
 	
 	public void guiMoveUp(){
-		myBack.move(0, -5); 
-		if (counter>0)	counter=counter-5;
+		myBack.move(0, -frameSpeed); 
+		if (counter>0)	counter=counter-frameSpeed;
 	}
 	
 	public void guiMoveDown(){
-		myBack.move(0, 5); 
-		if (counter< 2300) counter=counter+5;
+		myBack.move(0, frameSpeed); 
+		if (counter< 2300) counter=counter+frameSpeed;
 	}
 	
 	public void movePlayer(long elapsedTime, Sprite player){
@@ -96,6 +101,15 @@ public class Map {
 	
 	public int getFrameHeight(){
 		return counter; 
+	}
+	
+	public void setFrameSpeed(int fS){
+		frameSpeed = fS; 
+	}
+	
+	public void moveToBottom(){
+		myBack.move(backWidth - frameWidth, backHeight - frameHeight);
+		counter = counterHold; 
 	}
 	
 }
