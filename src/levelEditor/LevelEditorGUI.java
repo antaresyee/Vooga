@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.geom.Line2D;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -17,9 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import levelLoadSave.LevelSaver;
+import maps.Map;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
+import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
@@ -53,6 +56,11 @@ public class LevelEditorGUI extends Game {
 	private int powerupX = 330;
 	private String powerupImgPath = "resources/powerup.png";
 	
+	//initializes the Map to scroll in the background
+	private Map myMap; 
+	private BufferedImage myBackImage;
+	private Background myBackground; 
+	
 	private boolean bool =true;
 	private int counter = 0;
 	private int totalSprites=4;
@@ -61,7 +69,13 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void initResources() {
-		// create enemy sprite	
+		
+		// create Map
+		myBackImage = getImage("resources/Back2.png"); 
+	    myMap = new Map(myBackImage, 400, 700); 
+	    myBackground = myMap.getMyBack(); 
+		
+	    // create enemy sprite	
 		enemy = new Sprite(getImage(enemyImgPath), enemyX,
 				700 - getImage(enemyImgPath).getHeight() - 40);
 		enemy.setID(1);
@@ -98,8 +112,8 @@ public class LevelEditorGUI extends Game {
 	@Override
 	public void render(Graphics2D pen) {
 		// TODO Auto-generated method stub
-		pen.setColor(Color.WHITE);
-		pen.fillRect(0, 0, getWidth(), getHeight());
+		
+		myBackground.render(pen); 
 		ALL.render(pen);
 		pen.setColor(Color.BLACK);
 		pen.draw(new Line2D.Double(0.0, 600.0, 400.0, 600.0));
@@ -107,7 +121,18 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
+		
+		if (keyDown(java.awt.event.KeyEvent.VK_T)) {
+			myMap.guiMoveUp();
+		}
+		
+		if (keyDown(java.awt.event.KeyEvent.VK_G)) {
+			myMap.guiMoveDown();
+		}
+		
 		// TODO Auto-generated method stub
+		
+		myBackground.update(elapsedTime); 
 		ALL.update(elapsedTime);
 
 		if (clicked() != null && current == null) {
@@ -115,7 +140,7 @@ public class LevelEditorGUI extends Game {
 			time = count;
 		}
 		if (current != null) {
-			current.setLocation(getMouseX(), getMouseY());
+			current.setLocation(getMouseX(), getMouseY()); 
 			current.moveX(-current.getWidth() / 2);
 			current.moveY(-current.getHeight() / 2);
 			if (click() && time != count) {
@@ -145,6 +170,9 @@ public class LevelEditorGUI extends Game {
 							ALL.add(new1);
 							totalSprites++;
 							list.add(new1);
+							
+							//set to background
+							new1.setBackground(myBackground); 
 							
 						} else {
 							//else send him back to original location
