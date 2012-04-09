@@ -25,7 +25,7 @@ public class Map {
 	private int backHeight; 
 	private Timer timer; 
 	private int speed; 
-	private int counter; 
+	private int counter = 2300; 
 
 	public Map(BufferedImage image,int width, int height){
 		myBack = new ImageBackground(image);
@@ -53,7 +53,6 @@ public class Map {
 		backWidth = myBack.getWidth();
 		backHeight = myBack.getHeight(); 
 		
-		counter = backHeight;
 		myBack.setClip(0,0,frameWidth,frameHeight);
 		myBack.move(backWidth - frameWidth, backHeight - frameHeight);
 		
@@ -71,19 +70,18 @@ public class Map {
 		// TODO Auto-generated method stub
 		if (timer.action(elapsedTime)){
 			myBack.move(0, -1); 
-			counter--; 
 		}
 		
 	}
 	
 	public void guiMoveUp(){
 		myBack.move(0, -5); 
-		
+		if (counter>0)	counter=counter-5;
 	}
 	
 	public void guiMoveDown(){
 		myBack.move(0, 5); 
-		
+		if (counter< 2300) counter=counter+5;
 	}
 	
 	public void movePlayer(long elapsedTime, Sprite player){

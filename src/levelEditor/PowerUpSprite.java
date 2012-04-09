@@ -33,7 +33,7 @@ public class PowerUpSprite extends Sprites {
         
 		private final String imagePath = "resources/powerup.png";
 		private final int startX = 330;
-		private final int startY = 629;
+		private final int startY = 2929;
 		private final String myType = "PowerUp";
 
 		@Override

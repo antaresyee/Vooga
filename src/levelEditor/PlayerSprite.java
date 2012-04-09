@@ -38,7 +38,7 @@ public class PlayerSprite extends Sprites {
         
 		private final String imagePath = "resources/ship.png";
 		private final int startX = 30;
-		private final int startY = 629;	
+		private final int startY = 2929;	
 		private final String myType = "Player";
 		
 		@Override

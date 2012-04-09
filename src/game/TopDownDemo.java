@@ -50,7 +50,7 @@ public class TopDownDemo extends Game {
 	   
 	    //init background using the new Map class
 	    myBackImage = getImage("resources/Back2.png"); 
-	    myMap = new Map(myBackImage, 400, 600); 
+	    myMap = new Map(myBackImage, 400, 700); 
 	    myMap.setSpeed(10);
 	    myBackground = myMap.getMyBack(); 
 	    myPlayerGroup.setBackground(myBackground);

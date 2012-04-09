@@ -35,7 +35,7 @@ public class EnemySprite extends Sprites {
         
 		private final String imagePath = "resources/enemy.png";
 		private final int startX = 230;
-		private final int startY = 629;
+		private final int startY = 2929               ;
 		private final String myType= "Enemy";
 
 		@Override

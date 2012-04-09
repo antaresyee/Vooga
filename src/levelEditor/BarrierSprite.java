@@ -32,7 +32,7 @@ public class BarrierSprite extends Sprites {
         
 		private final String imagePath = "resources/black.png";
 		private final int startX = 130;
-		private final int startY = 629;
+		private final int startY = 2929;
 		private final String myType = "Barrier";
 
 		@Override

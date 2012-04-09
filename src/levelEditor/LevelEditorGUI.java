@@ -43,6 +43,7 @@ public class LevelEditorGUI extends Game {
 	private Sprite player;
 	private int count = 0;
 	private int time = 0;
+	
 	//initialize player position and image path
 	private int playerX = 30;
 	private String playerImgPath = "resources/ship.png";
@@ -74,33 +75,42 @@ public class LevelEditorGUI extends Game {
 		myBackImage = getImage("resources/Back2.png"); 
 	    myMap = new Map(myBackImage, 400, 700); 
 	    myBackground = myMap.getMyBack(); 
-		
+	
 	    // create enemy sprite	
 		enemy = new Sprite(getImage(enemyImgPath), enemyX,
-				700 - getImage(enemyImgPath).getHeight() - 40);
+				3000 - getImage(enemyImgPath).getHeight() - 40);
+		enemy.setBackground(myBackground);
 		enemy.setID(1);
 		// create barrier sprite
 		barrier = new Sprite(getImage(barrierImgPath));
-		barrier.setLocation(barrierX, 700 - getImage(barrierImgPath)
+		barrier.setBackground(myBackground);
+		barrier.setLocation(barrierX, 3000 - getImage(barrierImgPath)
 				.getHeight() - 40);
 		barrier.setID(1001);
+		
+
 		// create powerup sprite
 		powerup = new Sprite(getImage(powerupImgPath));
-		powerup.setLocation(powerupX, 700 - getImage(powerupImgPath)
+		powerup.setBackground(myBackground);
+		powerup.setLocation(powerupX, 3000 - getImage(powerupImgPath)
 				.getHeight() - 40);
 		powerup.setID(2001);
+		
+
 		// create player sprite
 		player = new Sprite(getImage(playerImgPath));
-		player.setLocation(playerX, 700 - getImage(playerImgPath)
+		player.setBackground(myBackground);
+		player.setLocation(playerX, 3000 - getImage(playerImgPath)
 				.getHeight() - 40);
 		player.setID(3001);
-
+		
 		ALL = new SpriteGroup("All");
 		ALL.add(enemy);
 		ALL.add(barrier);
 		ALL.add(player);
 		ALL.add(powerup);
-
+		ALL.setBackground(myBackground);
+		
 		list = new ArrayList<Sprite>();
 		list.add(enemy);
 		list.add(barrier);
@@ -121,7 +131,6 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-		
 		if (keyDown(java.awt.event.KeyEvent.VK_T)) {
 			myMap.guiMoveUp();
 		}
@@ -129,7 +138,6 @@ public class LevelEditorGUI extends Game {
 		if (keyDown(java.awt.event.KeyEvent.VK_G)) {
 			myMap.guiMoveDown();
 		}
-		
 		// TODO Auto-generated method stub
 		
 		myBackground.update(elapsedTime); 
@@ -140,7 +148,7 @@ public class LevelEditorGUI extends Game {
 			time = count;
 		}
 		if (current != null) {
-			current.setLocation(getMouseX(), getMouseY()); 
+			current.setLocation(getMouseX(), getMouseY()+myMap.getFrameHeight()); 
 			current.moveX(-current.getWidth() / 2);
 			current.moveY(-current.getHeight() / 2);
 			if (click() && time != count) {
@@ -155,6 +163,7 @@ public class LevelEditorGUI extends Game {
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						int input = yesOrNo(check.getType());
+						
 						Sprites newSpr = check.makeSprite();
 						if (check.getType().equals("Player")&&input==0) {
 							newSpr.askQuestions();
@@ -163,16 +172,17 @@ public class LevelEditorGUI extends Game {
 						//if user is happy with location make new sprite
 						if (input==0) {
 							Sprite new1 = new Sprite(
-									getImage(newSpr.getPath()),
-									newSpr.getStartX(), newSpr.getStartY());
+									getImage(newSpr.getPath()));
 							new1.setID(newSpr.newID());
+							new1.setBackground(myBackground); 
 							newSpr.askQuestions();
+							new1.setLocation(newSpr.getStartX(), newSpr.getStartY());
 							ALL.add(new1);
 							totalSprites++;
 							list.add(new1);
 							
 							//set to background
-							new1.setBackground(myBackground); 
+							
 							
 						} else {
 							//else send him back to original location
@@ -193,12 +203,6 @@ public class LevelEditorGUI extends Game {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
 			level = make(allSprite);
-			try {
-				LevelSaver.save(level, "savedLevel");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			for (GameObjectData f : level) {
 				System.out.print(f.getImgPath());
 				System.out.print(" ");
@@ -206,6 +210,13 @@ public class LevelEditorGUI extends Game {
 				System.out.print(" ");
 				System.out.println(f.getY());
 			}
+			try {
+				LevelSaver.save(level, "savedLevel");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 
 	}
@@ -250,7 +261,7 @@ public class LevelEditorGUI extends Game {
 			if (counter < totalSprites) {
 				for (Sprites.Factory check : factory) {
 
-					if (check.isType(elem.getID()) && elem.getY() < 580) {
+					if (check.isType(elem.getID()) && elem.getY() < 2900) {
 
 						GameObjectData god = new GameObjectData(check.getType());
 						god = check.makeGameObject(elem);
