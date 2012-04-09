@@ -25,6 +25,7 @@ public class Map {
 	private int backHeight; 
 	private Timer timer; 
 	private int speed; 
+	private int counter; 
 
 	public Map(BufferedImage image,int width, int height){
 		myBack = new ImageBackground(image);
@@ -38,7 +39,7 @@ public class Map {
 		init(width, height); 
 	}
 	
-	public void placeSprite(Sprite sprite, int x, int y){
+	public void place(Sprite sprite, int x, int y){
 		int alterY = backHeight - y; 
 		sprite.setLocation(x, alterY); 
 		
@@ -47,11 +48,12 @@ public class Map {
 	public void init(int width, int height){
 		frameHeight = height; 
 		frameWidth = width; 
+		 
 		
 		backWidth = myBack.getWidth();
 		backHeight = myBack.getHeight(); 
 		
-		
+		counter = backHeight;
 		myBack.setClip(0,0,frameWidth,frameHeight);
 		myBack.move(backWidth - frameWidth, backHeight - frameHeight);
 		
@@ -67,14 +69,35 @@ public class Map {
 
 	public void moveMap(long elapsedTime) {
 		// TODO Auto-generated method stub
-		if (timer.action(elapsedTime))
+		if (timer.action(elapsedTime)){
 			myBack.move(0, -1); 
+			counter--; 
+		}
 		
+	}
+	
+	public void guiMoveUp(){
+		myBack.move(0, -5); 
+		
+	}
+	
+	public void guiMoveDown(){
+		myBack.move(0, 5); 
+		
+	}
+	
+	public void movePlayer(long elapsedTime, Sprite player){
+		if(timer.action(elapsedTime))
+			player.move(0, -1); 
 	}
 	
 	public void setSpeed(int speed){
 		timer.setDelay(speed);  
 	}
-
+	
+	
+	public int getFrameHeight(){
+		return counter; 
+	}
 	
 }
