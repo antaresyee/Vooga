@@ -41,28 +41,32 @@ public class LevelEditorGUI extends Game {
 	private Sprite barrier;
 	private Sprite powerup;
 	private Sprite player;
+	private Sprite line;
 	private int count = 0;
 	private int time = 0;
 	
 	//initialize player position and image path
 	private int playerX = 30;
 	private String playerImgPath = "resources/ship.png";
+	
 	//initialize barrier position and image path
 	private int barrierX = 130;
 	private String barrierImgPath = "resources/black.png";
+	
 	//initialize enemy position and image path
 	private int enemyX = 230;
 	private String enemyImgPath = "resources/enemy.png";
+	
 	//initialize powerup position and image path
 	private int powerupX = 330;
 	private String powerupImgPath = "resources/powerup.png";
 	
+	private String lineImgPath ="resources/line.png";
 	//initializes the Map to scroll in the background
 	private Map myMap; 
 	private BufferedImage myBackImage;
 	private Background myBackground; 
 	
-	private boolean bool =true;
 	private int counter = 0;
 	private int totalSprites=4;
 	public List<GameObjectData> level;
@@ -104,11 +108,16 @@ public class LevelEditorGUI extends Game {
 				.getHeight() - 40);
 		player.setID(3001);
 		
+		line = new Sprite(getImage(lineImgPath));
+		line.setBackground(myBackground);
+		line.setLocation(0, 2900);
+		
 		ALL = new SpriteGroup("All");
 		ALL.add(enemy);
 		ALL.add(barrier);
 		ALL.add(player);
 		ALL.add(powerup);
+		ALL.add(line);
 		ALL.setBackground(myBackground);
 		
 		list = new ArrayList<Sprite>();
@@ -126,11 +135,17 @@ public class LevelEditorGUI extends Game {
 		myBackground.render(pen); 
 		ALL.render(pen);
 		pen.setColor(Color.BLACK);
-		pen.draw(new Line2D.Double(0.0, 600.0, 400.0, 600.0));
+		pen.draw(new Line2D.Double(0.0, 2900.0, 400.0, 2900.0));
 	}
 
 	@Override
 	public void update(long elapsedTime) {
+		//Press Space to move to the bottom of screen
+		
+		if (keyDown(java.awt.event.KeyEvent.VK_SPACE)) {
+			myMap.moveToBottom();
+		}
+		
 		if (keyDown(java.awt.event.KeyEvent.VK_T)) {
 			myMap.guiMoveUp();
 		}
@@ -189,6 +204,7 @@ public class LevelEditorGUI extends Game {
 							current.setLocation(newSpr.getStartX(),
 									newSpr.getStartY());
 						}
+					
 					}
 				}
 
@@ -216,7 +232,7 @@ public class LevelEditorGUI extends Game {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			finish();
 		}
 
 	}
