@@ -41,7 +41,7 @@ public class LevelEditorGUI extends Game {
 	public List<GameObjectData> level;
 	private int backHeight;
 	private String myPlayer = "Player";
-	
+
 	// initialize player position and image path
 	private int playerX = 30;
 	private String playerImgPath = "resources/ship.png";
@@ -57,22 +57,22 @@ public class LevelEditorGUI extends Game {
 	// initialize powerup position and image path
 	private int powerupX = 330;
 	private String powerupImgPath = "resources/powerup.png";
-	
-	// initialize line image path
+
+	// initialize line and background image path
 	private String lineImgPath = "resources/line.png";
+	private String backImgPath = "resources/Back2.png";
 	
 	// initializes the Map to scroll in the background
 	private Map myMap;
 	private BufferedImage myBackImage;
 	private Background myBackground;
 
-
 	@Override
 	public void initResources() {
 
 		// create Map
-		myBackImage = getImage("resources/Back2.png");
-		myMap = new Map(myBackImage, 400, 700);
+		myBackImage = getImage(backImgPath);
+		myMap = new Map(myBackImage, getWidth(), getHeight());
 		myBackground = myMap.getMyBack();
 		backHeight = myBackImage.getHeight();
 
@@ -113,7 +113,7 @@ public class LevelEditorGUI extends Game {
 		ALL.add(line);
 		ALL.setBackground(myBackground);
 
-		// add to Sprites to ArrayList of Sprites
+		// add Sprites to ArrayList of Sprites
 		list = new ArrayList<Sprite>();
 		list.add(enemy);
 		list.add(barrier);
@@ -147,22 +147,17 @@ public class LevelEditorGUI extends Game {
 		if (keyDown(java.awt.event.KeyEvent.VK_G))
 			myMap.guiMoveDown();
 
-		// if user clicks on a gameobject and
-		// no other gameobject is currently being dragged
-		// set the clicked on gameobject as current (sticks to the mouse
-		// location)
+		// if user clicks on a gameobject and no other gameobject is currently being dragged
+		// set the clicked on gameobject as current (sticks to the mouse location)
 		if (clicked() != null && current == null) {
 			current = clicked();
 			time = count;
 		}
 		// set current gameobject to mouse location
 		if (current != null) {
-			current.setLocation(getMouseX(),
-					getMouseY() + myMap.getFrameHeight());
-			current.moveX(-current.getWidth() / 2);
-			current.moveY(-current.getHeight() / 2);
-			// if user clicks, place gameobject and create the correct new
-			// sprite
+			followMouse();
+			
+			// if user clicks, place gameobject and create the correct new sprite
 			if (click() && time != count) {
 
 				// create list of Sprite Factories
@@ -175,64 +170,83 @@ public class LevelEditorGUI extends Game {
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						int input = yesOrNo(check.getType());
-
+				
 						Sprites newSpr = check.makeSprite();
+	
 						if (check.getType().equals(myPlayer) && input == 0) {
 							newSpr.askQuestions();
 							break;
 						}
-						// if user is happy with location make new sprite
-						if (input == 0) {
-							Sprite new1 = new Sprite(getImage(newSpr.getPath()),newSpr.getStartX(),
-									newSpr.getStartY());
-							new1.setID(newSpr.newID());
-							new1.setBackground(myBackground);
-							newSpr.askQuestions();
-							ALL.add(new1);
-							totalSprites++;
-							list.add(new1);
-
-						} else {
-							// else send him back to original location
-							current.setLocation(newSpr.getStartX(),
-									newSpr.getStartY());
-						}
-
+						//create and place new Sprite on background
+						createNewSprite(input, newSpr);
 					}
 				}
-
 				current = null;
-
 			}
 		}
 		count++;
 
 		// when user presses control and s at same time, the game will create a
 		// list of GameObject Data
-		if (keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S)) {
+		if ((keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S))) {
+			saveFile();
+		}
+	}
+
+	private void createNewSprite(int input, Sprites newSpr) {
+		// if user is happy with location make new sprite
+		if (input == 0) {
+			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
+			new1.setID(newSpr.newID());
+			new1.setBackground(myBackground);
+			newSpr.askQuestions();
+			ALL.add(new1);
+			totalSprites++;
+			list.add(new1);
+
+		} else {
+			// else send him back to original location
+			current.setLocation(newSpr.getStartX(),
+					newSpr.getStartY());
+		}
+	}
+
+	// saves the level
+	private void saveFile() {
+		if (player.getY() < backHeight - 100) {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
 			level = makeGODList(allSprite);
-		
+
 			try {
 				LevelSaver.jsonSave(level, "savedLevel");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			// for (GameObjectData f : level) {
-			// System.out.print(f.getImgPath());
-			// System.out.print(" ");
-			// System.out.print(f.getX());
-			// System.out.print(" ");
-			// System.out.println(f.getY());
-			// }
 			finish();
+		} else {
+			JOptionPane
+					.showMessageDialog(new JFrame(),
+							"You must place a 'Player' game object before you can save the level!");
 		}
-
+		// for (GameObjectData f : level) {
+		// System.out.print(f.getImgPath());
+		// System.out.print(" ");
+		// System.out.print(f.getX());
+		// System.out.print(" ");
+		// System.out.println(f.getY());
+		// }
 	}
-	
-	//asks user if he is happy with his location
+
+	// sets current game object to follow the mouse
+	private void followMouse() {
+		current.setLocation(getMouseX(), getMouseY() + myMap.getFrameHeight());
+		current.moveX(-current.getWidth() / 2);
+		current.moveY(-current.getHeight() / 2);
+	}
+
+	// asks user if he is happy with his location
 	private int yesOrNo(String type) {
 		String[] options = { "yes", "no" };
 		int option = JOptionPane.showOptionDialog(new JFrame(),
@@ -255,8 +269,8 @@ public class LevelEditorGUI extends Game {
 		}
 		return temp;
 	}
-	
-	//makes a list of GameObjectData after the user presses "control" and "s"
+
+	// makes a list of GameObjectData after the user presses "control" and "s"
 	private List<GameObjectData> makeGODList(Sprite[] sprites) {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
 		ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
@@ -268,7 +282,8 @@ public class LevelEditorGUI extends Game {
 			if (counter < totalSprites) {
 				for (Sprites.Factory check : factory) {
 
-					if (check.isType(elem.getID()) && elem.getY() < backHeight-100) {
+					if (check.isType(elem.getID())
+							&& elem.getY() < backHeight - 100) {
 
 						GameObjectData god = new GameObjectData(check.getType());
 						god = check.makeGameObject(elem);

@@ -9,9 +9,7 @@ import com.golden.gamedev.object.Sprite;
  *
  */
 public class BarrierSprite extends Sprites {
-	int barrierCount=1001;
-	private final String imagePath = "resources/black.png";
-	
+	int barrierCount=1001;	
 	public BarrierSprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
@@ -42,7 +40,6 @@ public class BarrierSprite extends Sprites {
 
 		@Override
 		public Sprites makeSprite() {
-			// TODO Auto-generated method stub
 			return new BarrierSprite(imagePath, startX, startY);
 		}
 
@@ -58,7 +55,6 @@ public class BarrierSprite extends Sprites {
 
 		@Override
 		public String getType() {
-			// TODO Auto-generated method stub
 			return myType;
 		}
 
