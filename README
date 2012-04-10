@@ -1,1 +1,9 @@
-CS 108 Project.  For now: Run GUI, make level, press ctrl+s when done, close window.  Then run Main.java.
+CS 108 Project
+  
+1. Run LevelEditorMain.java
+a. Click, Drag and Drop GameObjects around the background
+b. Press "t" and "g" to move the background up and down
+c. Press "Spacebar" to jump to bottom of the screen
+d. When finished with the level, press "control" and "s" to save the level
+
+2. Run Main.java
