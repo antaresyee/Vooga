@@ -2,15 +2,10 @@ package levelEditor;
 
 import gameObjects.GameObjectData;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,19 +16,16 @@ import levelLoadSave.LevelSaver;
 import maps.Map;
 
 import com.golden.gamedev.Game;
-import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
-
 /**
  * 
  * @author Leo Rofe
- *
+ * 
  */
 public class LevelEditorGUI extends Game {
-	// private SpriteGroup ENEMIES;
 	private List<Sprite> list;
 	private SpriteGroup ALL;
 	private Sprite current = null;
@@ -44,74 +36,75 @@ public class LevelEditorGUI extends Game {
 	private Sprite line;
 	private int count = 0;
 	private int time = 0;
+	private int counter = 0;
+	private int totalSprites = 4;
+	public List<GameObjectData> level;
+	private int backHeight;
+	private String myPlayer = "Player";
 	
-	//initialize player position and image path
+	// initialize player position and image path
 	private int playerX = 30;
 	private String playerImgPath = "resources/ship.png";
-	
-	//initialize barrier position and image path
+
+	// initialize barrier position and image path
 	private int barrierX = 130;
 	private String barrierImgPath = "resources/black.png";
-	
-	//initialize enemy position and image path
+
+	// initialize enemy position and image path
 	private int enemyX = 230;
 	private String enemyImgPath = "resources/enemy.png";
-	
-	//initialize powerup position and image path
+
+	// initialize powerup position and image path
 	private int powerupX = 330;
 	private String powerupImgPath = "resources/powerup.png";
 	
-	private String lineImgPath ="resources/line.png";
-	//initializes the Map to scroll in the background
-	private Map myMap; 
-	private BufferedImage myBackImage;
-	private Background myBackground; 
+	// initialize line image path
+	private String lineImgPath = "resources/line.png";
 	
-	private int counter = 0;
-	private int totalSprites=4;
-	public List<GameObjectData> level;
+	// initializes the Map to scroll in the background
+	private Map myMap;
+	private BufferedImage myBackImage;
+	private Background myBackground;
 
 
 	@Override
 	public void initResources() {
-		
+
 		// create Map
-		myBackImage = getImage("resources/Back2.png"); 
-	    myMap = new Map(myBackImage, 400, 700); 
-	    myBackground = myMap.getMyBack(); 
-	
-	    // create enemy sprite	
-		enemy = new Sprite(getImage(enemyImgPath), enemyX,
-				3000 - getImage(enemyImgPath).getHeight() - 40);
+		myBackImage = getImage("resources/Back2.png");
+		myMap = new Map(myBackImage, 400, 700);
+		myBackground = myMap.getMyBack();
+		backHeight = myBackImage.getHeight();
+
+		// create enemy sprite
+		enemy = new Sprite(getImage(enemyImgPath), enemyX, backHeight
+				- getImage(enemyImgPath).getHeight() - 40);
 		enemy.setBackground(myBackground);
 		enemy.setID(1);
+
 		// create barrier sprite
-		barrier = new Sprite(getImage(barrierImgPath));
+		barrier = new Sprite(getImage(barrierImgPath), barrierX, backHeight
+				- getImage(barrierImgPath).getHeight() - 40);
 		barrier.setBackground(myBackground);
-		barrier.setLocation(barrierX, 3000 - getImage(barrierImgPath)
-				.getHeight() - 40);
 		barrier.setID(1001);
-		
 
 		// create powerup sprite
-		powerup = new Sprite(getImage(powerupImgPath));
+		powerup = new Sprite(getImage(powerupImgPath), powerupX, backHeight
+				- getImage(powerupImgPath).getHeight() - 40);
 		powerup.setBackground(myBackground);
-		powerup.setLocation(powerupX, 3000 - getImage(powerupImgPath)
-				.getHeight() - 40);
 		powerup.setID(2001);
-		
 
 		// create player sprite
-		player = new Sprite(getImage(playerImgPath));
+		player = new Sprite(getImage(playerImgPath), playerX, backHeight
+				- getImage(playerImgPath).getHeight() - 40);
 		player.setBackground(myBackground);
-		player.setLocation(playerX, 3000 - getImage(playerImgPath)
-				.getHeight() - 40);
 		player.setID(3001);
-		
-		line = new Sprite(getImage(lineImgPath));
+
+		// create line sprite
+		line = new Sprite(getImage(lineImgPath), 0, backHeight - 100);
 		line.setBackground(myBackground);
-		line.setLocation(0, 2900);
-		
+
+		// add all sprites to ALL SpriteGroup
 		ALL = new SpriteGroup("All");
 		ALL.add(enemy);
 		ALL.add(barrier);
@@ -119,7 +112,8 @@ public class LevelEditorGUI extends Game {
 		ALL.add(powerup);
 		ALL.add(line);
 		ALL.setBackground(myBackground);
-		
+
+		// add to Sprites to ArrayList of Sprites
 		list = new ArrayList<Sprite>();
 		list.add(enemy);
 		list.add(barrier);
@@ -130,45 +124,48 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void render(Graphics2D pen) {
-		// TODO Auto-generated method stub
-		
-		myBackground.render(pen); 
+		// render
+		myBackground.render(pen);
 		ALL.render(pen);
-		pen.setColor(Color.BLACK);
-		pen.draw(new Line2D.Double(0.0, 2900.0, 400.0, 2900.0));
 	}
 
 	@Override
 	public void update(long elapsedTime) {
-		//Press Space to move to the bottom of screen
-		
-		if (keyDown(java.awt.event.KeyEvent.VK_SPACE)) {
-			myMap.moveToBottom();
-		}
-		
-		if (keyDown(java.awt.event.KeyEvent.VK_T)) {
-			myMap.guiMoveUp();
-		}
-		
-		if (keyDown(java.awt.event.KeyEvent.VK_G)) {
-			myMap.guiMoveDown();
-		}
-		// TODO Auto-generated method stub
-		
-		myBackground.update(elapsedTime); 
+
+		// update
+		myBackground.update(elapsedTime);
 		ALL.update(elapsedTime);
 
+		// Press Spacebar to move to the bottom of screen
+		if (keyDown(java.awt.event.KeyEvent.VK_SPACE))
+			myMap.moveToBottom();
+
+		// press "t" to scroll screen up the background
+		// press "g" to scroll screen down the background
+		if (keyDown(java.awt.event.KeyEvent.VK_T))
+			myMap.guiMoveUp();
+		if (keyDown(java.awt.event.KeyEvent.VK_G))
+			myMap.guiMoveDown();
+
+		// if user clicks on a gameobject and
+		// no other gameobject is currently being dragged
+		// set the clicked on gameobject as current (sticks to the mouse
+		// location)
 		if (clicked() != null && current == null) {
 			current = clicked();
 			time = count;
 		}
+		// set current gameobject to mouse location
 		if (current != null) {
-			current.setLocation(getMouseX(), getMouseY()+myMap.getFrameHeight()); 
+			current.setLocation(getMouseX(),
+					getMouseY() + myMap.getFrameHeight());
 			current.moveX(-current.getWidth() / 2);
 			current.moveY(-current.getHeight() / 2);
+			// if user clicks, place gameobject and create the correct new
+			// sprite
 			if (click() && time != count) {
-				
-				//create list of Sprite Factories
+
+				// create list of Sprite Factories
 				ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
 				factory.add(new EnemySprite.Factory());
 				factory.add(new BarrierSprite.Factory());
@@ -178,33 +175,29 @@ public class LevelEditorGUI extends Game {
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						int input = yesOrNo(check.getType());
-						
+
 						Sprites newSpr = check.makeSprite();
-						if (check.getType().equals("Player")&&input==0) {
+						if (check.getType().equals(myPlayer) && input == 0) {
 							newSpr.askQuestions();
-							break;		
+							break;
 						}
-						//if user is happy with location make new sprite
-						if (input==0) {
-							Sprite new1 = new Sprite(
-									getImage(newSpr.getPath()));
+						// if user is happy with location make new sprite
+						if (input == 0) {
+							Sprite new1 = new Sprite(getImage(newSpr.getPath()),newSpr.getStartX(),
+									newSpr.getStartY());
 							new1.setID(newSpr.newID());
-							new1.setBackground(myBackground); 
+							new1.setBackground(myBackground);
 							newSpr.askQuestions();
-							new1.setLocation(newSpr.getStartX(), newSpr.getStartY());
 							ALL.add(new1);
 							totalSprites++;
 							list.add(new1);
-							
-							//set to background
-							
-							
+
 						} else {
-							//else send him back to original location
+							// else send him back to original location
 							current.setLocation(newSpr.getStartX(),
 									newSpr.getStartY());
 						}
-					
+
 					}
 				}
 
@@ -213,43 +206,44 @@ public class LevelEditorGUI extends Game {
 			}
 		}
 		count++;
-		
-		//when user presses control and s at same time, the game will create a list of GameObject Data
+
+		// when user presses control and s at same time, the game will create a
+		// list of GameObject Data
 		if (keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S)) {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
-			level = make(allSprite);
-			for (GameObjectData f : level) {
-				System.out.print(f.getImgPath());
-				System.out.print(" ");
-				System.out.print(f.getX());
-				System.out.print(" ");
-				System.out.println(f.getY());
-			}
+			level = makeGODList(allSprite);
+		
 			try {
 				LevelSaver.save(level, "savedLevel");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			// for (GameObjectData f : level) {
+			// System.out.print(f.getImgPath());
+			// System.out.print(" ");
+			// System.out.print(f.getX());
+			// System.out.print(" ");
+			// System.out.println(f.getY());
+			// }
 			finish();
 		}
 
 	}
-
+	
+	//asks user if he is happy with his location
 	private int yesOrNo(String type) {
-		String[] options = {"yes","no"};
-		int option = JOptionPane.showOptionDialog(new JFrame(), "Would you like to place the "+type+ " here?", "Level Editor", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-		
-//		Object[] options = { "Yes", "No" };
-//
-//		String input = (String) JOptionPane.showInputDialog(new JFrame(),
-//				"Would you like to place the Game Object here?",
-//				"Level Editor'", JOptionPane.PLAIN_MESSAGE, null, options,
-//				options[0]);
+		String[] options = { "yes", "no" };
+		int option = JOptionPane.showOptionDialog(new JFrame(),
+				"Would you like to place the " + type + " here?",
+				"Level Editor", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
 		return option;
 	}
 
+	// returns the Sprite that is clicked on
 	private Sprite clicked() {
 		Sprite temp = null;
 
@@ -262,11 +256,8 @@ public class LevelEditorGUI extends Game {
 		return temp;
 	}
 	
-	public List<GameObjectData> getGODList(){
-		return level;
-	}
-
-	private List<GameObjectData> make(Sprite[] sprites) {
+	//makes a list of GameObjectData after the user presses "control" and "s"
+	private List<GameObjectData> makeGODList(Sprite[] sprites) {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
 		ArrayList<Sprites.Factory> factory = new ArrayList<Sprites.Factory>();
 		factory.add(new EnemySprite.Factory());
@@ -277,7 +268,7 @@ public class LevelEditorGUI extends Game {
 			if (counter < totalSprites) {
 				for (Sprites.Factory check : factory) {
 
-					if (check.isType(elem.getID()) && elem.getY() < 2900) {
+					if (check.isType(elem.getID()) && elem.getY() < backHeight-100) {
 
 						GameObjectData god = new GameObjectData(check.getType());
 						god = check.makeGameObject(elem);
@@ -291,12 +282,5 @@ public class LevelEditorGUI extends Game {
 		}
 		return temp;
 
-	}
-
-	public static void main(String[] args) throws MalformedURLException,
-			URISyntaxException, IOException {
-		GameLoader game = new GameLoader();
-		game.setup(new LevelEditorGUI(), new Dimension(400, 700), false);
-		game.start();
 	}
 }
