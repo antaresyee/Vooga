@@ -139,7 +139,7 @@ public class TopDownDemo extends Game {
       //load level
       LevelLoader l = new LevelLoader();
       try {
-          List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+          List<GameObjectData> gameObjectDatas = l.jsonLoad("savedLevel.json");
           for (GameObjectData god : gameObjectDatas) {
               
               GameObjectFactory playerFactory = Player.getFactory();

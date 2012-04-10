@@ -1,5 +1,6 @@
 package gameObjects;
 
+import java.io.Serializable;
 import java.util.TreeMap;
 
 import movement.Movement;
@@ -10,15 +11,20 @@ import movement.Movement;
  *
  */
 
-public class GameObjectData {
+public class GameObjectData implements Serializable {
+    
+    /**
+     * Used for serialization and versioning
+     */
+    private static final long serialVersionUID = 1L;
     
     private TreeMap<String, String> myData;
+    private Movement myMovement;
     
     public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
         myData.put("type", type);
     }
-    
     
     //SETTERS
     public void setX(Double x) {
@@ -34,7 +40,7 @@ public class GameObjectData {
     }
     
     public void setMovement(Movement movement) {
-        myData.put("movement", movement.toString());
+        myMovement = movement;
     }
     
     
@@ -56,12 +62,15 @@ public class GameObjectData {
     }
     
     public Movement getMovement() {
-        return null;
+        return myMovement;
     }
     
     //JAVA OVERRIDES
     public String toString() {
-        return myData.get("type") + " " + myData.get("imgPath") + " " + myData.get("x") + " " + myData.get("y");
+        if (myMovement != null)
+            return "\n" + myData.get("type") + " " + myData.get("imgPath") + " " + myData.get("x") + " " + myData.get("y") + " " + myMovement.toString() + "\n";
+        else 
+            return "\n" + myData.get("type") + " " + myData.get("imgPath") + " " + myData.get("x") + " " + myData.get("y") + " " + "\n";
     }
     
     public boolean equals(GameObjectData other) {

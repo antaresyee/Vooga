@@ -1,5 +1,7 @@
 package movement;
 
+import java.io.Serializable;
+
 import gameObjects.GameObject;
 
 /**
@@ -8,7 +10,7 @@ import gameObjects.GameObject;
  *
  */
 
-public class BackForthMovement extends Movement {
+public class BackForthMovement extends Movement implements Serializable {
 
 	private double leftBound;
 	private double rightBound;

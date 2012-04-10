@@ -215,7 +215,7 @@ public class LevelEditorGUI extends Game {
 			level = makeGODList(allSprite);
 		
 			try {
-				LevelSaver.save(level, "savedLevel");
+				LevelSaver.jsonSave(level, "savedLevel");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
