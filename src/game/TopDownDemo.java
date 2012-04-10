@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import levelLoadSave.LevelLoader;
+import levelLoadSave.LoadObserver;
+import levelLoadSave.PlayerLoadObserver;
 import maps.Map;
 import movement.TargetedMovement;
 
@@ -39,6 +41,8 @@ public class TopDownDemo extends Game {
 	
 	private BufferedImage myBackImage;
 	private Map myMap; 
+	
+	private List<LoadObserver> myLoadObservers;
 	
 
 	@Override
@@ -69,7 +73,13 @@ public class TopDownDemo extends Game {
 	    myPlayfield.addGroup(myProjectileGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
-	    loadLevelData();
+	    //load level data
+	    myLoadObservers = new ArrayList<LoadObserver>();
+	    myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
+	    myLoadObservers.add(new SimpleLoadObserver(myEnemyGroup));
+	    myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
+	    LevelLoader l = new LevelLoader(myLoadObservers);
+	    l.loadLevelData("serializeTest.ser");
 	    
 //this is for testing enemy movement
 //		Enemy e = new Enemy (100, 2400, "resources/enemy.png");
@@ -111,64 +121,72 @@ public class TopDownDemo extends Game {
 		}
 	}
 	
-	public void loadLevelData() {
-//	    //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET myPlayer, setImage(), etc.
-//	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
-//	    allFactories.add(Player.getFactory());
-//	    allFactories.add(Barrier.getFactory());
-//	    allFactories.add(Enemy.getFactory());
-//	    
-//        //load level
-//        LevelLoader l = new LevelLoader();
-//        try {
-//            List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
-//            for (GameObjectData god : gameObjectDatas) {
-//                for (GameObjectFactory factory : allFactories) {
-//                    if (factory.isMyObject(god)) {
-//                        factory.makeGameObject(god);
-//                        break;
-//                    }
-//                }
-//            }
-//            
-//        }
-//        catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-	    
-      //load level
-      LevelLoader l = new LevelLoader();
-      try {
-          List<GameObjectData> gameObjectDatas = l.jsonLoad("savedLevel.json");
-          for (GameObjectData god : gameObjectDatas) {
-              
-              GameObjectFactory playerFactory = Player.getFactory();
-              GameObjectFactory barrierFactory = Barrier.getFactory();
-              GameObjectFactory enemyFactory = Enemy.getFactory();
-              
-              if (playerFactory.isMyObject(god)) {
-                  myPlayer = (Player) playerFactory.makeGameObject(god);
-                  myPlayer.setImage(getImage(myPlayer.getImgPath()));
-                  //myPlayer.setSpeed(0, 20); 
-                  myPlayerGroup.add(myPlayer);
-               
-              }
-              if (barrierFactory.isMyObject(god)) {
-                  Barrier b = (Barrier) barrierFactory.makeGameObject(god);
-                  b.setImage(getImage(b.getImgPath()));
-                  myBarrierGroup.add(b);
-              }
-              if (enemyFactory.isMyObject(god)) {
-                  Enemy e = (Enemy) enemyFactory.makeGameObject(god);
-                  e.setImage(getImage(e.getImgPath()));
-                  myEnemyGroup.add(e);
-              }
-          }
-          
-      }
-      catch (FileNotFoundException e) {
-          e.printStackTrace();
-      }
+	public void setPlayer(Player g) {
+	    myPlayer = g;
 	}
+	
+//	public void loadLevelData() {
+////	    //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET myPlayer, setImage(), etc.
+////	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
+////	    allFactories.add(Player.getFactory());
+////	    allFactories.add(Barrier.getFactory());
+////	    allFactories.add(Enemy.getFactory());
+////	    
+////        //load level
+////        LevelLoader l = new LevelLoader();
+////        try {
+////            List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+////            for (GameObjectData god : gameObjectDatas) {
+////                for (GameObjectFactory factory : allFactories) {
+////                    if (factory.isMyObject(god)) {
+////                        factory.makeGameObject(god);
+////                        break;
+////                    }
+////                }
+////            }
+////            
+////        }
+////        catch (FileNotFoundException e) {
+////            e.printStackTrace();
+////        }
+//	  
+//	  
+//      //load level
+//      LevelLoader l = new LevelLoader(myLoadObservers);
+//      l.loadLevelData("serializeTest.ser");
+//      
+//      try {
+//          List<GameObjectData> gameObjectDatas = l.jsonLoad("savedLevel.json");
+//          for (GameObjectData god : gameObjectDatas) {
+//              
+//              GameObjectFactory playerFactory = Player.getFactory();
+//              GameObjectFactory barrierFactory = Barrier.getFactory();
+//              GameObjectFactory enemyFactory = Enemy.getFactory();
+//              
+//              if (playerFactory.isMyObject(god)) {
+//                  myPlayer = (Player) playerFactory.makeGameObject(god);
+//                  myPlayer.setImage(getImage(myPlayer.getImgPath()));
+//                  //myPlayer.setSpeed(0, 20); 
+//                  myPlayerGroup.add(myPlayer);
+//               
+//              }
+//              if (barrierFactory.isMyObject(god)) {
+//                  Barrier b = (Barrier) barrierFactory.makeGameObject(god);
+//                  b.setImage(getImage(b.getImgPath()));
+//                  myBarrierGroup.add(b);
+//              }
+//              if (enemyFactory.isMyObject(god)) {
+//                  Enemy e = (Enemy) enemyFactory.makeGameObject(god);
+//                  e.setImage(getImage(e.getImgPath()));
+//                  myEnemyGroup.add(e);
+//              }
+//          }
+//          
+//      }
+//      catch (FileNotFoundException e) {
+//          e.printStackTrace();
+//      }
+//	}
+//	
 
 }
