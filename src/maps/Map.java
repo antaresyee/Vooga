@@ -75,6 +75,7 @@ public class Map {
 		// TODO Auto-generated method stub
 		if (timer.action(elapsedTime)){
 			myBack.move(0, -1); 
+			if (counter>0)counter--;
 		}
 		
 	}

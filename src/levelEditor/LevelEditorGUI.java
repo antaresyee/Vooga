@@ -72,7 +72,7 @@ public class LevelEditorGUI extends Game {
 
 		// create Map
 		myBackImage = getImage(backImgPath);
-		myMap = new Map(myBackImage, 400, 700);
+		myMap = new Map(myBackImage, getWidth(), getHeight());
 		myBackground = myMap.getMyBack();
 		backHeight = myBackImage.getHeight();
 
@@ -147,10 +147,8 @@ public class LevelEditorGUI extends Game {
 		if (keyDown(java.awt.event.KeyEvent.VK_G))
 			myMap.guiMoveDown();
 
-		// if user clicks on a gameobject and
-		// no other gameobject is currently being dragged
-		// set the clicked on gameobject as current (sticks to the mouse
-		// location)
+		// if user clicks on a gameobject and no other gameobject is currently being dragged
+		// set the clicked on gameobject as current (sticks to the mouse location)
 		if (clicked() != null && current == null) {
 			current = clicked();
 			time = count;
@@ -172,7 +170,7 @@ public class LevelEditorGUI extends Game {
 				for (Sprites.Factory check : factory) {
 					if (check.isType(current.getID())) {
 						int input = yesOrNo(check.getType());
-						
+				
 						Sprites newSpr = check.makeSprite();
 	
 						if (check.getType().equals(myPlayer) && input == 0) {
@@ -181,12 +179,9 @@ public class LevelEditorGUI extends Game {
 						}
 						//create and place new Sprite on background
 						createNewSprite(input, newSpr);
-
 					}
 				}
-
 				current = null;
-
 			}
 		}
 		count++;
@@ -201,9 +196,7 @@ public class LevelEditorGUI extends Game {
 	private void createNewSprite(int input, Sprites newSpr) {
 		// if user is happy with location make new sprite
 		if (input == 0) {
-			Sprite new1 = new Sprite(
-					getImage(newSpr.getPath()),
-					newSpr.getStartX(), newSpr.getStartY());
+			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setID(newSpr.newID());
 			new1.setBackground(myBackground);
 			newSpr.askQuestions();

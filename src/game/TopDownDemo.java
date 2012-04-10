@@ -50,7 +50,7 @@ public class TopDownDemo extends Game {
 	   
 	    //init background using the new Map class
 	    myBackImage = getImage("resources/Back2.png"); 
-	    myMap = new Map(myBackImage, 400, 700); 
+	    myMap = new Map(myBackImage, getWidth(), getHeight()); 
 	    myMap.setSpeed(10);
 	    myBackground = myMap.getMyBack(); 
 	    myPlayerGroup.setBackground(myBackground);
@@ -100,13 +100,13 @@ public class TopDownDemo extends Game {
 		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
 			myPlayer.moveX(-3);
 		}
-		if (myPlayer.getX() < 800-myPlayer.getWidth()-3 && keyDown(java.awt.event.KeyEvent.VK_D)){
+		if (myPlayer.getX() < getWidth()-myPlayer.getWidth()-3 && keyDown(java.awt.event.KeyEvent.VK_D)){
 			myPlayer.moveX(3);
 		}
-		if (myPlayer.getY() > 0 && keyDown(java.awt.event.KeyEvent.VK_W)){
+		if (myPlayer.getY() > myMap.getFrameHeight()  && keyDown(java.awt.event.KeyEvent.VK_W)){
 			myPlayer.moveY(-3);
 		}
-		if (myPlayer.getY() < 600-myPlayer.getHeight()-3 && keyDown(java.awt.event.KeyEvent.VK_S)){
+		if (myPlayer.getY()  < getHeight()-myPlayer.getHeight()-3 +myMap.getFrameHeight()&& keyDown(java.awt.event.KeyEvent.VK_S)){
 			myPlayer.moveY(3);
 		}
 	}
