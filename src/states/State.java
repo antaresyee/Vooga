@@ -16,8 +16,7 @@ public abstract class State {
 	
 	public void move(){
 		myMovement.move(myEnemy);
-		checkStateChange();
 	}
 	
-	public abstract void checkStateChange();
+	public abstract boolean shouldBeCurrentState();
 }

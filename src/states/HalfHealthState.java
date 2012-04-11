@@ -15,14 +15,13 @@ public class HalfHealthState extends State {
 		myEnemy = e;
 		myMovement = m;
 	}
-	
+
 	@Override
-	public void checkStateChange() {
-		if (myEnemy.getCurrentHealth() == 0){
-			myEnemy.setX(1000);
-			myEnemy.setY(1000);
-			myEnemy.setSpeed(0, 0);
+	public boolean shouldBeCurrentState() {
+		if (myEnemy.getCurrentHealth() < 250){
+			return true;
 		}
+		return false;
 	}
 
 }

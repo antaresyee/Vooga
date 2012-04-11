@@ -1,5 +1,7 @@
 package gameObjects;
 
+import java.util.ArrayList;
+
 import states.FullHealthState;
 import states.HalfHealthState;
 import states.State;
@@ -13,21 +15,23 @@ import movement.Movement;
  */
 public class Enemy extends GameObject {
 
-	private State fullHealthState;
-	private State halfHealthState;
+	private ArrayList<State> possibleStates;
 	private State currentState;
 	private int currentHealth;
 
-	public Enemy(double x, double y, String imgPath) {
+	public Enemy(double x, double y, String imgPath, ArrayList<State> states) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
 		setLocation(myX, myY);
-		fullHealthState = new FullHealthState(this, new BackForthMovement(
+		possibleStates = states;
+		State fullHealthState = new FullHealthState(this, new BackForthMovement(
 				getX(), getX() + 200, .2));
-		halfHealthState = new HalfHealthState(this, new BackForthMovement(
+		State halfHealthState = new HalfHealthState(this, new BackForthMovement(
 				getX(), getX() + 200, 1));
+		possibleStates.add(fullHealthState);
+		possibleStates.add(halfHealthState);
 		currentState = fullHealthState;
 		currentHealth = 500;
 	}
@@ -44,22 +48,15 @@ public class Enemy extends GameObject {
 
 	public void update() {
 		move();
+		checkState();
 	}
-
-	public void setState(State s) {
-		currentState = s;
-	}
-
-	public State getCurrentState() {
-		return currentState;
-	}
-
-	public State getFullHealthState() {
-		return fullHealthState;
-	}
-
-	public State getHalfHealthState() {
-		return halfHealthState;
+	
+	public void checkState(){
+		for (State s : possibleStates){
+			if (s.shouldBeCurrentState()){
+				currentState = s;
+			}
+		}
 	}
 
 	public int getCurrentHealth() {
@@ -75,7 +72,8 @@ public class Enemy extends GameObject {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();
-		return new Enemy(x, y, imgPath);
+		ArrayList<State> states = new ArrayList<State>(); 
+		return new Enemy(x, y, imgPath, states);
 	}
 
 	/**

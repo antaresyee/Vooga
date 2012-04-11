@@ -14,8 +14,13 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import states.FullHealthState;
+import states.HalfHealthState;
+import states.State;
+
 import levelLoadSave.LevelLoader;
 import maps.Map;
+import movement.BackForthMovement;
 import movement.TargetedMovement;
 
 import com.golden.gamedev.Game;
@@ -72,17 +77,18 @@ public class TopDownDemo extends Game {
 	    loadLevelData();
 	    
 //this is for testing enemy movement
-//		Enemy e = new Enemy (100, 2400, "resources/enemy.png");
-//		e.setImage(getImage(e.getImgPath()));
-//		myEnemy = e;
-//		myEnemyGroup.add(myEnemy);
+	    ArrayList<State> s = new ArrayList<State>();
+		Enemy e = new Enemy (100, 2400, "resources/enemy.png", s);
+		e.setImage(getImage(e.getImgPath()));
+		myEnemy = e;
+		myEnemyGroup.add(myEnemy);
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
 //		this is for testing enemy movement
-		//myEnemy.render(pen);
+		myEnemy.render(pen);
 	}
 
 	@Override
@@ -93,7 +99,7 @@ public class TopDownDemo extends Game {
 	
 		
 // this is for testing enemy movement
-		//myEnemy.update();
+		myEnemy.update();
 	}
 	
 	public void playerMovement(){
@@ -139,7 +145,7 @@ public class TopDownDemo extends Game {
       //load level
       LevelLoader l = new LevelLoader();
       try {
-          List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+          List<GameObjectData> gameObjectDatas = l.load("testLevel.json");
           for (GameObjectData god : gameObjectDatas) {
               
               GameObjectFactory playerFactory = Player.getFactory();

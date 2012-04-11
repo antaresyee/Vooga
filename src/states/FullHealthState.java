@@ -17,10 +17,12 @@ public class FullHealthState extends State {
 	}
 
 	@Override
-	public void checkStateChange() {
-		if (myEnemy.getCurrentHealth() < 250) {
-			myEnemy.setState(myEnemy.getHalfHealthState());
+	public boolean shouldBeCurrentState() {
+		if (myEnemy.getCurrentHealth() > 250){
+			return true;
 		}
+		return false;
 	}
+
 
 }
