@@ -27,6 +27,7 @@ public class PlayerSprite extends Sprites {
 //		GameLoader game = new GameLoader();
 //		game.setup(s, new Dimension(800, 600), false);
 //		game.start();
+		
 	}
 	@Override
 	public int newID() {
@@ -38,7 +39,7 @@ public class PlayerSprite extends Sprites {
         
 		private final String imagePath = "resources/ship.png";
 		private final int startX = 30;
-		private final int startY = 629;	
+		private final int startY = 2929;	
 		private final String myType = "Player";
 		
 		@Override
@@ -47,14 +48,9 @@ public class PlayerSprite extends Sprites {
 		}
 
 		@Override
-		public Sprites makeSprite() {
-			// TODO Auto-generated method stub
-			
+		public Sprites makeSprite() {			
 			return new PlayerSprite(imagePath, startX, startY);			
-			
-		}
-
-	
+		}	
 
 		public GameObjectData makeGameObject(Sprite spr) {
 			GameObjectData god = new GameObjectData(myType);
@@ -66,7 +62,6 @@ public class PlayerSprite extends Sprites {
 
 		@Override
 		public String getType() {
-			// TODO Auto-generated method stub
 			return myType;
 		}
 

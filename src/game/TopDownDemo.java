@@ -19,6 +19,8 @@ import states.HalfHealthState;
 import states.State;
 
 import levelLoadSave.LevelLoader;
+import levelLoadSave.LoadObserver;
+import levelLoadSave.PlayerLoadObserver;
 import maps.Map;
 import movement.BackForthMovement;
 import movement.TargetedMovement;
@@ -45,6 +47,8 @@ public class TopDownDemo extends Game {
 	private BufferedImage myBackImage;
 	private Map myMap; 
 	
+	private List<LoadObserver> myLoadObservers;
+	
 
 	@Override
 	public void initResources() {	    
@@ -55,7 +59,7 @@ public class TopDownDemo extends Game {
 	   
 	    //init background using the new Map class
 	    myBackImage = getImage("resources/Back2.png"); 
-	    myMap = new Map(myBackImage, 400, 600); 
+	    myMap = new Map(myBackImage, getWidth(), getHeight()); 
 	    myMap.setSpeed(10);
 	    myBackground = myMap.getMyBack(); 
 	    myPlayerGroup.setBackground(myBackground);
@@ -74,7 +78,13 @@ public class TopDownDemo extends Game {
 	    myPlayfield.addGroup(myProjectileGroup);
 	    myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup, new PlayerBarrierCollision());
 	    
-	    loadLevelData();
+	    //load level data
+	    myLoadObservers = new ArrayList<LoadObserver>();
+	    myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
+	    myLoadObservers.add(new SimpleLoadObserver(myEnemyGroup));
+	    myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
+	    LevelLoader l = new LevelLoader(myLoadObservers);
+	    l.loadLevelData("serializeTest.ser");
 	    
 //this is for testing enemy movement
 	    ArrayList<State> s = new ArrayList<State>();
@@ -106,75 +116,83 @@ public class TopDownDemo extends Game {
 		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
 			myPlayer.moveX(-3);
 		}
-		if (myPlayer.getX() < 800-myPlayer.getWidth()-3 && keyDown(java.awt.event.KeyEvent.VK_D)){
+		if (myPlayer.getX() < getWidth()-myPlayer.getWidth()-3 && keyDown(java.awt.event.KeyEvent.VK_D)){
 			myPlayer.moveX(3);
 		}
-		if (myPlayer.getY() > 0 && keyDown(java.awt.event.KeyEvent.VK_W)){
+		if (myPlayer.getY() > myMap.getFrameHeight()  && keyDown(java.awt.event.KeyEvent.VK_W)){
 			myPlayer.moveY(-3);
 		}
-		if (myPlayer.getY() < 600-myPlayer.getHeight()-3 && keyDown(java.awt.event.KeyEvent.VK_S)){
+		if (myPlayer.getY()  < getHeight()-myPlayer.getHeight()-3 +myMap.getFrameHeight()&& keyDown(java.awt.event.KeyEvent.VK_S)){
 			myPlayer.moveY(3);
 		}
 	}
 	
-	public void loadLevelData() {
-//	    //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET myPlayer, setImage(), etc.
-//	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
-//	    allFactories.add(Player.getFactory());
-//	    allFactories.add(Barrier.getFactory());
-//	    allFactories.add(Enemy.getFactory());
-//	    
-//        //load level
-//        LevelLoader l = new LevelLoader();
-//        try {
-//            List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
-//            for (GameObjectData god : gameObjectDatas) {
-//                for (GameObjectFactory factory : allFactories) {
-//                    if (factory.isMyObject(god)) {
-//                        factory.makeGameObject(god);
-//                        break;
-//                    }
-//                }
-//            }
-//            
-//        }
-//        catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-	    
-      //load level
-      LevelLoader l = new LevelLoader();
-      try {
-          List<GameObjectData> gameObjectDatas = l.load("testLevel.json");
-          for (GameObjectData god : gameObjectDatas) {
-              
-              GameObjectFactory playerFactory = Player.getFactory();
-              GameObjectFactory barrierFactory = Barrier.getFactory();
-              GameObjectFactory enemyFactory = Enemy.getFactory();
-              
-              if (playerFactory.isMyObject(god)) {
-                  myPlayer = (Player) playerFactory.makeGameObject(god);
-                  myPlayer.setImage(getImage(myPlayer.getImgPath()));
-                  //myPlayer.setSpeed(0, 20); 
-                  myPlayerGroup.add(myPlayer);
-               
-              }
-              if (barrierFactory.isMyObject(god)) {
-                  Barrier b = (Barrier) barrierFactory.makeGameObject(god);
-                  b.setImage(getImage(b.getImgPath()));
-                  myBarrierGroup.add(b);
-              }
-              if (enemyFactory.isMyObject(god)) {
-                  Enemy e = (Enemy) enemyFactory.makeGameObject(god);
-                  e.setImage(getImage(e.getImgPath()));
-                  myEnemyGroup.add(e);
-              }
-          }
-          
-      }
-      catch (FileNotFoundException e) {
-          e.printStackTrace();
-      }
+	public void setPlayer(Player g) {
+	    myPlayer = g;
 	}
+	
+//	public void loadLevelData() {
+////	    //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET myPlayer, setImage(), etc.
+////	    List<GameObjectFactory> allFactories = new ArrayList<GameObjectFactory>();
+////	    allFactories.add(Player.getFactory());
+////	    allFactories.add(Barrier.getFactory());
+////	    allFactories.add(Enemy.getFactory());
+////	    
+////        //load level
+////        LevelLoader l = new LevelLoader();
+////        try {
+////            List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
+////            for (GameObjectData god : gameObjectDatas) {
+////                for (GameObjectFactory factory : allFactories) {
+////                    if (factory.isMyObject(god)) {
+////                        factory.makeGameObject(god);
+////                        break;
+////                    }
+////                }
+////            }
+////            
+////        }
+////        catch (FileNotFoundException e) {
+////            e.printStackTrace();
+////        }
+//	  
+//	  
+//      //load level
+//      LevelLoader l = new LevelLoader(myLoadObservers);
+//      l.loadLevelData("serializeTest.ser");
+//      
+//      try {
+//          List<GameObjectData> gameObjectDatas = l.jsonLoad("savedLevel.json");
+//          for (GameObjectData god : gameObjectDatas) {
+//              
+//              GameObjectFactory playerFactory = Player.getFactory();
+//              GameObjectFactory barrierFactory = Barrier.getFactory();
+//              GameObjectFactory enemyFactory = Enemy.getFactory();
+//              
+//              if (playerFactory.isMyObject(god)) {
+//                  myPlayer = (Player) playerFactory.makeGameObject(god);
+//                  myPlayer.setImage(getImage(myPlayer.getImgPath()));
+//                  //myPlayer.setSpeed(0, 20); 
+//                  myPlayerGroup.add(myPlayer);
+//               
+//              }
+//              if (barrierFactory.isMyObject(god)) {
+//                  Barrier b = (Barrier) barrierFactory.makeGameObject(god);
+//                  b.setImage(getImage(b.getImgPath()));
+//                  myBarrierGroup.add(b);
+//              }
+//              if (enemyFactory.isMyObject(god)) {
+//                  Enemy e = (Enemy) enemyFactory.makeGameObject(god);
+//                  e.setImage(getImage(e.getImgPath()));
+//                  myEnemyGroup.add(e);
+//              }
+//          }
+//          
+//      }
+//      catch (FileNotFoundException e) {
+//          e.printStackTrace();
+//      }
+//	}
+//	
 
 }

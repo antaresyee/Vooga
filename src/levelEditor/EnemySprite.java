@@ -12,7 +12,6 @@ import com.golden.gamedev.object.Sprite;
  */
 public class EnemySprite extends Sprites {
 	 int enemyCount=1;
-	 private final String imagePath = "resources/enemy.png";
 
 	public EnemySprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
@@ -35,7 +34,7 @@ public class EnemySprite extends Sprites {
         
 		private final String imagePath = "resources/enemy.png";
 		private final int startX = 230;
-		private final int startY = 629;
+		private final int startY = 2929               ;
 		private final String myType= "Enemy";
 
 		@Override
@@ -45,7 +44,6 @@ public class EnemySprite extends Sprites {
 
 		@Override
 		public Sprites makeSprite() {
-			// TODO Auto-generated method stub
 			return new EnemySprite(imagePath, startX, startY);
 		}
 		
@@ -59,7 +57,6 @@ public class EnemySprite extends Sprites {
 
 		@Override
 		public String getType() {
-			// TODO Auto-generated method stub
 			return myType;
 		}
 

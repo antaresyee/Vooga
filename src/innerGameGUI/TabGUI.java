@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -38,6 +39,7 @@ public class TabGUI {
 	private final static int OBJ_WIDTH = 60;
 	private final static int OBJ_HEIGHT = 60;
 	private final static int GAP = 20;
+	public BufferedImage a;
 	
 	
 	private boolean isClicked;
@@ -114,13 +116,14 @@ public class TabGUI {
 		}
 		
 		if (myGame.keyPressed(KeyEvent.VK_ENTER)){
-			//TODO pass to myPlayer
+			//pass to myPlayer
 			String[] options = {"yes","no"};   
 			int option = JOptionPane.showOptionDialog(new JFrame(), "Buy this one?", "Welcome to the shop!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 			
 			if(option == 0)
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Thanks for choosing me! Further steps to be implemented");
+				a=myCurrentObject.getImage();
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), "Ohhh...Why not me? Further steps to be implemented");
 			}

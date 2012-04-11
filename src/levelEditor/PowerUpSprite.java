@@ -10,8 +10,6 @@ import com.golden.gamedev.object.Sprite;
  */
 public class PowerUpSprite extends Sprites {
 	int powerUpCount=2001;
-	private final String imagePath = "resources/powerup.png";
-
 	
 	public PowerUpSprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
@@ -33,7 +31,7 @@ public class PowerUpSprite extends Sprites {
         
 		private final String imagePath = "resources/powerup.png";
 		private final int startX = 330;
-		private final int startY = 629;
+		private final int startY = 2929;
 		private final String myType = "PowerUp";
 
 		@Override
