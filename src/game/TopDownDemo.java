@@ -17,6 +17,7 @@ import java.util.List;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
+import levelLoadSave.SimpleLoadObserver;
 import maps.Map;
 import movement.TargetedMovement;
 
