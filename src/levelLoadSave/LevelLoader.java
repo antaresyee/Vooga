@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import states.FullHealthState;
-import states.HalfHealthState;
+import states.LowHealthState;
 import states.State;
 
 import movement.BackForthMovement;

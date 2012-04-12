@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import states.FullHealthState;
-import states.HalfHealthState;
+import states.LowHealthState;
 import states.State;
 
 import levelLoadSave.LevelLoader;
@@ -105,7 +105,7 @@ public class TopDownDemo extends Game {
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
 		// this is for testing enemy movement
-		myEnemy.render(pen);
+		//myEnemy.render(pen);
 	}
 
 	@Override
