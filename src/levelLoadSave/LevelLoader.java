@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import states.FullHealthState;
+import states.HalfHealthState;
+import states.State;
+
 import movement.BackForthMovement;
+import movement.Movement;
 
 import gameObjects.Enemy;
 import gameObjects.GameObject;
@@ -32,133 +37,134 @@ import com.google.gson.reflect.TypeToken;
 
 public class LevelLoader {
 
-    List<LoadObserver> myLoadObservers;
-    
-    public LevelLoader(List<LoadObserver> loadObservers) {
-        myLoadObservers = loadObservers;
-    }
-    
-    public void loadLevelData(String fileName) {
-        List<GameObjectData> gameObjectDatas;
-        try {
-            gameObjectDatas = serializeLoad(fileName);
-            System.out.println(gameObjectDatas);
-            GameObjectFactory playerFactory = Player.getFactory();
-            GameObjectFactory barrierFactory = Barrier.getFactory();
-            GameObjectFactory enemyFactory = Enemy.getFactory();
-            GameObjectFactory bossFactory = Boss.getFactory();
+	List<LoadObserver> myLoadObservers;
 
-            GameObject loaded = null;
-            for (GameObjectData god : gameObjectDatas) {
-                if (playerFactory.isMyObject(god)) {
-                    Player p = (Player) playerFactory.makeGameObject(god);
-                    loaded = p;
-                    System.out.println("player made");
-                }
-                if (barrierFactory.isMyObject(god)) {
-                    Barrier b = (Barrier) barrierFactory.makeGameObject(god);
-                    loaded = b;
-                    System.out.println("barrier made");
+	public LevelLoader(List<LoadObserver> loadObservers) {
+		myLoadObservers = loadObservers;
+	}
 
-                }
-                if (enemyFactory.isMyObject(god)) {
-                    Enemy e = (Enemy) enemyFactory.makeGameObject(god);
-                    loaded = e;
-                    System.out.println("enemy made");
+	public void loadLevelData(String fileName) {
+		List<GameObjectData> gameObjectDatas;
+		try {
+			gameObjectDatas = serializeLoad(fileName);
+			System.out.println(gameObjectDatas);
+			GameObjectFactory playerFactory = Player.getFactory();
+			GameObjectFactory barrierFactory = Barrier.getFactory();
+			GameObjectFactory enemyFactory = Enemy.getFactory();
+			GameObjectFactory bossFactory = Boss.getFactory();
 
-                }
-                if (bossFactory.isMyObject(god)) {
-                    Boss b = (Boss) bossFactory.makeGameObject(god);
-                    loaded = b;
-                    System.out.println("boss made");
-                }
-                notifyObservers(loaded);
+			GameObject loaded = null;
+			for (GameObjectData god : gameObjectDatas) {
+				if (playerFactory.isMyObject(god)) {
+					Player p = (Player) playerFactory.makeGameObject(god);
+					loaded = p;
+					System.out.println("player made");
+				}
+				if (barrierFactory.isMyObject(god)) {
+					Barrier b = (Barrier) barrierFactory.makeGameObject(god);
+					loaded = b;
+					System.out.println("barrier made");
 
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
+				}
+				if (enemyFactory.isMyObject(god)) {
+					Enemy e = (Enemy) enemyFactory.makeGameObject(god);
+					loaded = e;
+					System.out.println("enemy made");
 
-    public List<GameObjectData> serializeLoad(String fileName) throws FileNotFoundException {
-        System.out.println("entered serializeLoad");
-        List<GameObjectData> parsedObjects = new ArrayList<GameObjectData>();
+				}
+				if (bossFactory.isMyObject(god)) {
+					Boss b = (Boss) bossFactory.makeGameObject(god);
+					loaded = b;
+					System.out.println("boss made");
+				}
+				notifyObservers(loaded);
 
-        try {
-            FileInputStream fis = new FileInputStream(fileName);
-            ObjectInputStream ois = new ObjectInputStream(fis);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
 
-            int numObjects = ois.readInt();
+	public List<GameObjectData> serializeLoad(String fileName)
+			throws FileNotFoundException {
+		System.out.println("entered serializeLoad");
+		List<GameObjectData> parsedObjects = new ArrayList<GameObjectData>();
 
-            for (int i = 0; i < numObjects; ++i) {
-                parsedObjects.add((GameObjectData) ois.readObject());
-            }
-            ois.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+		try {
+			FileInputStream fis = new FileInputStream(fileName);
+			ObjectInputStream ois = new ObjectInputStream(fis);
 
-        return parsedObjects;
-    }
+			int numObjects = ois.readInt();
 
-    /**
-     * load json file with GameObjectFactory objects delimited by newlines
-     */
-    public List<GameObjectData> jsonLoad(String fileName)
-            throws FileNotFoundException {
-        Gson gson = new Gson();
-        Scanner scanner = new Scanner(new File(fileName));
+			for (int i = 0; i < numObjects; ++i) {
+				parsedObjects.add((GameObjectData) ois.readObject());
+			}
+			ois.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 
-        List<GameObjectData> parsedObjects = new ArrayList<GameObjectData>();
-        Type godClass = new TypeToken<GameObjectData>() {
-        }.getType(); // tell json parser the object's type
+		return parsedObjects;
+	}
 
-        while (scanner.useDelimiter("\n").hasNext()) {
-            String jsonGod = scanner.useDelimiter("\n").next();
-            GameObjectData parsedGod = gson.fromJson(jsonGod, godClass);
-            parsedObjects.add(parsedGod);
-        }
-        return parsedObjects;
-    }
-    
-    public void notifyObservers(GameObject go) {
-        for (LoadObserver lo : myLoadObservers) {
-            if (lo.isMyObserver(go)) {
-                lo.objectLoaded(go);
-            }
-        }
-    }
+	/**
+	 * load json file with GameObjectFactory objects delimited by newlines
+	 */
+	public List<GameObjectData> jsonLoad(String fileName)
+			throws FileNotFoundException {
+		Gson gson = new Gson();
+		Scanner scanner = new Scanner(new File(fileName));
 
-    public static void main(String[] args) throws IOException {
-        LevelLoader l = new LevelLoader(null);
+		List<GameObjectData> parsedObjects = new ArrayList<GameObjectData>();
+		Type godClass = new TypeToken<GameObjectData>() {
+		}.getType(); // tell json parser the object's type
 
-        List<GameObjectData> objectsToSave = new ArrayList<GameObjectData>();
+		while (scanner.useDelimiter("\n").hasNext()) {
+			String jsonGod = scanner.useDelimiter("\n").next();
+			GameObjectData parsedGod = gson.fromJson(jsonGod, godClass);
+			parsedObjects.add(parsedGod);
+		}
+		return parsedObjects;
+	}
 
-        GameObjectData barrierData = new GameObjectData("Barrier");
-        barrierData.setX(200.5);
-        barrierData.setY(1000.0);
-        barrierData.setImgPath("./resources/triangle.png");
-        objectsToSave.add(barrierData);
+	public void notifyObservers(GameObject go) {
+		for (LoadObserver lo : myLoadObservers) {
+			if (lo.isMyObserver(go)) {
+				lo.objectLoaded(go);
+			}
+		}
+	}
 
-        GameObjectData playerData = new GameObjectData("Player");
-        playerData.setX(3.5);
-        playerData.setY(4.0);
-        playerData.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData);
+	public static void main(String[] args) throws IOException {
+		LevelLoader l = new LevelLoader(null);
 
-        GameObjectData playerData2 = new GameObjectData("Player");
-        playerData2.setX(100.0);
-        playerData2.setY(500.0);
-        playerData2.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData2);
+		List<GameObjectData> objectsToSave = new ArrayList<GameObjectData>();
 
-        // LevelSaver.jsonSave(objectsToSave, "testLevel");
-        // System.out.println(l.jsonLoad("testLevel.json"));
+		GameObjectData barrierData = new GameObjectData("Barrier");
+		barrierData.setX(200.5);
+		barrierData.setY(1000.0);
+		barrierData.setImgPath("./resources/triangle.png");
+		objectsToSave.add(barrierData);
 
-        LevelSaver.serializeSave(objectsToSave, "serializeTest");
-        System.out.println(l.serializeLoad("serializeTest.ser"));
+		GameObjectData playerData = new GameObjectData("Player");
+		playerData.setX(3.5);
+		playerData.setY(4.0);
+		playerData.setImgPath("./resources/enemy.png");
+		objectsToSave.add(playerData);
 
-    }
+		GameObjectData playerData2 = new GameObjectData("Player");
+		playerData2.setX(100.0);
+		playerData2.setY(500.0);
+		playerData2.setImgPath("./resources/enemy.png");
+		objectsToSave.add(playerData2);
+
+		// LevelSaver.jsonSave(objectsToSave, "testLevel");
+		// System.out.println(l.jsonLoad("testLevel.json"));
+
+		LevelSaver.serializeSave(objectsToSave, "serializeTest");
+		System.out.println(l.serializeLoad("serializeTest.ser"));
+
+	}
 }

@@ -1,12 +1,19 @@
 package gameObjects;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+
+import com.golden.gamedev.Game;
 
 import states.FullHealthState;
 import states.HalfHealthState;
 import states.State;
+import states.StateLoader;
 import movement.BackForthMovement;
 import movement.Movement;
+import movement.TargetedMovement;
 
 /**
  * 
@@ -17,22 +24,19 @@ public class Enemy extends GameObject {
 
 	private ArrayList<State> possibleStates;
 	private State currentState;
+	private StateLoader loader;
 	private int currentHealth;
 
-	public Enemy(double x, double y, String imgPath, ArrayList<State> states) {
+	public Enemy(double x, double y, String imgPath, FileInputStream f) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
 		setLocation(myX, myY);
-		possibleStates = states;
-		State fullHealthState = new FullHealthState(this, new BackForthMovement(
-				getX(), getX() + 200, .2));
-		State halfHealthState = new HalfHealthState(this, new BackForthMovement(
-				getX(), getX() + 200, 1));
-		possibleStates.add(fullHealthState);
-		possibleStates.add(halfHealthState);
-		currentState = fullHealthState;
+		loader = new StateLoader(f);
+		possibleStates = new ArrayList<State>();
+		parseStates(parseMovementTypes());
+		currentState = possibleStates.get(0);
 		currentHealth = 500;
 	}
 
@@ -44,16 +48,17 @@ public class Enemy extends GameObject {
 	public void move() {
 		currentState.move();
 		currentHealth--;
+		System.out.println(currentHealth);
 	}
 
 	public void update() {
 		move();
 		checkState();
 	}
-	
-	public void checkState(){
-		for (State s : possibleStates){
-			if (s.shouldBeCurrentState()){
+
+	public void checkState() {
+		for (State s : possibleStates) {
+			if (s.shouldBeCurrentState()) {
 				currentState = s;
 			}
 		}
@@ -62,9 +67,55 @@ public class Enemy extends GameObject {
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-	
-	public void sustainDamage(int damage){
+
+	public State getCurrentState() {
+		return currentState;
+	}
+
+	public void sustainDamage(int damage) {
 		currentHealth -= damage;
+	}
+
+	private ArrayList<Movement> parseMovementTypes() {
+		System.out.println("in parseMovementTypes");
+		ArrayList<String> movementInfo = loader.getMovementInfo();
+		ArrayList<Movement> movementTypes = new ArrayList<Movement>();
+		for (String s : movementInfo) {
+			String[] parameters = s.split(",");
+			if (parameters[0].equals("BF")) {
+				BackForthMovement m = parseBackForthMovement(parameters);
+				movementTypes.add(m);
+			}
+		}
+		return movementTypes;
+	}
+
+	private BackForthMovement parseBackForthMovement(String[] parameters) {
+		double leftBound = Double.parseDouble(parameters[1]);
+		double rightBound = Double.parseDouble(parameters[2]);
+		double speed = Double.parseDouble(parameters[3]);
+		BackForthMovement m = new BackForthMovement(leftBound,
+				rightBound, speed);
+		return m;
+	}
+
+	private void parseStates(ArrayList<Movement> movementTypes) {
+		System.out.println("in parseStates");
+		ArrayList<String> stateInfo = loader.getStateInfo();
+		for (int i = 0; i < stateInfo.size(); i++) {
+			String[] parameters = stateInfo.get(i).split(",");
+			if (parameters[0].equals("FH")) {
+				System.out.println(parameters[1]);
+				FullHealthState full = new FullHealthState(this,
+						movementTypes.get(i), Integer.parseInt(parameters[1]));
+				possibleStates.add(full);
+			}
+			if (parameters[0].equals("HH")) {
+				HalfHealthState full = new HalfHealthState(this,
+						movementTypes.get(i), Integer.parseInt(parameters[1]));
+				possibleStates.add(full);
+			}
+		}
 	}
 
 	@Override
@@ -72,8 +123,16 @@ public class Enemy extends GameObject {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();
-		ArrayList<State> states = new ArrayList<State>(); 
-		return new Enemy(x, y, imgPath, states);
+		FileInputStream f;
+		try {
+			f = new FileInputStream("stateInfo.txt");
+			return new Enemy(x, y, imgPath, f);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+		
 	}
 
 	/**

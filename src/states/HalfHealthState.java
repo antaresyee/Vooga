@@ -11,17 +11,15 @@ import movement.Movement;
 
 public class HalfHealthState extends State {
 
-	public HalfHealthState(Enemy e, Movement m){
+	public HalfHealthState(Enemy e, Movement m, int p){
 		myEnemy = e;
 		myMovement = m;
+		priorityLevel = p;
 	}
 
 	@Override
 	public boolean shouldBeCurrentState() {
-		if (myEnemy.getCurrentHealth() < 250){
-			return true;
-		}
-		return false;
+		return myEnemy.getCurrentHealth() < 250 && takesPriority();
 	}
 
 }

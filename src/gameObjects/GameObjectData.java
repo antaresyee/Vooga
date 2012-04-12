@@ -1,7 +1,10 @@
 package gameObjects;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.TreeMap;
+
+import states.State;
 
 import movement.Movement;
 
@@ -20,6 +23,8 @@ public class GameObjectData implements Serializable {
     
     private TreeMap<String, String> myData;
     private Movement myMovement;
+    //used ONLY for enemies. testing enemy state framework
+    private ArrayList<Movement> myEnemyMovements;
     
     public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
@@ -43,6 +48,10 @@ public class GameObjectData implements Serializable {
         myMovement = movement;
     }
     
+    public void setEnemyMovements(ArrayList<Movement> movements){
+    	myEnemyMovements = movements;
+    }
+    
     
     //GETTERS
     public String getType() {
@@ -63,6 +72,10 @@ public class GameObjectData implements Serializable {
     
     public Movement getMovement() {
         return myMovement;
+    }
+    
+    public ArrayList<Movement> getMovements(){
+    	return myEnemyMovements;
     }
     
     //JAVA OVERRIDES
