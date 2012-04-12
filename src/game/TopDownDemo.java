@@ -23,6 +23,7 @@ import states.State;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
+import levelLoadSave.SimpleLoadObserver;
 import maps.Map;
 import movement.BackForthMovement;
 import movement.Movement;
