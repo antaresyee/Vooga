@@ -50,5 +50,9 @@ public abstract class Projectile extends GameObject{
 	
 	public abstract void actionOnCollision(GameObject hit);
 	
+	public void removeProjectile(){
+		this.myGroup.remove(this);
+	}
+	
 
 }

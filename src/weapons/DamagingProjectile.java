@@ -21,7 +21,7 @@ public class DamagingProjectile extends Projectile{
 			Enemy enemy = (Enemy) hit;
 			enemy.sustainDamage(myDamage);
 		}
-		
+		removeProjectile();
 	}
 
 	@Override
