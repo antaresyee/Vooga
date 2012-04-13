@@ -10,7 +10,7 @@ public class Question {
 	public int enemies = 1;
 	private String movement;
 	public void enemyQuestion(){
-		Object[] options = {"Back and Forth"};
+		Object[] options = {"Back and Forth", "No Movement"};
 
 		String input = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Pick Your Enemy Movement for default state:", "Top Down Demo'",
