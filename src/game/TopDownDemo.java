@@ -20,6 +20,7 @@ import states.FullHealthState;
 import states.LowHealthState;
 import states.State;
 
+import levelLoadSave.EnemyLoadObserver;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
@@ -81,8 +82,8 @@ public class TopDownDemo extends Game {
 		// load level data
 		myLoadObservers = new ArrayList<LoadObserver>();
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new SimpleLoadObserver(myEnemyGroup));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
+		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
 

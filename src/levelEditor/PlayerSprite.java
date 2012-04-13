@@ -22,11 +22,8 @@ public class PlayerSprite extends Sprites {
 	}
 
 	@Override
-	public void askQuestions() {
-//		TabGUIExample s=new TabGUIExample();
-//		GameLoader game = new GameLoader();
-//		game.setup(s, new Dimension(800, 600), false);
-//		game.start();
+	public void askQuestions(Question q) {
+		
 		
 	}
 	@Override

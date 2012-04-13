@@ -16,7 +16,7 @@ public class BarrierSprite extends Sprites {
 	}
 
 	@Override
-	public void askQuestions() {
+	public void askQuestions(Question q) {
 		// TODO Auto-generated method stub
 		
 	}

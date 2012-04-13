@@ -125,7 +125,7 @@ public class Enemy extends GameObject {
 		String imgPath = god.getImgPath();
 		FileInputStream f;
 		try {
-			f = new FileInputStream("stateInfo.txt");
+			f = new FileInputStream("StateInfo1.txt");
 			return new Enemy(x, y, imgPath, f);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

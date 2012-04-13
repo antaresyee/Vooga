@@ -12,16 +12,17 @@ import com.golden.gamedev.object.Sprite;
  */
 public class EnemySprite extends Sprites {
 	 int enemyCount=1;
-
+	 Question q;
 	public EnemySprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void askQuestions() {
+	public void askQuestions(Question q) {
 		// TODO Auto-generated method stub
-		
+		q.enemyQuestion();
+		q.writeEnemy();
 	}
 	@Override
 	public int newID() {

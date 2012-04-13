@@ -66,6 +66,7 @@ public class LevelEditorGUI extends Game {
 	private Map myMap;
 	private BufferedImage myBackImage;
 	private Background myBackground;
+	public Question q;
 
 	@Override
 	public void initResources() {
@@ -119,6 +120,8 @@ public class LevelEditorGUI extends Game {
 		list.add(barrier);
 		list.add(player);
 		list.add(powerup);
+		
+		q= new Question();
 
 	}
 
@@ -174,7 +177,7 @@ public class LevelEditorGUI extends Game {
 						Sprites newSpr = check.makeSprite();
 	
 						if (check.getType().equals(myPlayer) && input == 0) {
-							newSpr.askQuestions();
+							newSpr.askQuestions(q);
 							break;
 						}
 						//create and place new Sprite on background
@@ -199,7 +202,7 @@ public class LevelEditorGUI extends Game {
 			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setID(newSpr.newID());
 			new1.setBackground(myBackground);
-			newSpr.askQuestions();
+			newSpr.askQuestions(q);
 			ALL.add(new1);
 			totalSprites++;
 			list.add(new1);
@@ -217,26 +220,21 @@ public class LevelEditorGUI extends Game {
 			Sprite[] allSprite = new Sprite[ALL.getSize()];
 			allSprite = ALL.getSprites();
 			level = makeGODList(allSprite);
-
-			try {
-				LevelSaver.jsonSave(level, "savedLevel");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			LevelSaver.serializeSave(level, "serializeTest");	
+			 for (GameObjectData f : level) {
+				 System.out.print(f.getImgPath());
+				 System.out.print(" ");
+				 System.out.print(f.getX());
+				 System.out.print(" ");
+				 System.out.println(f.getY());
+				 }
 			finish();
 		} else {
 			JOptionPane
 					.showMessageDialog(new JFrame(),
 							"You must place a 'Player' game object before you can save the level!");
 		}
-		// for (GameObjectData f : level) {
-		// System.out.print(f.getImgPath());
-		// System.out.print(" ");
-		// System.out.print(f.getX());
-		// System.out.print(" ");
-		// System.out.println(f.getY());
-		// }
+		
 	}
 
 	// sets current game object to follow the mouse

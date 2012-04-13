@@ -32,7 +32,7 @@ public abstract class Sprites {
 		return y;
 	}
 	
-	public abstract void askQuestions();
+	public abstract void askQuestions(Question q);
 	
 	public abstract int newID();
 	
