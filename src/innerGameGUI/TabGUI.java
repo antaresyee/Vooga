@@ -39,18 +39,19 @@ public class TabGUI {
 	private final static int OBJ_WIDTH = 60;
 	private final static int OBJ_HEIGHT = 60;
 	private final static int GAP = 20;
+	protected String myMessage;
 	public BufferedImage a;
 	
 	
 	private boolean isClicked;
-	private GameObject myCurrentObject;
+	protected GameObject myCurrentObject;
 	
 	private List<TabGUI> myNeighbors;
 
 	public TabGUI(Game game, List<GameObject> gos, String name, List<TabGUI> neighbors, int x, int y) {
 		myGame = game;
 		myTabname = name;
-
+		myMessage = "Buy this one?";
 		myX = x;
 		myY = y;
 		myWindowWidth = game.getWidth();
@@ -65,17 +66,42 @@ public class TabGUI {
 		if(gos != null)
 		{
 			myCurrentObject = gos.get(0);
-			myCurrentObject.setImage(ImageUtil.resize(myCurrentObject.getImage(), CURRENT_WIDTH, CURRENT_HEIGHT));
+			BufferedImage img1 = myCurrentObject.getImage();
+			if(img1 == null) img1 = game.getImage(myCurrentObject.getImgPath());
+			myCurrentObject.setImage(ImageUtil.resize(img1, CURRENT_WIDTH, CURRENT_HEIGHT));
 			int gox = myGame.getWidth() / 2 - myCurrentObject.getWidth()/2;
 			int goy = myGame.getHeight() / 4;
 			for (GameObject go : myObjects) {
-				if (!go.equals(myCurrentObject))
-					go.setImage(ImageUtil.resize(go.getImage(), OBJ_WIDTH, OBJ_HEIGHT));
+				if (!go.equals(myCurrentObject)){
+					BufferedImage img = go.getImage();
+					if(img == null) img = game.getImage(go.getImgPath());
+					go.setImage(ImageUtil.resize(img, OBJ_WIDTH, OBJ_HEIGHT));
+				}
 				go.setLocation(gox, goy);
 				gox += go.getWidth() + GAP;
 			}
 		}
 	}
+
+//	protected void setList(List<GameObject> gos) {
+//		myObjects = gos;
+//		if(gos != null)
+//		{
+//			myCurrentObject = gos.get(0);
+//			myCurrentObject.setImage(ImageUtil.resize(myCurrentObject.getImage(), CURRENT_WIDTH, CURRENT_HEIGHT));
+//			int gox = myGame.getWidth() / 2 - myCurrentObject.getWidth()/2;
+//			int goy = myGame.getHeight() / 4;
+//			for (GameObject go : myObjects) {
+//				if (!go.equals(myCurrentObject)){
+//					BufferedImage img = go.getImage();
+//					if(img == null) ;
+//					go.setImage(ImageUtil.resize(go.getImage(), OBJ_WIDTH, OBJ_HEIGHT));
+//				}
+//				go.setLocation(gox, goy);
+//				gox += go.getWidth() + GAP;
+//			}
+//		}
+//	}
 
 	public void render(Graphics2D pen) {
 //		pen.fillRect(0, 0, myWindowWidth, myWindowHeight);
@@ -115,20 +141,22 @@ public class TabGUI {
 			shiftLeft();
 		}
 		
-		if (myGame.keyPressed(KeyEvent.VK_ENTER)){
+		if (myGame.keyPressed(KeyEvent.VK_ENTER) && isClicked){
 			//pass to myPlayer
 			String[] options = {"yes","no"};   
-			int option = JOptionPane.showOptionDialog(new JFrame(), "Buy this one?", "Welcome to the shop!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+			int option = JOptionPane.showOptionDialog(new JFrame(), myMessage, "Welcome to the shop!", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
 			
 			if(option == 0)
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Thanks for choosing me! Further steps to be implemented");
-				a=myCurrentObject.getImage();
+				selectionEvent();
+//				a=myCurrentObject.getImage();
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), "Ohhh...Why not me? Further steps to be implemented");
 			}
 			
 		}
+//		refreshList();
 
 	}
 
@@ -159,6 +187,13 @@ public class TabGUI {
 		}
 
 	}
+	
+	public void selectionEvent()
+	{
+		
+	}
+	
+//	public void refreshList(){}
 
 	/*
 	 * Set up the second Tab
