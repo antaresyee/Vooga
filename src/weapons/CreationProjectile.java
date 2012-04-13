@@ -18,7 +18,7 @@ public class CreationProjectile extends Projectile{
 
 	@Override
 	public void actionOnCollision(GameObject hit) {
-		myCreated.setLocation(myX, myY);
+		myCreated.setLocation(hit.getX(), hit.getY());
 		myCreatedSpriteGroup.add(myCreated);
 		removeProjectile();
 		
