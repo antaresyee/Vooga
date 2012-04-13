@@ -16,6 +16,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import playerObjects.Ship;
+
 import states.FullHealthState;
 import states.LowHealthState;
 import states.State;
@@ -39,6 +41,7 @@ import com.golden.gamedev.object.background.ImageBackground;
 
 public class TopDownDemo extends Game {
 
+	private Ship myShip; 
 	private Player myPlayer;
 	private Enemy myEnemy;
 	private SpriteGroup myPlayerGroup;
@@ -100,6 +103,13 @@ public class TopDownDemo extends Game {
 			e1.printStackTrace();
 		}
 
+		//testing ship movement
+		Ship s = new Ship(200, 2950, "resources/ship.png"); 
+		s.setImage(getImage(s.getImgPath())); 
+		myShip = s; 
+		myShip.setHozSpeed(5); 
+		myPlayerGroup.add(myShip); 
+		
 	}
 
 	@Override
@@ -107,6 +117,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.render(pen);
 		// this is for testing enemy movement
 		//myEnemy.render(pen);
+//		myShip.render(pen);
 	}
 
 	@Override
@@ -114,7 +125,8 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		playerMovement();
 		myPlayfield.update(elapsedTime);
-
+		myMap.movePlayer(elapsedTime, myShip);
+		myShip.move(this, myMap.getWidth()); 
 		// this is for testing enemy movement
 		myEnemy.update();
 	}
