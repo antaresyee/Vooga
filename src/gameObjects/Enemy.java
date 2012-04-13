@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import com.golden.gamedev.Game;
 
 import states.FullHealthState;
-import states.HalfHealthState;
+import states.LowHealthState;
 import states.State;
 import states.StateLoader;
 import movement.BackForthMovement;
@@ -110,9 +110,9 @@ public class Enemy extends GameObject {
 						movementTypes.get(i), Integer.parseInt(parameters[1]));
 				possibleStates.add(full);
 			}
-			if (parameters[0].equals("HH")) {
-				HalfHealthState full = new HalfHealthState(this,
-						movementTypes.get(i), Integer.parseInt(parameters[1]));
+			if (parameters[0].equals("LH")) {
+				LowHealthState full = new LowHealthState(this,
+						movementTypes.get(i), Integer.parseInt(parameters[1]), Integer.parseInt(parameters[2]));
 				possibleStates.add(full);
 			}
 		}
