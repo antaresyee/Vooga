@@ -126,7 +126,7 @@ public class TopDownDemo extends Game {
 		playerMovement();
 		myPlayfield.update(elapsedTime);
 		myMap.movePlayer(elapsedTime, myShip);
-		myShip.move(this, myMap.getWidth()); 
+		//myShip.move(this, myMap.getWidth()); 
 		// this is for testing enemy movement
 		myEnemy.update();
 	}
