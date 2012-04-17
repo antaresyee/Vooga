@@ -48,7 +48,7 @@ public class Enemy extends GameObject {
 	public void move() {
 		currentState.move();
 		currentHealth--;
-		System.out.println(currentHealth);
+//		System.out.println(currentHealth);
 	}
 
 	public void update() {
