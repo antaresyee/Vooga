@@ -50,6 +50,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
+	private PlayerInfo playerInfo;
 
 	private BufferedImage myBackImage;
 	private Map myMap;
@@ -109,6 +110,8 @@ public class TopDownDemo extends Game {
 		myShip = s; 
 		myShip.setHozSpeed(5); 
 		myPlayerGroup.add(myShip); 
+		// initializing PlayerInfo
+		playerInfo = new PlayerInfo();
 		
 	}
 
@@ -125,8 +128,10 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		playerMovement();
 		myPlayfield.update(elapsedTime);
+		//updating playerInfo
+		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
 		myMap.movePlayer(elapsedTime, myShip);
-		myShip.move(this, myMap.getWidth()); 
+		//myShip.move(this, myMap.getWidth()); 
 		// this is for testing enemy movement
 		myEnemy.update();
 	}
@@ -220,7 +225,8 @@ public class TopDownDemo extends Game {
 	// }
 	//
 
-	public Player getPlayer() {
-		return myPlayer;
-	}
+//	public Player getPlayer() {
+//		return myPlayer;
+//	}
+	
 }

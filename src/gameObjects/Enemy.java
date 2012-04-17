@@ -1,5 +1,7 @@
 package gameObjects;
 
+import game.PlayerInfo;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,9 +12,13 @@ import com.golden.gamedev.Game;
 import states.FullHealthState;
 import states.LowHealthState;
 import states.State;
+import states.StateFactories;
+import states.StateFactory;
 import states.StateLoader;
 import movement.BackForthMovement;
 import movement.Movement;
+import movement.MovementFactories;
+import movement.MovementFactory;
 import movement.TargetedMovement;
 
 /**
@@ -77,43 +83,38 @@ public class Enemy extends GameObject {
 	}
 
 	private ArrayList<Movement> parseMovementTypes() {
-		System.out.println("in parseMovementTypes");
+		MovementFactories factoryInfo = new MovementFactories();
+		ArrayList<MovementFactory> movementFactories = factoryInfo
+				.getAllMovementFactories();
 		ArrayList<String> movementInfo = loader.getMovementInfo();
 		ArrayList<Movement> movementTypes = new ArrayList<Movement>();
 		for (String s : movementInfo) {
 			String[] parameters = s.split(",");
-			if (parameters[0].equals("BF")) {
-				BackForthMovement m = parseBackForthMovement(parameters);
-				movementTypes.add(m);
+			String name = parameters[0];
+			for (MovementFactory f : movementFactories) {
+				if (f.isMyMovement(name)) {
+					Movement newMovement = f.makeMyMovement(parameters);
+					movementTypes.add(newMovement);
+				}
 			}
 		}
 		return movementTypes;
 	}
 
-	private BackForthMovement parseBackForthMovement(String[] parameters) {
-		double leftBound = Double.parseDouble(parameters[1]);
-		double rightBound = Double.parseDouble(parameters[2]);
-		double speed = Double.parseDouble(parameters[3]);
-		BackForthMovement m = new BackForthMovement(leftBound,
-				rightBound, speed);
-		return m;
-	}
-
 	private void parseStates(ArrayList<Movement> movementTypes) {
-		System.out.println("in parseStates");
+		StateFactories factoryInfo = new StateFactories();
+		ArrayList<StateFactory> stateFactories = factoryInfo
+				.getAllStateFactories();
 		ArrayList<String> stateInfo = loader.getStateInfo();
 		for (int i = 0; i < stateInfo.size(); i++) {
 			String[] parameters = stateInfo.get(i).split(",");
-			if (parameters[0].equals("FH")) {
-				System.out.println(parameters[1]);
-				FullHealthState full = new FullHealthState(this,
-						movementTypes.get(i), Integer.parseInt(parameters[1]));
-				possibleStates.add(full);
-			}
-			if (parameters[0].equals("LH")) {
-				LowHealthState full = new LowHealthState(this,
-						movementTypes.get(i), Integer.parseInt(parameters[1]), Integer.parseInt(parameters[2]));
-				possibleStates.add(full);
+			String name = parameters[0];
+			for (StateFactory f : stateFactories) {
+				if (f.isMyState(name)) {
+					State newState = f.makeMyState(this, parameters,
+							movementTypes, i);
+					possibleStates.add(newState);
+				}
 			}
 		}
 	}
@@ -125,14 +126,13 @@ public class Enemy extends GameObject {
 		String imgPath = god.getImgPath();
 		FileInputStream f;
 		try {
-			f = new FileInputStream("StateInfo1.txt");
+			f = new FileInputStream("stateInfo.txt");
 			return new Enemy(x, y, imgPath, f);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
-		
+
 	}
 
 	/**
