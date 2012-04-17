@@ -38,47 +38,31 @@ import com.google.gson.reflect.TypeToken;
 public class LevelLoader {
 
 	List<LoadObserver> myLoadObservers;
+	List<GameObjectFactory> myAllFactories;
 
 	public LevelLoader(List<LoadObserver> loadObservers) {
 		myLoadObservers = loadObservers;
+		
+		myAllFactories = new ArrayList<GameObjectFactory>();
+        myAllFactories.add(Player.getFactory());
+        myAllFactories.add(Barrier.getFactory());
+        myAllFactories.add(Enemy.getFactory());
+        myAllFactories.add(Boss.getFactory());
+
 	}
 
 	public void loadLevelData(String fileName) {
-		List<GameObjectData> gameObjectDatas;
 		try {
-			gameObjectDatas = serializeLoad(fileName);
-			System.out.println(gameObjectDatas);
-			GameObjectFactory playerFactory = Player.getFactory();
-			GameObjectFactory barrierFactory = Barrier.getFactory();
-			GameObjectFactory enemyFactory = Enemy.getFactory();
-			GameObjectFactory bossFactory = Boss.getFactory();
-
-			GameObject loaded = null;
+			List<GameObjectData> gameObjectDatas = serializeLoad(fileName);
+			
 			for (GameObjectData god : gameObjectDatas) {
-				if (playerFactory.isMyObject(god)) {
-					Player p = (Player) playerFactory.makeGameObject(god);
-					loaded = p;
-					System.out.println("player made");
-				}
-				if (barrierFactory.isMyObject(god)) {
-					Barrier b = (Barrier) barrierFactory.makeGameObject(god);
-					loaded = b;
-					System.out.println("barrier made");
-
-				}
-				if (enemyFactory.isMyObject(god)) {
-					Enemy e = (Enemy) enemyFactory.makeGameObject(god);
-					loaded = e;
-					System.out.println("enemy made");
-
-				}
-				if (bossFactory.isMyObject(god)) {
-					Boss b = (Boss) bossFactory.makeGameObject(god);
-					loaded = b;
-					System.out.println("boss made");
-				}
-				notifyObservers(loaded);
-
+			    for (GameObjectFactory f : myAllFactories) {
+			        if (f.isMyObject(god)) {
+			            GameObject loadedObject = f.makeGameObject(god);
+			            notifyObservers(loadedObject);
+			            break;
+			        }
+			    }
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -87,7 +71,6 @@ public class LevelLoader {
 
 	public List<GameObjectData> serializeLoad(String fileName)
 			throws FileNotFoundException {
-		System.out.println("entered serializeLoad");
 		List<GameObjectData> parsedObjects = new ArrayList<GameObjectData>();
 
 		try {

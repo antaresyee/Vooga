@@ -1,5 +1,6 @@
 package movement;
 
+import game.PlayerInfo;
 import gameObjects.GameObject;
 
 /**
@@ -10,10 +11,14 @@ import gameObjects.GameObject;
 
 public class TargetedMovement extends Movement {
 
-	private GameObject myTarget;
+	private double myTargetX;
+	private double myTargetY;
+	private PlayerInfo playerInfo;
 
-	public TargetedMovement(GameObject o, double s) {
-		myTarget = o;
+	public TargetedMovement(double s) {
+		playerInfo = new PlayerInfo();
+		myTargetX = playerInfo.getPlayerX();
+		myTargetY = playerInfo.getPlayerY();
 		speed = s;
 	}
 
@@ -21,38 +26,50 @@ public class TargetedMovement extends Movement {
 	public void move(GameObject o) {
 		double myY = o.getY();
 		double myX = o.getX();
-		double targetY = myTarget.getY();
-		double targetX = myTarget.getX();
-		if (myY < targetY) {
+		if (myY < myTargetY) {
 			o.setVerticalSpeed(speed);
 		}
-		if (myY > targetY) {
+		if (myY > myTargetY) {
 			o.setVerticalSpeed(-speed);
 		}
-		if (myX < targetX) {
+		if (myX < myTargetX) {
 			o.setHorizontalSpeed(speed);
 		}
-		if (myX > targetX) {
+		if (myX > myTargetX) {
 			o.setHorizontalSpeed(-speed);
 		}
 
-		if (myX > targetX && myX < targetX + 5) {
+		if (myX > myTargetX && myX < myTargetX + 5) {
 			o.setHorizontalSpeed(0);
 		}
-		if (myX < targetX && myX > targetX - 5) {
+		if (myX < myTargetX && myX > myTargetX - 5) {
 			o.setHorizontalSpeed(0);
 		}
-		if (myY > targetY && myY < targetY + 5) {
+		if (myY > myTargetY && myY < myTargetY + 5) {
 			o.setVerticalSpeed(0);
 		}
-		if (myY < targetY && myY > targetY - 5) {
+		if (myY < myTargetY && myY > myTargetY - 5) {
 			o.setVerticalSpeed(0);
 		}
 
 	}
+	
+	public void setSpeed(double s){
+		speed = s;
+	}
 
-	public void changeTarget(GameObject o) {
-		myTarget = o;
+	public static class TargetedMovementFactory extends MovementFactory{
+		
+		public TargetedMovementFactory(){
+			myName = "T";
+		}
+
+		@Override
+		public Movement makeMyMovement(String[] parameters) {
+			double speed = Double.parseDouble(parameters[1]);
+			return new TargetedMovement(speed);
+		}
+		
 	}
 
 }
