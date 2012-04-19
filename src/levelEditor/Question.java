@@ -16,7 +16,6 @@ public class Question {
 				"Pick Your Enemy Movement for default state:", "Top Down Demo'",
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (input.equals("Back and Forth")) movement ="BF,100,200,.2 ";
-		System.out.print(enemies);
 	}
 	
 	public void writeEnemy(){
@@ -32,6 +31,17 @@ public class Question {
 			  System.err.println("Error: " + e.getMessage());
 			  }
 			  enemies++;
+	}
+	
+	// asks user if he is happy with his location
+	public int yesOrNo(String type) {
+		String[] options = { "yes", "no" };
+		int option = JOptionPane.showOptionDialog(new JFrame(),
+				"Would you like to place the " + type + " here?",
+				"Level Editor", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+		return option;
 	}
 	
 	

@@ -1,7 +1,10 @@
 package levelEditor;
 
+import java.awt.image.BufferedImage;
+
 import gameObjects.GameObjectData;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 /**
  * 
@@ -9,7 +12,7 @@ import com.golden.gamedev.object.Sprite;
  *
  */
 public class BarrierSprite extends Sprites {
-	int barrierCount=1001;	
+	private final String myType = "Barrier";
 	public BarrierSprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
@@ -20,12 +23,11 @@ public class BarrierSprite extends Sprites {
 		// TODO Auto-generated method stub
 		
 	}
-	@Override
-	public int newID() {
-		barrierCount++;
-		return barrierCount;
-	}
 
+	@Override
+	public String getType() {
+		return myType;
+	}
 	public static class Factory extends Sprites.Factory{
         
 		private final String imagePath = "resources/black.png";
@@ -33,9 +35,10 @@ public class BarrierSprite extends Sprites {
 		private final int startY = 2929;
 		private final String myType = "Barrier";
 
+
 		@Override
-		public boolean isType(int id) {
-			return 1000<id && id<2001;
+		public boolean isType(BufferedImage img, Game g) {
+			return img.equals(g.getImage(imagePath));
 		}
 
 		@Override
@@ -43,20 +46,12 @@ public class BarrierSprite extends Sprites {
 			return new BarrierSprite(imagePath, startX, startY);
 		}
 
-
-		@Override
-		public GameObjectData makeGameObject(Sprite spr) {
-			GameObjectData god = new GameObjectData(myType);
-			god.setX(spr.getX());
-			god.setY(spr.getY());
-			god.setImgPath(imagePath);
-			return god;
-		}
-
 		@Override
 		public String getType() {
+			// TODO Auto-generated method stub
 			return myType;
 		}
+		
 
 	}
 
