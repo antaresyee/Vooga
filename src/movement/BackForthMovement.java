@@ -16,10 +16,10 @@ public class BackForthMovement extends Movement implements Serializable {
 	private double myLeftBound;
 	private double myRightBound;
 
-	public BackForthMovement(double l, double r, double s) {
+	public BackForthMovement(double l, double r) {
 		myLeftBound = l;
 		myRightBound = r;
-		mySpeed = s;
+		mySpeed = .2;
 	}
 
 	@Override
@@ -42,9 +42,8 @@ public class BackForthMovement extends Movement implements Serializable {
 		public Movement makeMyMovement(String[] parameters) {
 			double leftBound = Double.parseDouble(parameters[1]);
 			double rightBound = Double.parseDouble(parameters[2]);
-			double speed = Double.parseDouble(parameters[3]);
 			return new BackForthMovement(leftBound,
-					rightBound, speed);
+					rightBound);
 		}
 		
 	}

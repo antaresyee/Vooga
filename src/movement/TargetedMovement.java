@@ -16,11 +16,11 @@ public class TargetedMovement extends Movement {
 	private double myTargetY;
 	private PlayerInfo playerInfo;
 
-	public TargetedMovement(double s) {
+	public TargetedMovement() {
 		playerInfo = new PlayerInfo();
 		myTargetX = playerInfo.getPlayerX();
 		myTargetY = playerInfo.getPlayerY();
-		mySpeed = s;
+		mySpeed = .2;
 	}
 
 	@Override
@@ -69,8 +69,7 @@ public class TargetedMovement extends Movement {
 
 		@Override
 		public Movement makeMyMovement(String[] parameters) {
-			double speed = Double.parseDouble(parameters[1]);
-			return new TargetedMovement(speed);
+			return new TargetedMovement();
 		}
 		
 	}
