@@ -1,7 +1,10 @@
 package levelEditor;
 
+import java.awt.image.BufferedImage;
+
 import gameObjects.GameObjectData;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
 
@@ -11,8 +14,7 @@ import com.golden.gamedev.object.Sprite;
  *
  */
 public class EnemySprite extends Sprites {
-	 int enemyCount=1;
-	 Question q;
+	private final String myType= "Enemy";
 	public EnemySprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
@@ -25,9 +27,8 @@ public class EnemySprite extends Sprites {
 		q.writeEnemy();
 	}
 	@Override
-	public int newID() {
-		enemyCount++;
-		return enemyCount;
+	public String getType() {
+		return myType;
 	}
 	
 	
@@ -39,25 +40,18 @@ public class EnemySprite extends Sprites {
 		private final String myType= "Enemy";
 
 		@Override
-		public boolean isType(int id) {
-			return id<101;
+		public boolean isType(BufferedImage img, Game g) {
+			return img.equals(g.getImage(imagePath));
 		}
 
 		@Override
 		public Sprites makeSprite() {
 			return new EnemySprite(imagePath, startX, startY);
 		}
-		
-		public GameObjectData makeGameObject(Sprite spr) {
-			GameObjectData god = new GameObjectData(myType);
-			god.setX(spr.getX());
-			god.setY(spr.getY());
-			god.setImgPath(imagePath);
-			return god;
-		}
 
 		@Override
 		public String getType() {
+			// TODO Auto-generated method stub
 			return myType;
 		}
 

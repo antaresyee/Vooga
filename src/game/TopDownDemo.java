@@ -219,8 +219,4 @@ public class TopDownDemo extends Game {
 	// }
 	//
 
-	// public Player getPlayer() {
-	// return myPlayer;
-	// }
-
 }
