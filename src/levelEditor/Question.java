@@ -1,21 +1,28 @@
 package levelEditor;
 
+import java.awt.Point;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import com.golden.gamedev.Game;
+
 public class Question {
 	public int enemies = 1;
-	private String movement;
-	public void enemyQuestion(){
-		Object[] options = {"Back and Forth", "No Movement"};
+	private String movement=null;
+	public void enemyQuestion(Game g){
+		ArrayList<Point> coordinates = new ArrayList<Point>();
+		Object[] options = {"Back and Forth","Targeted Movement", "No Movement"};
 
 		String input = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Pick Your Enemy Movement for default state:", "Top Down Demo'",
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (input.equals("Back and Forth")) movement ="BF,100,200,.2 ";
+		if (input.equals("Targeted Movement")) movement = "T ";
+	
 	}
 	
 	public void writeEnemy(){

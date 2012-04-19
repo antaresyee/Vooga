@@ -13,8 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.Set;
-import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -186,7 +184,7 @@ public class LevelEditorGUI extends Game {
 				mapData.put(loc,newSpr);
 				
 				if (check.getType().equals(myPlayer)) {
-					newSpr.askQuestions(q);
+					newSpr.askQuestions(q, this);
 					break;
 				}
 				//create and place new Sprite on background
@@ -211,7 +209,7 @@ public class LevelEditorGUI extends Game {
 		// if user is happy with location make new sprite
 			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setBackground(myBackground);
-			if (!initial) newSpr.askQuestions(q);
+			if (!initial) newSpr.askQuestions(q,this);
 			ALL.add(new1);
 			list.add(new1);
 			totalSprites++;	
@@ -220,9 +218,7 @@ public class LevelEditorGUI extends Game {
 	// saves the level
 	private void saveFile() {
 		if (player.getY() < backHeight - 100) {
-			Sprite[] allSprite = new Sprite[ALL.getSize()];
-			allSprite = ALL.getSprites();
-			level = makeGODList(allSprite);
+			level = makeGODList();
 			LevelSaver.serializeSave(level, "serializeTest");	
 			 for (GameObjectData f : level) {
 				 System.out.print(f.getImgPath());
@@ -263,7 +259,7 @@ public class LevelEditorGUI extends Game {
 	}
 
 	// makes a list of GameObjectData after the user presses "control" and "s"
-	private List<GameObjectData> makeGODList(Sprite[] sprites) {
+	private List<GameObjectData> makeGODList() {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
 		for (Point pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());

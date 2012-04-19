@@ -32,6 +32,7 @@ public class Enemy extends GameObject {
 	private State currentState;
 	private EnemyDataLoader loader;
 	private int currentHealth;
+	private static int count=0;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
@@ -62,7 +63,7 @@ public class Enemy extends GameObject {
 		currentHealth--;
 	}
 
-	public void update() {
+	public void updateEnemy() {
 		move();
 		checkState();
 	}
@@ -96,6 +97,7 @@ public class Enemy extends GameObject {
 		for (String s : movementInfo) {
 			String[] parameters = s.split(",");
 			String name = parameters[0];
+			System.out.println(name);
 			for (MovementFactory f : movementFactories) {
 				if (f.isMyMovement(name)) {
 					Movement newMovement = f.makeMyMovement(parameters);
@@ -128,8 +130,10 @@ public class Enemy extends GameObject {
 	public GameObject makeGameObject(GameObjectData god) {
 		Double x = god.getX();
 		Double y = god.getY();
-		String imgPath = god.getImgPath();
-		String filename = "stateInfo.txt";
+		String imgPath = god.getImgPath();	
+		count++;
+		String filename = "stateInfo"+count+ ".txt";
+		System.out.println(count);
 		return new Enemy(x, y, imgPath, filename);
 
 	}

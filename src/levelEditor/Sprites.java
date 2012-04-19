@@ -35,7 +35,7 @@ public abstract class Sprites {
 		return y;
 	}
 	
-	public abstract void askQuestions(Question q);
+	public abstract void askQuestions(Question q, Game g);
 	
 	public abstract String getType();
 	

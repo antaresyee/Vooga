@@ -27,8 +27,6 @@ public class EnemyDataLoader {
 		while (s.hasNext()) {
 			String line = s.next();
 			String[] splitLine = line.split(" ");
-			System.out.println(splitLine[0]);
-			System.out.println(splitLine[1]);
 			movementInfo.add(splitLine[0]);
 			stateInfo.add(splitLine[1]);
 		}
