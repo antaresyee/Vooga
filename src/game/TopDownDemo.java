@@ -93,7 +93,7 @@ public class TopDownDemo extends Game {
 		l.loadLevelData("serializeTest.ser");
 		
 		// this is for testing enemy movement
-		Enemy e = new Enemy(100, 2400, "resources/enemy.png", "StateInfo1.txt");
+		Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
 		e.setImage(getImage(e.getImgPath()));
 //		myEnemy = e;
 //		myEnemyGroup.add(myEnemy);
