@@ -2,6 +2,7 @@ package movement;
 
 import java.io.Serializable;
 
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -12,22 +13,22 @@ import gameObjects.GameObject;
 
 public class BackForthMovement extends Movement implements Serializable {
 
-	private double leftBound;
-	private double rightBound;
+	private double myLeftBound;
+	private double myRightBound;
 
 	public BackForthMovement(double l, double r, double s) {
-		leftBound = l;
-		rightBound = r;
-		speed = s;
+		myLeftBound = l;
+		myRightBound = r;
+		mySpeed = s;
 	}
 
 	@Override
 	public void move(GameObject o) {
 		// System.out.println(o.getX());
-		if (o.getX() >= rightBound) {
-			o.setHorizontalSpeed(-speed);
-		} else if (o.getX() <= leftBound) {
-			o.setHorizontalSpeed(speed);
+		if (o.getX() >= myRightBound) {
+			o.setHorizontalSpeed(-mySpeed);
+		} else if (o.getX() <= myLeftBound) {
+			o.setHorizontalSpeed(mySpeed);
 		}
 	}
 	

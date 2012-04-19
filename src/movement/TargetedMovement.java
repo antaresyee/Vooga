@@ -1,6 +1,7 @@
 package movement;
 
 import game.PlayerInfo;
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -19,24 +20,26 @@ public class TargetedMovement extends Movement {
 		playerInfo = new PlayerInfo();
 		myTargetX = playerInfo.getPlayerX();
 		myTargetY = playerInfo.getPlayerY();
-		speed = s;
+		mySpeed = s;
 	}
 
 	@Override
 	public void move(GameObject o) {
 		double myY = o.getY();
 		double myX = o.getX();
+		myTargetX = playerInfo.getPlayerX();
+		myTargetY = playerInfo.getPlayerY();
 		if (myY < myTargetY) {
-			o.setVerticalSpeed(speed);
+			o.setVerticalSpeed(mySpeed);
 		}
 		if (myY > myTargetY) {
-			o.setVerticalSpeed(-speed);
+			o.setVerticalSpeed(-mySpeed);
 		}
 		if (myX < myTargetX) {
-			o.setHorizontalSpeed(speed);
+			o.setHorizontalSpeed(mySpeed);
 		}
 		if (myX > myTargetX) {
-			o.setHorizontalSpeed(-speed);
+			o.setHorizontalSpeed(-mySpeed);
 		}
 
 		if (myX > myTargetX && myX < myTargetX + 5) {
@@ -55,7 +58,7 @@ public class TargetedMovement extends Movement {
 	}
 	
 	public void setSpeed(double s){
-		speed = s;
+		mySpeed = s;
 	}
 
 	public static class TargetedMovementFactory extends MovementFactory{

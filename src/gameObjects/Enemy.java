@@ -14,8 +14,12 @@ import states.LowHealthState;
 import states.State;
 import states.StateFactories;
 import states.StateFactory;
+<<<<<<< HEAD
 import states.StateLoader;
 import levelLoadSave.ForSave;
+=======
+import states.EnemyDataLoader;
+>>>>>>> 4e0395a3eeb379cfa46b648ddc6219a8ee4bc8c5
 import movement.BackForthMovement;
 import movement.Movement;
 import movement.MovementFactories;
@@ -33,16 +37,22 @@ public class Enemy extends GameObject {
 
 	private ArrayList<State> possibleStates;
 	private State currentState;
-	private StateLoader loader;
+	private EnemyDataLoader loader;
 	private int currentHealth;
 
-	public Enemy(double x, double y, String imgPath, FileInputStream f) {
+	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
 		setLocation(myX, myY);
-		loader = new StateLoader(f);
+		FileInputStream f;
+		try {
+			f = new FileInputStream(filename);
+			loader = new EnemyDataLoader(f);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
 		possibleStates = new ArrayList<State>();
 		parseStates(parseMovementTypes());
 		currentState = possibleStates.get(0);
@@ -57,7 +67,6 @@ public class Enemy extends GameObject {
 	public void move() {
 		currentState.move();
 		currentHealth--;
-		System.out.println(currentHealth);
 	}
 
 	public void update() {
@@ -127,14 +136,8 @@ public class Enemy extends GameObject {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();
-		FileInputStream f;
-		try {
-			f = new FileInputStream("stateInfo.txt");
-			return new Enemy(x, y, imgPath, f);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return null;
+		String filename = "stateInfo.txt";
+		return new Enemy(x, y, imgPath, filename);
 
 	}
 
