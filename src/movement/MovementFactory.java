@@ -1,5 +1,10 @@
 package movement;
 
+/**
+ * 
+ * @author James Pagliuca
+ *
+ */
 public abstract class MovementFactory {
 	
 	protected String myName;
