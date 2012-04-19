@@ -15,6 +15,7 @@ import states.State;
 import states.StateFactories;
 import states.StateFactory;
 import states.StateLoader;
+import levelLoadSave.ForSave;
 import movement.BackForthMovement;
 import movement.Movement;
 import movement.MovementFactories;
@@ -26,6 +27,8 @@ import movement.TargetedMovement;
  * @author James Pagliuca
  * 
  */
+
+@ForSave
 public class Enemy extends GameObject {
 
 	private ArrayList<State> possibleStates;
