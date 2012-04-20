@@ -2,7 +2,7 @@ package playerObjects;
 
 import com.golden.gamedev.Game;
 
-public class VertShip extends Ship{
+public class VertShip extends HozShip{
 
 	protected int myVertSpeed; 	
 	
