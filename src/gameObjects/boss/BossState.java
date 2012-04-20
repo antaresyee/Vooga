@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.SpriteGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class BossState extends GameObject {
 	private List<BossWeakPoint> myWeakPoints;
+	private List<BossPart> myBossParts;
 	private SpriteGroup mySpriteGroup;
 	private boolean isDead;
 	private String jsonString;
@@ -27,12 +29,18 @@ public class BossState extends GameObject {
 	public BossState(List<BossWeakPoint> bwps) {
 		mySpriteGroup = new SpriteGroup("BossWeakPoints");
 		isDead = false;
+		setParts(new ArrayList<BossPart>());
 		setWeakPoints(bwps);
 	}
 
 	public BossState(double x, double y, String imgPath) {
 		setLocation(x, y);
 		myImgPath = imgPath;
+	}
+	
+	public void setParts(List<BossPart> bps){
+		myBossParts = bps;
+//		System.out.println(myBossParts.size());
 	}
 
 	public void setWeakPoints(List<BossWeakPoint> bwps) {
@@ -84,6 +92,9 @@ public class BossState extends GameObject {
 			if (!bwp.isHit())
 				bwp.update(elapsedTime);
 		}
+		for (BossPart bp : myBossParts){
+			bp.update(elapsedTime);
+		}
 		checkDead();
 	}
 
@@ -91,6 +102,9 @@ public class BossState extends GameObject {
 		super.render(pen);
 		for (BossWeakPoint bwp : myWeakPoints) {
 			bwp.render(pen);
+		}
+		for (BossPart bp : myBossParts){
+			bp.render(pen);
 		}
 	}
 
@@ -125,24 +139,37 @@ public class BossState extends GameObject {
 		return jsonString;
 	}
 
-	public int load(List<String> list, int index, String prefix) {
+	public int load(Game game, List<String> list, int index, String prefix) {
 		// TODO Auto-generated method stub
 		Gson gson = new Gson();
 		List<BossWeakPoint> bsl = new ArrayList<BossWeakPoint>();
+		List<BossPart> bps = new ArrayList<BossPart>();
 		Type godClass = new TypeToken<BossWeakPoint>() {
 		}.getType(); // tell json parser the object's type
 		while (index < list.size()) {
 			String jsonGod = list.get(index);
 			if (jsonGod.startsWith(prefix)) {
+				if(jsonGod.startsWith(prefix+"*")){
+					BossPart bp = gson.fromJson(jsonGod.substring(prefix.length()+1), new TypeToken<BossPart>(){}.getType());
+					bp.setImage(game.getImage(bp.getImgPath()));
+					bps.add(bp);
+//					System.out.println(bps.size());
+//					System.out.println(jsonGod);
+					index++;
+					continue;
+				}
 				BossWeakPoint parsedGod = gson.fromJson(
 						jsonGod.substring(prefix.length()), godClass);
 				bsl.add(parsedGod);
 				index = parsedGod.load(list, index+1, this, prefix + '-');
+				
 			} else {
+				setParts(bps);
 				setWeakPoints(bsl);
 				return index;
 			}
 		}
+		setParts(bps);
 		setWeakPoints(bsl);
 		return index;
 		// while (scanner.useDelimiter("\n").hasNext()) {
