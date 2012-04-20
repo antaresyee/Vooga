@@ -16,13 +16,14 @@ import com.golden.gamedev.object.font.SystemFont;
  * @author Kaitlyn
  *
  */
-public class KTextBox extends Sprite {
+public class KTextBox extends KComponent {
 	private String myInfo, myMsg;
 	private SystemFont myFont;
 	private boolean displayTextOn, enabled;
 	private Game myGame;
 	
 	public KTextBox(Game game, String info){
+		super(game);
 		myInfo = info;
 		myMsg = "";
 		myGame = game;
