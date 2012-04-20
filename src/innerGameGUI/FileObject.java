@@ -10,7 +10,12 @@ import com.golden.gamedev.object.font.SystemFont;
 
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
-
+/**
+ * Convert the saved JSON game to a GameObject for display in the TabGUI should the developer choose to
+ * 
+ * @author Kaitlyn 
+ * 
+ */
 public class FileObject extends GameObject {
 	private String myFilePath;
 	private SystemFont myFont;

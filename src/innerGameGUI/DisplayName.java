@@ -5,7 +5,9 @@ package innerGameGUI;
  * @author Kaitlyn
  *
  */
-public class DisplayBloodbar extends DisplayBar {
-
-	
+public class DisplayName extends DisplayBar {
+	public DisplayName(String name)
+	{
+		myName = name;
+	}
 }
