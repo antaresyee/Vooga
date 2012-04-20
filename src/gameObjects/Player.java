@@ -2,9 +2,10 @@ package gameObjects;
 import java.awt.image.BufferedImage;
 
 
+import levelLoadSave.ForSave;
 import movement.Movement;
 
-
+@ForSave
 public class Player extends GameObject {
 
     public Player(double x, double y, String imgPath){

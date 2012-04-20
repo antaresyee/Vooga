@@ -1,5 +1,7 @@
 package movement;
 
+import game.PlayerInfo;
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -10,49 +12,66 @@ import gameObjects.GameObject;
 
 public class TargetedMovement extends Movement {
 
-	private GameObject myTarget;
+	private double myTargetX;
+	private double myTargetY;
+	private PlayerInfo playerInfo;
 
-	public TargetedMovement(GameObject o, double s) {
-		myTarget = o;
-		speed = s;
+	public TargetedMovement() {
+		playerInfo = new PlayerInfo();
+		myTargetX = playerInfo.getPlayerX();
+		myTargetY = playerInfo.getPlayerY();
+		mySpeed = .2;
 	}
 
 	@Override
 	public void move(GameObject o) {
 		double myY = o.getY();
 		double myX = o.getX();
-		double targetY = myTarget.getY();
-		double targetX = myTarget.getX();
-		if (myY < targetY) {
-			o.setVerticalSpeed(speed);
+		myTargetX = playerInfo.getPlayerX();
+		myTargetY = playerInfo.getPlayerY();
+		if (myY < myTargetY) {
+			o.setVerticalSpeed(mySpeed);
 		}
-		if (myY > targetY) {
-			o.setVerticalSpeed(-speed);
+		if (myY > myTargetY) {
+			o.setVerticalSpeed(-mySpeed);
 		}
-		if (myX < targetX) {
-			o.setHorizontalSpeed(speed);
+		if (myX < myTargetX) {
+			o.setHorizontalSpeed(mySpeed);
 		}
-		if (myX > targetX) {
-			o.setHorizontalSpeed(-speed);
+		if (myX > myTargetX) {
+			o.setHorizontalSpeed(-mySpeed);
 		}
 
-		if (myX > targetX && myX < targetX + 5) {
+		if (myX > myTargetX && myX < myTargetX + 5) {
 			o.setHorizontalSpeed(0);
 		}
-		if (myX < targetX && myX > targetX - 5) {
+		if (myX < myTargetX && myX > myTargetX - 5) {
 			o.setHorizontalSpeed(0);
 		}
-		if (myY > targetY && myY < targetY + 5) {
+		if (myY > myTargetY && myY < myTargetY + 5) {
 			o.setVerticalSpeed(0);
 		}
-		if (myY < targetY && myY > targetY - 5) {
+		if (myY < myTargetY && myY > myTargetY - 5) {
 			o.setVerticalSpeed(0);
 		}
 
 	}
+	
+	public void setSpeed(double s){
+		mySpeed = s;
+	}
 
-	public void changeTarget(GameObject o) {
-		myTarget = o;
+	public static class TargetedMovementFactory extends MovementFactory{
+		
+		public TargetedMovementFactory(){
+			myName = "T";
+		}
+
+		@Override
+		public Movement makeMyMovement(String[] parameters) {
+			return new TargetedMovement();
+		}
+		
 	}
 
 }

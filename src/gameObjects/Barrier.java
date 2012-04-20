@@ -1,7 +1,9 @@
 package gameObjects;
 
+import levelLoadSave.ForSave;
 
 
+@ForSave
 public class Barrier extends GameObject{
 	
     public Barrier(double x, double y, String imgPath){

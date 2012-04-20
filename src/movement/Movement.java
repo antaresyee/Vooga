@@ -1,5 +1,6 @@
 package movement;
 
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -10,8 +11,9 @@ import gameObjects.GameObject;
 
 public abstract class Movement {
 	
-	protected double speed;
-		
+	protected double mySpeed;
+			
 	public abstract void move(GameObject o);
+
 	
 }

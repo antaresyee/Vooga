@@ -1,7 +1,10 @@
 package levelEditor;
 
+import java.awt.image.BufferedImage;
+
 import gameObjects.GameObjectData;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
 /**
@@ -32,20 +35,18 @@ public abstract class Sprites {
 		return y;
 	}
 	
-	public abstract void askQuestions(Question q);
+	public abstract void askQuestions(Question q, Game g);
 	
-	public abstract int newID();
-	
+	public abstract String getType();
 	
 	public abstract static class Factory {
 
-		public abstract boolean isType(int id);
+		public abstract boolean isType(BufferedImage img, Game g);
 		
 		public abstract Sprites makeSprite();
 		
-		public abstract GameObjectData makeGameObject(Sprite spr);
-
 		public abstract String getType();
+		
 	}
 
 }

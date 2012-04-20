@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import levelLoadSave.ForSave;
+
 import gameObjects.Enemy;
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
@@ -19,6 +21,7 @@ import com.golden.gamedev.object.SpriteGroup;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+@ForSave
 public class Boss extends GameObject {
 
 	private List<BossState> myStates;

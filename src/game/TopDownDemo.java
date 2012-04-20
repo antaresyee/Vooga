@@ -41,7 +41,7 @@ import com.golden.gamedev.object.background.ImageBackground;
 
 public class TopDownDemo extends Game {
 
-	private Ship myShip; 
+	private Ship myShip;
 	private Player myPlayer;
 	private Enemy myEnemy;
 	private SpriteGroup myPlayerGroup;
@@ -50,10 +50,12 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
+	private PlayerInfo playerInfo;
+	private int enemySize;
 
 	private BufferedImage myBackImage;
 	private Map myMap;
-
+	private int count=0;
 	private List<LoadObserver> myLoadObservers;
 
 	@Override
@@ -89,35 +91,30 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
-
-		// this is for testing enemy movement
-		FileInputStream f;
-		try {
-			f = new FileInputStream(
-					"stateInfo.txt");
-			Enemy e = new Enemy(100, 2400, "resources/enemy.png", f);
-			e.setImage(getImage(e.getImgPath()));
-			myEnemy = e;
-			myEnemyGroup.add(myEnemy);
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-
-		//testing ship movement
-		Ship s = new Ship(200, 2950, "resources/ship.png"); 
-		s.setImage(getImage(s.getImgPath())); 
-		myShip = s; 
-		myShip.setHozSpeed(5); 
-		myPlayerGroup.add(myShip); 
 		
+		// this is for testing enemy movement
+		Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
+		e.setImage(getImage(e.getImgPath()));
+//		myEnemy = e;
+//		myEnemyGroup.add(myEnemy);
+		enemySize=myEnemyGroup.getSize();
+		// testing ship movement
+		Ship s = new Ship(200, 2950, "resources/ship.png");
+		s.setImage(getImage(s.getImgPath()));
+		myShip = s;
+		myShip.setHozSpeed(5);
+		myPlayerGroup.add(myShip);
+		// initializing PlayerInfo
+		playerInfo = new PlayerInfo();
+
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
 		// this is for testing enemy movement
-		//myEnemy.render(pen);
-//		myShip.render(pen);
+		// myEnemy.render(pen);
+		// myShip.render(pen);
 	}
 
 	@Override
@@ -125,10 +122,20 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		playerMovement();
 		myPlayfield.update(elapsedTime);
+		// updating playerInfo
 		myMap.movePlayer(elapsedTime, myShip);
-		myShip.move(this, myMap.getWidth()); 
+		// myShip.move(this, myMap.getWidth());
 		// this is for testing enemy movement
-		myEnemy.update();
+		count =0;
+		for (Sprite elem:myEnemyGroup.getSprites()){
+			if (count>=enemySize) break;
+			Enemy e = (Enemy) elem;
+			e.updateEnemy();
+			System.out.println("a");
+			count++;
+		}
+		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
+
 	}
 
 	public void playerMovement() {
@@ -220,7 +227,4 @@ public class TopDownDemo extends Game {
 	// }
 	//
 
-	public Player getPlayer() {
-		return myPlayer;
-	}
 }

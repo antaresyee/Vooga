@@ -1,10 +1,12 @@
 package levelEditor;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 
 import innerGameGUI.TabGUIExample;
 import gameObjects.GameObjectData;
 
+import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.Sprite;
 
@@ -15,54 +17,46 @@ import com.golden.gamedev.object.Sprite;
  */
 
 public class PlayerSprite extends Sprites {
-	int playerCount=3001;
+	private final String myType = "Player";
 	public PlayerSprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public void askQuestions(Question q) {
+	public void askQuestions(Question q, Game g) {
 		
 		
 	}
 	@Override
-	public int newID() {
-		playerCount++;
-		return playerCount;
+	public String getType() {
+		return myType;
 	}
 	
 	public static class Factory extends Sprites.Factory{
         
 		private final String imagePath = "resources/ship.png";
 		private final int startX = 30;
-		private final int startY = 2929;	
+		private final int startY = 2929;
 		private final String myType = "Player";
+
+		
 		
 		@Override
-		public boolean isType(int id) {
-			return id>3000;
+		public boolean isType(BufferedImage img, Game g) {
+			return img.equals(g.getImage(imagePath));
 		}
 
 		@Override
 		public Sprites makeSprite() {			
 			return new PlayerSprite(imagePath, startX, startY);			
-		}	
-
-		public GameObjectData makeGameObject(Sprite spr) {
-			GameObjectData god = new GameObjectData(myType);
-			god.setX(spr.getX());
-			god.setY(spr.getY());
-			god.setImgPath(imagePath);
-			return god;
 		}
 
 		@Override
 		public String getType() {
+			// TODO Auto-generated method stub
 			return myType;
-		}
-
-
+		}	
 		
 	}
 
