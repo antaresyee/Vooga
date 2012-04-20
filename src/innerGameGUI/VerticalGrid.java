@@ -1,5 +1,10 @@
 package innerGameGUI;
-
+/**
+ * Subclass of Grid.java
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class VerticalGrid extends Grid {
 	public VerticalGrid(){
 		super(Grid.VERTICAL);

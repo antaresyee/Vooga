@@ -8,11 +8,17 @@ import java.util.List;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.util.ImageUtil;
-
+/**
+ * Provides the background to add other KComponents
+ * This class is implemented with the help of Grid.java, which defines how and where to display each of the KComponents
+ * in the KPanel
+ * Can add KComponent to the panel or remove KComponent from the panel.
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class KPanel extends KComponent{
 	private List<KComponent> myComponents;
-//	private int SPACING = 30;
-//	private int myWidth, myHeight;
 	private Color myColor;
 	private Grid myGrid;
 	
@@ -38,6 +44,10 @@ public class KPanel extends KComponent{
 		this(game, color, new VerticalGrid(), x, y, width, height);
 	}
 	
+	/*
+	 * All position using pixels now replaced by Grid.java for simplicity
+	 * TODO still need to provide the flexibility of choosing between Grid and Pixels? Need to be this detailed?
+	 */
 	public void add(KComponent kc){
 		myComponents.add(kc);
 		kc.setParent(this);
@@ -58,19 +68,7 @@ public class KPanel extends KComponent{
 	public void setGrid(Grid grid){
 		myGrid = grid;
 		myGrid.setComponent(this);
-//		grid.setLocation((int)getX(), (int)getY());
-//		grid.setWidthHeight(getWidth(), getHeight());
 	}
-	
-//	public void setSpacing(int spacing){
-//		SPACING = spacing;
-//	}
-	
-//	public void setWidthHeight(int width, int height){
-//		myWidth = width;
-//		myHeight = height;
-//		if(getImage() != null && (getWidth() + getHeight()) > 0) setImage(ImageUtil.resize(getImage(), getWidth(), getHeight()));
-//	}
 	
 	public void updatePanel(KComponent kc){
 		myGrid.setGridSize(myComponents.size());
@@ -80,17 +78,6 @@ public class KPanel extends KComponent{
 		}
 	}
 	
-//	@Override
-//	public int getWidth()
-//	{
-//		return myWidth;
-//	}
-//	
-//	@Override
-//	public int getHeight()
-//	{
-//		return myHeight;
-//	}
 	
 	@Override
 	public void render(Graphics2D pen){

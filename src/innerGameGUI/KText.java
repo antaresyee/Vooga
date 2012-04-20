@@ -6,7 +6,10 @@ import java.awt.Graphics2D;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.font.SystemFont;
-
+/*
+ * All functionality similar to KTextBox only that the user cannot edit the texts.
+ * TODO not showing text. Leaving it for later.
+ */
 public class KText extends KComponent{
 
 	private String myText;

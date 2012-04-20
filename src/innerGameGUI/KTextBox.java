@@ -57,13 +57,6 @@ public class KTextBox extends KComponent {
 		
 	}
 	
-	// take any class, GUIElements, not just GameObjects, ListBoxes, Or Button Press
-	// Design doc how the sywtem will work
-	// super class: game object parent, tab GUI object, template methos2, abstract methods 2
-	// what happens is this:
-	// 
-	
-	
 	
 	/*
 	 * TODO If want to put in a different location, call KTextBox.update and pass in new location as x and y

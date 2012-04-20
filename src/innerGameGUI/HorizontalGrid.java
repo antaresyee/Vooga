@@ -1,5 +1,11 @@
 package innerGameGUI;
-
+/**
+ * Subclass of Grid.
+ * TODO
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class HorizontalGrid extends Grid {
 	public HorizontalGrid(){
 		super(Grid.HORIZONTAL);

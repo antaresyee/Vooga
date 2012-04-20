@@ -10,7 +10,9 @@ import javax.swing.JOptionPane;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
-
+/*
+ * Example of combining all KComponents
+ */
 public class GUIExample extends Game{
 	KPanel myPanel;
 	@Override
@@ -19,19 +21,22 @@ public class GUIExample extends Game{
 		myPanel.add(new KTextBox(this, "Start Game"));
 		myPanel.add(new KTextBox(this, "Load/Save"));
 		KButton button = new KButton(this, "Confirm");
+		
+		//Define action to be listened by the developer. 
+		//If want to change button's behavior, no need to go to the original framework
 		button.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ev) {
 				JOptionPane.showMessageDialog(new JFrame(), "Surprise suprise!!");
 			}
 		});
 		myPanel.add(button);
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
-		// TODO Auto-generated method stub
+		
 		myPanel.render(pen);
 	}
 

@@ -1,5 +1,11 @@
 package innerGameGUI;
-
+/**
+ * Subclass of Grid
+ * TODO
+ * 
+ * @author Kaitlyn Yumeng
+ *
+ */
 public class UniformGrid extends Grid {
 	public UniformGrid(){
 		super(Grid.UNIFORM);

@@ -7,7 +7,13 @@ import java.awt.event.ActionListener;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.font.SystemFont;
-
+/**
+ * A subclass of KComponent
+ * A button that can be clicked on.
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class KButton extends KComponent{
 	private String myText;
 	private final static int MY_TAB_WIDTH = 100;
@@ -20,9 +26,13 @@ public class KButton extends KComponent{
 		myText=text;
 		myFont = new SystemFont(new Font("Comic Sans MS", Font.PLAIN, 18),
 				Color.ORANGE);
-		// TODO Auto-generated constructor stub
+		
 	}
 	
+	/*
+	 * Define action to be listened by the developer. 
+	 * If want to change button's behavior, no need to go to the original framework
+	 */
 	public void addActionListener(ActionListener al){
 		myListener = al;
 	}
@@ -45,6 +55,10 @@ public class KButton extends KComponent{
 				}
 	}
 	
+	/*
+	 * On click of the button, do something.
+	 * TODO can generalize this action
+	 */
 	public void clickEvent(){
 		if(myListener != null) myListener.actionPerformed(null);
 	}
