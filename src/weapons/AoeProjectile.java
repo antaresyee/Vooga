@@ -9,8 +9,8 @@ public abstract class AoeProjectile extends Projectile{
 	PlayField myPlayField;
 	int myRange;
 
-	AoeProjectile(int speed, String imgPath, SpriteGroup g, PlayField playfield, int range) {
-		super(speed, imgPath, g);
+	AoeProjectile( String imgPath, SpriteGroup g, PlayField playfield, int range) {
+		super(imgPath, g);
 		myPlayField = playfield;
 		myRange = range;
 	}
