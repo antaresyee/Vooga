@@ -14,12 +14,8 @@ import states.LowHealthState;
 import states.State;
 import states.StateFactories;
 import states.StateFactory;
-<<<<<<< HEAD
-import states.StateLoader;
 import levelLoadSave.ForSave;
-=======
 import states.EnemyDataLoader;
->>>>>>> 4e0395a3eeb379cfa46b648ddc6219a8ee4bc8c5
 import movement.BackForthMovement;
 import movement.Movement;
 import movement.MovementFactories;
