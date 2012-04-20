@@ -4,14 +4,14 @@ import com.golden.gamedev.object.SpriteGroup;
 
 public class UnlimitedGun extends Gun{
 
-	public UnlimitedGun(int rate, Projectile p, SpriteGroup g) {
-		super(rate, p, g);
+	public UnlimitedGun(int rate, Projectile p, SpriteGroup g, ShotPattern pattern) {
+		super(rate, p, g,pattern);
 		
 	}
 
 	@Override
 	public void actionOnFire(double xpos,double ypos) {
-		myProjectile.createProjectile(xpos, ypos);
+		myPattern.fire(myProjectile, xpos, ypos);
 		
 	}
 

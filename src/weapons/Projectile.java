@@ -15,13 +15,14 @@ import gameObjects.GameObjectData;
 
 
 public abstract class Projectile extends GameObject{
-	int mySpeed;
+	
 	SpriteGroup myGroup;
+	double myXSpeed;
+	double myYSpeed;
 	
 	
-	
-	Projectile(int speed, String imgPath, SpriteGroup g){
-		mySpeed = speed;
+	Projectile( String imgPath, SpriteGroup g){
+		
 		myImgPath = imgPath;
 		myGroup = g;
 		myType = "Projectile";
@@ -37,7 +38,8 @@ public abstract class Projectile extends GameObject{
 	
 	@Override
 	public void update(long elapsedTime){
-		this.moveY(mySpeed);
+		this.moveY(myYSpeed);
+		this.moveX(myXSpeed);
 	}
 	
 	public void setPosition(double x, double y){
@@ -46,7 +48,12 @@ public abstract class Projectile extends GameObject{
 		setLocation(myX,myY);
 	}
 	
-	public abstract void createProjectile(double x, double y);
+	public void setSpeed(double xspeed, double yspeed){
+		myXSpeed = xspeed;
+		myYSpeed = yspeed;
+	}
+	
+	public abstract void createProjectile(double xpos, double ypos, double xspeed, double yspeed);
 	
 	public abstract void actionOnCollision(GameObject hit);
 	
