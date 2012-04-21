@@ -155,8 +155,10 @@ public class LevelEditorGUI extends Game {
 				
 				String writeFile = "P,";
 				for (Point pt:pathCoord){
-					writeFile = writeFile +pt.getX()+myMap.getFrameHeight()+","+pt.getY()+myMap.getFrameHeight()+",";
+					writeFile = writeFile +pt.getX()+","+(pt.getY()+myMap.getFrameHeight())+",";
+					System.out.println(pt.getY()+myMap.getFrameHeight());
 				}
+				
 				pathCoord.clear();
 				writeFile= writeFile + " ";
 				q.writeEnemy(writeFile);
