@@ -155,7 +155,7 @@ public class LevelEditorGUI extends Game {
 				
 				String writeFile = "P,";
 				for (Point pt:pathCoord){
-					writeFile = writeFile +pt.getX()+","+pt.getY()+",";
+					writeFile = writeFile +pt.getX()+myMap.getFrameHeight()+","+pt.getY()+myMap.getFrameHeight()+",";
 				}
 				pathCoord.clear();
 				writeFile= writeFile + " ";
@@ -307,6 +307,7 @@ public class LevelEditorGUI extends Game {
 			god.setX(pt.getX());
 			god.setY(pt.getY());
 			god.setImgPath(mapData.get(pt).getPath());
+			god.setEnemyConfigFile("StateInfo1.txt");
 			temp.add(god);
 		}
 		return temp;

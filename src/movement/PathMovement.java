@@ -84,8 +84,8 @@ public class PathMovement extends Movement {
 		public Movement makeMyMovement(String[] parameters) {
 			ArrayList<Point> path = new ArrayList<Point>();
 			for (int i = 1; i < parameters.length; i += 2) {
-				int x = Integer.parseInt(parameters[i]);
-				int y = Integer.parseInt(parameters[i + 1]);
+				int x = (int) Double.parseDouble(parameters[i]);
+				int y = (int) Double.parseDouble(parameters[i + 1]);
 				Point p = new Point(x, y);
 				path.add(p);
 			}
