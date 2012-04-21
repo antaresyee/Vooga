@@ -4,6 +4,7 @@ import gameObjects.GameObject;
 import gameObjects.GameObjectData;
 import gameObjects.Player;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.io.File;
@@ -12,14 +13,23 @@ import java.util.List;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
-
+/**
+ * Sample code for developer: how to use LoadGUI and SaveGUI together
+ * 
+ * @author Kaitlyn 
+ *
+ */
 public class LoadSaveGUIExample extends Game {
 	private TabGUI tab1, tab2;
+	private KTextBox myKTB;
 	
 	
 	@Override
 	public void initResources() {
-		// TODO Auto-generated method stub
+		myKTB = new KTextBox(this);
+		myKTB.popDialogueBox("your name:");
+//		DisplayBar db = new DisplayName(myKTB.getInfo());
+		//Find all files that are able to be loaded
 		List<TabGUI> tg = new ArrayList<TabGUI>();
 		List<GameObject> gob = new ArrayList<GameObject>();
 		String filename = "serializeTest";
@@ -39,10 +49,16 @@ public class LoadSaveGUIExample extends Game {
 //			p.setImage(getImage("resources/ship" + i + ".png"));
 //			gob.add(p);
 //		}
+		/*
+		 * Create a new LoadGUI
+		 */
 		tab1 = new LoadGUI(this, gob, tg, null, 0, 0);
 		
 		List<GameObject> gob2 = new ArrayList<GameObject>();
-
+		
+		/*
+		 * Find all current files to be saved to
+		 */
 		filename = "serializeTest";
 		ext = ".ser";
 		path = filename + ext;
@@ -57,6 +73,11 @@ public class LoadSaveGUIExample extends Game {
 		
 		List<GameObjectData> objectsToSave = new ArrayList<GameObjectData>();
 
+		/*
+		 * Copied from Antares' LevelLoader class's main method
+		 * Developer write a for loop, add the list of objects on the screen to this list of GameObjectData
+		 */
+		 
 		GameObjectData barrierData = new GameObjectData("Barrier");
 		barrierData.setX(200.5);
 		barrierData.setY(1000.0);
@@ -75,6 +96,9 @@ public class LoadSaveGUIExample extends Game {
 		playerData2.setImgPath("./resources/enemy.png");
 		objectsToSave.add(playerData2);
 		
+		/*
+		 * Given a list of already existing save files and a list of objects to save
+		 */
 		tab2 = new SaveGUI(this, gob2, objectsToSave, tg, tab1.getX() + tab1.getWidth(), tab1.getY());
 		
 		tg.add(tab1);
@@ -83,19 +107,20 @@ public class LoadSaveGUIExample extends Game {
 
 	@Override
 	public void render(Graphics2D pen) {
-		// TODO Auto-generated method stub
-		
+		pen.setColor(Color.BLACK);
+		pen.fillRect(0, 0, getWidth(), getHeight());
 		tab1.render(pen);
 		tab2.render(pen);
-
+		myKTB.render(pen);
 		
 	}
 
 	@Override
 	public void update(long elapsedTime) {
-		// TODO Auto-generated method stub
+		
 		tab1.update(elapsedTime);
 		tab2.update(elapsedTime);
+		myKTB.update(elapsedTime, 100, 100);
 	}
 	
 	public static void main(String[] arg0)

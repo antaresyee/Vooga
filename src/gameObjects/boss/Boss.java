@@ -127,7 +127,7 @@ public class Boss extends GameObject {
 	public void load(Game game) {
 		try {
 			Gson gson = new Gson();
-			Scanner scanner = new Scanner(new File("boss.json"));
+			Scanner scanner = new Scanner(new File("boss2.json"));
 			List<BossState> bsl = new ArrayList<BossState>();
 			Type godClass = new TypeToken<BossState>() {
 			}.getType(); // tell json parser the object's type
@@ -143,7 +143,7 @@ public class Boss extends GameObject {
 					parsedGod.setImage(game.getImage(parsedGod.getImgPath()));
 //					System.out.println(parsedGod.getImgPath());
 					bsl.add(parsedGod);
-					index = parsedGod.load(list, index+1, "--");
+					index = parsedGod.load(game, list, index+1, "--");
 				}
 			}
 			myStates = bsl;

@@ -16,7 +16,9 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import playerObjects.Ship;
+import playerObjects.CompanionShip;
+import playerObjects.HozShip;
+import playerObjects.SmallShip;
 
 import states.FullHealthState;
 import states.LowHealthState;
@@ -32,6 +34,9 @@ import movement.BackForthMovement;
 import movement.Movement;
 import movement.TargetedMovement;
 
+import bars.Bar;
+import bars.HealthBar;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
@@ -41,9 +46,12 @@ import com.golden.gamedev.object.background.ImageBackground;
 
 public class TopDownDemo extends Game {
 
-	private Ship myShip;
+	private CompanionShip myShip;
+	private SmallShip comp;
 	private Player myPlayer;
 	private Enemy myEnemy;
+	private HealthBar myBar; 
+	
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -99,19 +107,30 @@ public class TopDownDemo extends Game {
 //		myEnemyGroup.add(myEnemy);
 		enemySize=myEnemyGroup.getSize();
 		// testing ship movement
-		Ship s = new Ship(200, 2950, "resources/ship.png");
+		CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
 		s.setImage(getImage(s.getImgPath()));
 		myShip = s;
-		myShip.setHozSpeed(5);
+		//myShip.setHozSpeed(5);
 		myPlayerGroup.add(myShip);
+		
+		
+		// companion
+		SmallShip c = myShip.getComp();
+		c.setImage(getImage(c.getImgPath()));; 
+		comp = c; 
+		myPlayerGroup.add(comp);
+		
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
+		
+		myBar = new HealthBar(myShip); 
 
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
+		myBar.render(pen); 
 		// this is for testing enemy movement
 		// myEnemy.render(pen);
 		// myShip.render(pen);
@@ -125,6 +144,7 @@ public class TopDownDemo extends Game {
 		// updating playerInfo
 		myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
+		//myShip.move(this, myMap.getWidth());
 		// this is for testing enemy movement
 		count =0;
 		for (Sprite elem:myEnemyGroup.getSprites()){

@@ -9,7 +9,11 @@ import gameObjects.GameObjectData;
  * @author Kaitlyn
  *
  */
-public class DisplayBloodbar extends DisplayBar {
+public class DisplayName extends DisplayBar {
+	public DisplayName(String name)
+	{
+		String myName = name;
+	}
 
 	@Override
 	public String getImgPath() {
@@ -22,6 +26,4 @@ public class DisplayBloodbar extends DisplayBar {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
 }
