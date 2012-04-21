@@ -86,6 +86,8 @@ public class PathMovement extends Movement {
 			for (int i = 1; i < parameters.length; i += 2) {
 				int x = (int) Double.parseDouble(parameters[i]);
 				int y = (int) Double.parseDouble(parameters[i + 1]);
+				System.out.println("X = " + x);
+				System.out.println("Y = " + y);
 				Point p = new Point(x, y);
 				path.add(p);
 			}

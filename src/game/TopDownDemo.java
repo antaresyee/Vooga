@@ -154,7 +154,6 @@ public class TopDownDemo extends Game {
 			if (count>=enemySize) break;
 			Enemy e = (Enemy) elem;
 			e.updateEnemy();
-			System.out.println("a");
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
