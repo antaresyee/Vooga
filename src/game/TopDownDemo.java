@@ -144,7 +144,9 @@ public class TopDownDemo extends Game {
 		// updating playerInfo
 		myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
+
 		myShip.move(this, 400);
+
 		// this is for testing enemy movement
 		count =0;
 		for (Sprite elem:myEnemyGroup.getSprites()){

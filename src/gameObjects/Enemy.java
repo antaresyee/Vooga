@@ -40,7 +40,6 @@ public class Enemy extends GameObject {
 	private State currentState;
 	private EnemyDataLoader loader;
 	private int currentHealth;
-	private static int count=0;
 	private List <Status> myStatuses;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
@@ -50,9 +49,8 @@ public class Enemy extends GameObject {
 		myType = "Enemy";
 		myStatuses = new ArrayList<Status>();
 		setLocation(myX, myY);
-		FileInputStream f;
 		try {
-			f = new FileInputStream(filename);
+			FileInputStream f = new FileInputStream(filename);
 			loader = new EnemyDataLoader(f);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -148,9 +146,7 @@ public class Enemy extends GameObject {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();	
-		count++;
-		String filename = "stateInfo"+count+ ".txt";
-		System.out.println(count);
+		String filename = god.getEnemyConfigFile();
 		return new Enemy(x, y, imgPath, filename);
 
 	}
