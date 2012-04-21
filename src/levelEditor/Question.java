@@ -20,7 +20,7 @@ public class Question {
 				"Pick Your Enemy Movement for default state:", "Top Down Demo'",
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (input.equals("Back and Forth")) movement ="BF,100,200,.2 ";
-		if (input.equals("Targeted Movement")) movement = "T ";
+		if (input.equals("Targeted")) movement = "T ";
 		if (input.equalsIgnoreCase("Path")){
 			String str = JOptionPane.showInputDialog(null, "Enter your coordinates: (ex. x1,y1,x2,y2, etc.) - Screen Dimensions (400,3000)", 
 					"PathMovement", 1);
