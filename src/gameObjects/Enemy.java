@@ -49,6 +49,7 @@ public class Enemy extends GameObject {
 		myType = "Enemy";
 		myStatuses = new ArrayList<Status>();
 		setLocation(myX, myY);
+		System.out.println(filename);
 		try {
 			FileInputStream f = new FileInputStream(filename);
 			loader = new EnemyDataLoader(f);

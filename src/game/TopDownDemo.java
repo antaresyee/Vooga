@@ -101,8 +101,9 @@ public class TopDownDemo extends Game {
 		l.loadLevelData("serializeTest.ser");
 		
 		// this is for testing enemy movement
-//		Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
-//		e.setImage(getImage(e.getImgPath()));
+
+		//Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
+		//e.setImage(getImage(e.getImgPath()));
 //		myEnemy = e;
 //		myEnemyGroup.add(myEnemy);
 		enemySize=myEnemyGroup.getSize();
@@ -115,10 +116,10 @@ public class TopDownDemo extends Game {
 		
 		
 		// companion
-		SmallShip c = myShip.getComp();
-		c.setImage(getImage(c.getImgPath()));; 
-		comp = c; 
-		myPlayerGroup.add(comp);
+//		SmallShip c = myShip.getComp();
+//		c.setImage(getImage(c.getImgPath()));; 
+//		comp = c; 
+//		myPlayerGroup.add(comp);
 		
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
