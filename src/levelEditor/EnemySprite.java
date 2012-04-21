@@ -21,10 +21,11 @@ public class EnemySprite extends Sprites {
 	}
 
 	@Override
-	public void askQuestions(Question q, Game g) {
+	public String askQuestions(Question q, Game g) {
 		// TODO Auto-generated method stub
-		q.enemyQuestion(g);
-		q.writeEnemy();
+		String str=q.enemyQuestion(g);
+		if (!str.equals("Path")) q.writeEnemy(str);
+		return str;
 	}
 	@Override
 	public String getType() {

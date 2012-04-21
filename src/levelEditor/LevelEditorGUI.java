@@ -60,6 +60,8 @@ public class LevelEditorGUI extends Game {
 	public Question q;
 	private ArrayList<Sprites.Factory> factory;
 	public HashMap<Point,Sprites> mapData;
+	private String askQ=" ";
+	public ArrayList<Point> pathCoord;
 	
 	
 	@Override
@@ -98,7 +100,10 @@ public class LevelEditorGUI extends Game {
 
 		list.add(player);
 		q= new Question();
+		
 		mapData= new HashMap<Point,Sprites>();
+		pathCoord = new ArrayList<Point>();
+
 	}
 
 	private Properties configFile() {
@@ -122,11 +127,6 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-
-		// update
-		myBackground.update(elapsedTime);
-		ALL.update(elapsedTime);
-
 		// Press Spacebar to move to the bottom of screen
 		if (keyDown(java.awt.event.KeyEvent.VK_SPACE))
 			myMap.moveToBottom();
@@ -137,7 +137,38 @@ public class LevelEditorGUI extends Game {
 			myMap.guiMoveUp();
 		if (keyDown(java.awt.event.KeyEvent.VK_G))
 			myMap.guiMoveDown();
-
+		// update
+		myBackground.update(elapsedTime);
+		
+	
+	if(askQ.equals("Path")){
+			
+			if (click()){
+				Point p = new Point();
+				p.setLocation(getMouseX(), getMouseY());
+				pathCoord.add(p);
+				JOptionPane
+				.showMessageDialog(new JFrame(),
+						"Added coordinate for Enemy Path. Remember press 'D' when done.");
+			}
+			if (keyDown(java.awt.event.KeyEvent.VK_D)){
+				
+				String writeFile = "P,";
+				for (Point pt:pathCoord){
+					writeFile = writeFile +pt.getX()+","+pt.getY()+",";
+				}
+				pathCoord.clear();
+				writeFile= writeFile + " ";
+				q.writeEnemy(writeFile);
+				askQ = " ";
+				JOptionPane
+				.showMessageDialog(new JFrame(),
+						"Finished Enemy Path. Back to LevelEditor.");
+			}
+			
+		}
+	else{
+		ALL.update(elapsedTime);
 		// if user clicks on a gameobject and no other gameobject is currently being dragged
 		// set the clicked on gameobject as current (sticks to the mouse location)
 		if (clicked() != null && current == null) {
@@ -153,7 +184,7 @@ public class LevelEditorGUI extends Game {
 			
 			// if user clicks, place gameobject and create the correct new sprite
 			if (click() && time != count) {
-				placeAndCreateGameObject();
+				askQ=placeAndCreateGameObject();
 			}
 		}
 		
@@ -164,10 +195,11 @@ public class LevelEditorGUI extends Game {
 		if ((keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S))) {
 			saveFile();
 		}
+	}	
 	}
 
-	private void placeAndCreateGameObject() {
-
+	private String placeAndCreateGameObject() {
+		String str = " ";
 		for (Sprites.Factory check : factory) {
 			if (check.isType(current.getImage(),this)) {
 				int input = q.yesOrNo(check.getType());
@@ -188,10 +220,12 @@ public class LevelEditorGUI extends Game {
 					break;
 				}
 				//create and place new Sprite on background
-				createNewSprite(newSpr, false);
+				str=createNewSprite(newSpr, false);
 			}
 		}
+		
 		current = null;
+		return str;
 	}
 
 	private Point findPointToRemove() {
@@ -205,14 +239,18 @@ public class LevelEditorGUI extends Game {
 		return loc;
 	}
 
-	private void createNewSprite(Sprites newSpr, boolean initial) {
+	private String createNewSprite(Sprites newSpr, boolean initial) {
 		// if user is happy with location make new sprite
+			String str = " ";
 			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setBackground(myBackground);
-			if (!initial) newSpr.askQuestions(q,this);
+			if (!initial) {
+				str = newSpr.askQuestions(q,this);
+			}
 			ALL.add(new1);
 			list.add(new1);
 			totalSprites++;	
+			return str;
 	}
 
 	// saves the level
@@ -227,6 +265,9 @@ public class LevelEditorGUI extends Game {
 				 System.out.print(" ");
 				 System.out.println(f.getY());
 				 }
+			 for (Point a: pathCoord){
+				 System.out.println(a.getX() +" " +a.getY());
+			 }
 			finish();
 		} else {
 			JOptionPane
