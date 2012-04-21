@@ -307,7 +307,7 @@ public class LevelEditorGUI extends Game {
 			god.setX(pt.getX());
 			god.setY(pt.getY());
 			god.setImgPath(mapData.get(pt).getPath());
-			god.setEnemyConfigFile("stateInfo.txt");
+			god.setEnemyConfigFile("StateInfo1.txt");
 			temp.add(god);
 		}
 		return temp;
