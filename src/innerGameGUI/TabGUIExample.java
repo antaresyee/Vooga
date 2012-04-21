@@ -14,6 +14,13 @@ import com.golden.gamedev.GameLoader;
 public class TabGUIExample extends Game {
 	private TabGUI tab1, tab2;
 	
+	/*
+	 * logically contain all the tabs
+	 * 
+	 * 
+	 * (non-Javadoc)
+	 * @see com.golden.gamedev.Game#initResources()
+	 */
 	
 	@Override
 	public void initResources() {

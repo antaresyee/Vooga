@@ -12,7 +12,13 @@ import levelLoadSave.LevelSaver;
 
 
 import com.golden.gamedev.Game;
-
+/**
+ * An example of using TabGUI
+ * TODO save to new file, and if filepath is empty, pop up KTextBox to input name. Location not choosable. 
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class SaveGUI extends TabGUI {
 	
 	private List<GameObjectData> myGOD;
@@ -23,7 +29,7 @@ public class SaveGUI extends TabGUI {
 		myGOD = god;
 		myMessage = "Save to this file?";
 //		System.out.println(myMessage);
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	@Override
@@ -38,6 +44,11 @@ public class SaveGUI extends TabGUI {
 //			file = new File(path+ext);
 //			i++;
 //		}
+		
+		/*
+		 * TODO if new file, read from KTextBox and save to a new location
+		 * TODO decide whether to let user customize location or not!??
+		 */
 		LevelSaver.serializeSave(myGOD, ((FileObject)myCurrentObject).getFilePath());
 		System.out.println("Saved to " + ((FileObject)myCurrentObject).getFilePath());
 		try {

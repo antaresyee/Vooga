@@ -9,7 +9,13 @@ import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 
 import com.golden.gamedev.Game;
-
+/**
+ * Another example of using TabGUI
+ * To create an interface to load games
+ * 
+ * @author Kaitlyn
+ *
+ */
 public class LoadGUI extends TabGUI{
 	
 	private List<LoadObserver> myLoadObservers;
@@ -32,6 +38,13 @@ public class LoadGUI extends TabGUI{
 		// TODO Auto-generated constructor stub
 	}
 	
+	/*
+	 * Example of implementing selectionEvent() method from TabGUI to do further stuff
+	 * In this case, print the location
+	 * 
+	 * (non-Javadoc)
+	 * @see innerGameGUI.TabGUI#selectionEvent()
+	 */
 	@Override
 	public void selectionEvent()
 	{

@@ -150,13 +150,11 @@ public class TabGUI {
 			{
 				JOptionPane.showMessageDialog(new JFrame(), "Thanks for choosing me! Further steps to be implemented");
 				selectionEvent();
-//				a=myCurrentObject.getImage();
 			} else {
 				JOptionPane.showMessageDialog(new JFrame(), "Ohhh...Why not me? Further steps to be implemented");
 			}
 			
 		}
-//		refreshList();
 
 	}
 
@@ -188,12 +186,16 @@ public class TabGUI {
 
 	}
 	
+	/*
+	 * The template method for the developer to implement: communicate with other class
+	 * can't make it abstract for now. Another way is to make TabGUI abstract and subclass when use it.
+	 * example implementation in LoadGUI.java or SaveGUI.java
+	 */
 	public void selectionEvent()
 	{
 		
 	}
-	
-//	public void refreshList(){}
+
 
 	/*
 	 * Set up the second Tab
