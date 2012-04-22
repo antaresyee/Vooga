@@ -1,6 +1,7 @@
 package levelEditor;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import gameObjects.GameObjectData;
 
@@ -24,9 +25,11 @@ public class EnemySprite extends Sprites {
 	@Override
 	public String askQuestions(Question q, Game g) {
 		// TODO Auto-generated method stub
-		String str=q.enemyQuestion(g);
-		if (!str.equals("Path")) q.writeEnemy(str);
+		String str =q.enemyQuestion(g);
+		if (!str.equals("Path")) q.writeEnemy(q.getFileData());
 		enemyCount++;
+
+		
 		return str;
 	}
 	@Override

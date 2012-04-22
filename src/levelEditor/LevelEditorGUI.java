@@ -62,6 +62,7 @@ public class LevelEditorGUI extends Game {
 	public HashMap<double[],Sprites> mapData;
 	private String askQ=" ";
 	public ArrayList<Point> pathCoord;
+	public ArrayList<String> finalFile;
 	
 	
 	@Override
@@ -103,6 +104,8 @@ public class LevelEditorGUI extends Game {
 		
 		mapData= new HashMap<double[],Sprites>();
 		pathCoord = new ArrayList<Point>();
+		finalFile = new ArrayList<String>();
+
 
 	}
 
@@ -143,7 +146,7 @@ public class LevelEditorGUI extends Game {
 		
 	
 	if(askQ.equals("Path")){
-			setPath();	
+			 setPath();
 		}
 	else{
 		ALL.update(elapsedTime);
@@ -177,6 +180,7 @@ public class LevelEditorGUI extends Game {
 	}
 
 	private void setPath() {
+		String writeFile = "P,";
 		if (click()){
 			Point p = new Point();
 			p.setLocation(getMouseX(), getMouseY());
@@ -187,15 +191,16 @@ public class LevelEditorGUI extends Game {
 		}
 		if (keyDown(java.awt.event.KeyEvent.VK_D)){
 			
-			String writeFile = "P,";
+			
 			for (Point pt:pathCoord){
 				writeFile = writeFile +pt.getX()+","+(pt.getY()+myMap.getFrameHeight())+",";
-				System.out.println(pt.getY()+myMap.getFrameHeight());
 			}
 			
 			pathCoord.clear();
 			writeFile= writeFile + " ";
-			q.writeEnemy(writeFile);
+			finalFile=q.getFileData();
+			finalFile.add(q.addState(writeFile, this));
+			q.writeEnemy(finalFile);
 			askQ = " ";
 			JOptionPane
 			.showMessageDialog(new JFrame(),
@@ -294,7 +299,6 @@ public class LevelEditorGUI extends Game {
 		current.moveX(-current.getWidth() / 2);
 		current.moveY(-current.getHeight() / 2);
 	}
-
 
 
 	// returns the Sprite that is clicked on
