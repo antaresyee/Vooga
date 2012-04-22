@@ -58,14 +58,13 @@ public class Question {
 
 	public String addState(String move,Game g) {
 		String state ="";
-		Object[] options1 = {"Full Health","Half Health", "Low Health", "Proximity"};
+		Object[] options1 = {"Full Health", "Low Health", "Proximity"};
 		String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Pick State", "Enemy Movement",
 				JOptionPane.PLAIN_MESSAGE, null, options1, options1[0]);
 				if (input1.equals("Full Health")) state="FH,";
-				if (input1.equals("Half Health")) state="HH,";
 				if (input1.equals("Low Health")) state="LH,";
-				if (input1.equals("Proximity")) state="P,";
+				if (input1.equals("Proximity")) state="PR,0,100,";
 		String prior = JOptionPane.showInputDialog(null, "Enter Priority Level number: (the lower the number, the higher the priority)", 
 						"Enemy Movement", 1);
 		state=state+Integer.parseInt(prior) + " ";

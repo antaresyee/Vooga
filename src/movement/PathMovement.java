@@ -25,7 +25,7 @@ public class PathMovement extends Movement {
 	public void move(GameObject o) {
 		if (pointIndex == myPath.size()) {
 			pointIndex = 0;
-			reversePath();
+			//reversePath();
 		}
 		Point currentPoint = myPath.get(pointIndex);
 		moveToPoint(o, currentPoint);
@@ -53,7 +53,7 @@ public class PathMovement extends Movement {
 			o.setHorizontalSpeed(0);
 		}
 		if (myY > targetY - 5 && myY < targetY + 5) {
-			o.setLocation(targetX, targetY);
+			o.setLocation(myX, targetY);
 			o.setVerticalSpeed(0);
 		}
 		if (myX > targetX - 5 && myX < targetX + 5 && myY > targetY - 5

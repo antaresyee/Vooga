@@ -20,8 +20,8 @@ public class FullHealthState extends State {
 	}
 
 	@Override
-	public boolean shouldBeCurrentState() {
-		return myEnemy.getCurrentHealth() > 250 && takesPriority();
+	public boolean changeCondition() {
+		return myEnemy.getCurrentHealth() > 250;
 	}
 
 	public static class FHStateFactory extends StateFactory {
@@ -38,5 +38,7 @@ public class FullHealthState extends State {
 		}
 
 	}
+
+	
 
 }

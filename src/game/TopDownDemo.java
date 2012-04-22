@@ -47,7 +47,8 @@ import com.golden.gamedev.object.background.ImageBackground;
 public class TopDownDemo extends Game {
 
 	//private CompanionShip myShip;
-	private SmallShip comp;
+
+	//private SmallShip comp;
 	private Player myPlayer;
 	private Enemy myEnemy;
 	// private HealthBar myBar; 
@@ -77,6 +78,7 @@ public class TopDownDemo extends Game {
 		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
 		
+
 		myMap.setSpeed(10);
 		myBackground = myMap.getMyBack();
 		
@@ -116,6 +118,7 @@ public class TopDownDemo extends Game {
 //		//myShip.setHozSpeed(5);
 //		myPlayerGroup.add(myShip);
 
+
 		// companion
 //		SmallShip c = myShip.getComp();
 //		c.setImage(getImage(c.getImgPath()));; 
@@ -125,14 +128,20 @@ public class TopDownDemo extends Game {
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
 		
+
 //		myBar = new HealthBar(myShip); 
+
+		
 
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
+
 //		myBar.render(pen); 
+
+		
 		// this is for testing enemy movement
 		// myEnemy.render(pen);
 		// myShip.render(pen);
@@ -144,9 +153,11 @@ public class TopDownDemo extends Game {
 		playerMovement();
 		myPlayfield.update(elapsedTime);
 		// updating playerInfo
-//		myMap.movePlayer(elapsedTime, myShip);
+
+		//myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
-//		myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
+		//myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
+
 
 		// this is for testing enemy movement
 		count =0;

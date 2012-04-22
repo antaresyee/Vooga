@@ -68,12 +68,12 @@ public class Enemy extends GameObject {
 
 	public void move() {
 		currentState.move();
-		currentHealth--;
+		//currentHealth--;
 	}
 
 	public void updateEnemy() {
-		move();
 		checkState();
+		move();
 		for(Status s: myStatuses){
 			s.iterate(this);
 		}
