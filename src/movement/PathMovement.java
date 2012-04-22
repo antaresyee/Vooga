@@ -12,8 +12,8 @@ import gameObjects.GameObject;
  */
 public class PathMovement extends Movement {
 
-	private ArrayList<Point> myPath;
-	private int pointIndex;
+	protected ArrayList<Point> myPath;
+	protected int pointIndex;
 
 	public PathMovement(ArrayList<Point> path) {
 		myPath = path;
