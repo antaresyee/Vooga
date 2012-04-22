@@ -37,7 +37,7 @@ public class LevelEditorGUI extends Game {
 	private Sprite current = null;
 	private double currentX;
 	private double currentY;
-	private Point toRemove=null;
+	private double[] toRemove=null;
 	
 	private Sprite player;
 	private Sprite line;
@@ -59,7 +59,10 @@ public class LevelEditorGUI extends Game {
 	private Background myBackground;
 	public Question q;
 	private ArrayList<Sprites.Factory> factory;
-	public HashMap<Point,Sprites> mapData;
+	public HashMap<double[],Sprites> mapData;
+	private String askQ=" ";
+	public ArrayList<Point> pathCoord;
+	public ArrayList<String> finalFile;
 	
 	
 	@Override
@@ -98,7 +101,12 @@ public class LevelEditorGUI extends Game {
 
 		list.add(player);
 		q= new Question();
-		mapData= new HashMap<Point,Sprites>();
+		
+		mapData= new HashMap<double[],Sprites>();
+		pathCoord = new ArrayList<Point>();
+		finalFile = new ArrayList<String>();
+
+
 	}
 
 	private Properties configFile() {
@@ -122,11 +130,7 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-
-		// update
-		myBackground.update(elapsedTime);
-		ALL.update(elapsedTime);
-
+		
 		// Press Spacebar to move to the bottom of screen
 		if (keyDown(java.awt.event.KeyEvent.VK_SPACE))
 			myMap.moveToBottom();
@@ -137,7 +141,15 @@ public class LevelEditorGUI extends Game {
 			myMap.guiMoveUp();
 		if (keyDown(java.awt.event.KeyEvent.VK_G))
 			myMap.guiMoveDown();
-
+		// update
+		myBackground.update(elapsedTime);
+		
+	
+	if(askQ.equals("Path")){
+			 setPath();
+		}
+	else{
+		ALL.update(elapsedTime);
 		// if user clicks on a gameobject and no other gameobject is currently being dragged
 		// set the clicked on gameobject as current (sticks to the mouse location)
 		if (clicked() != null && current == null) {
@@ -153,7 +165,7 @@ public class LevelEditorGUI extends Game {
 			
 			// if user clicks, place gameobject and create the correct new sprite
 			if (click() && time != count) {
-				placeAndCreateGameObject();
+				askQ=placeAndCreateGameObject();
 			}
 		}
 		
@@ -164,10 +176,40 @@ public class LevelEditorGUI extends Game {
 		if ((keyDown(KeyEvent.VK_CONTROL) && keyPressed(KeyEvent.VK_S))) {
 			saveFile();
 		}
+	}	
 	}
 
-	private void placeAndCreateGameObject() {
+	private void setPath() {
+		String writeFile = "P,";
+		if (click()){
+			Point p = new Point();
+			p.setLocation(getMouseX(), getMouseY());
+			pathCoord.add(p);
+			JOptionPane
+			.showMessageDialog(new JFrame(),
+					"Added coordinate for Enemy Path. Remember press 'D' when done.");
+		}
+		if (keyDown(java.awt.event.KeyEvent.VK_D)){
+			
+			
+			for (Point pt:pathCoord){
+				writeFile = writeFile +pt.getX()+","+(pt.getY()+myMap.getFrameHeight())+",";
+			}
+			
+			pathCoord.clear();
+			writeFile= writeFile + " ";
+			finalFile=q.getFileData();
+			finalFile.add(q.addState(writeFile, this));
+			q.writeEnemy(finalFile);
+			askQ = " ";
+			JOptionPane
+			.showMessageDialog(new JFrame(),
+					"Finished Enemy Path. Back to LevelEditor.");
+		}
+	}
 
+	private String placeAndCreateGameObject() {
+		String str = " ";
 		for (Sprites.Factory check : factory) {
 			if (check.isType(current.getImage(),this)) {
 				int input = q.yesOrNo(check.getType());
@@ -177,8 +219,8 @@ public class LevelEditorGUI extends Game {
 						newSpr.getStartY());
 					break;
 				}
-				
-				Point loc = findPointToRemove();
+				double []loc = new double[3];
+				loc = findPointToRemove(newSpr);
 				if (toRemove!=null) mapData.remove(toRemove);
 				
 				mapData.put(loc,newSpr);
@@ -188,31 +230,43 @@ public class LevelEditorGUI extends Game {
 					break;
 				}
 				//create and place new Sprite on background
-				createNewSprite(newSpr, false);
+				str=createNewSprite(newSpr, false);
 			}
 		}
+		
 		current = null;
+		return str;
 	}
 
-	private Point findPointToRemove() {
-		Point loc = new Point();
-		loc.setLocation(current.getX(),current.getY());
-		for (Point p: mapData.keySet()) {
-			if (p.getX()==currentX &&p.getY()==currentY){
-				toRemove =p;
+	private double[] findPointToRemove(Sprites spr) {
+		double[] loc = new double[3];
+		loc[0]=current.getX();
+		loc[1]=current.getY();
+		if (spr.getType().equals("Enemy")) {
+			loc[2]=EnemySprite.enemyCount;
+			System.out.println(EnemySprite.enemyCount);
+		}
+		else loc[2]=0;
+		for (double[] arr: mapData.keySet()) {
+			if (arr[0]==currentX &&arr[1]==currentY){
+				toRemove=arr;
 			}
 		}
 		return loc;
 	}
 
-	private void createNewSprite(Sprites newSpr, boolean initial) {
+	private String createNewSprite(Sprites newSpr, boolean initial) {
 		// if user is happy with location make new sprite
+			String str = " ";
 			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setBackground(myBackground);
-			if (!initial) newSpr.askQuestions(q,this);
+			if (!initial) {
+				str = newSpr.askQuestions(q,this);
+			}
 			ALL.add(new1);
 			list.add(new1);
 			totalSprites++;	
+			return str;
 	}
 
 	// saves the level
@@ -227,6 +281,9 @@ public class LevelEditorGUI extends Game {
 				 System.out.print(" ");
 				 System.out.println(f.getY());
 				 }
+			 for (Point a: pathCoord){
+				 System.out.println(a.getX() +" " +a.getY());
+			 }
 			finish();
 		} else {
 			JOptionPane
@@ -242,7 +299,6 @@ public class LevelEditorGUI extends Game {
 		current.moveX(-current.getWidth() / 2);
 		current.moveY(-current.getHeight() / 2);
 	}
-
 
 
 	// returns the Sprite that is clicked on
@@ -261,11 +317,17 @@ public class LevelEditorGUI extends Game {
 	// makes a list of GameObjectData after the user presses "control" and "s"
 	private List<GameObjectData> makeGODList() {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
-		for (Point pt: mapData.keySet()){
+		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
-			god.setX(pt.getX());
-			god.setY(pt.getY());
+			god.setX(pt[0]);
+			god.setY(pt[1]);
 			god.setImgPath(mapData.get(pt).getPath());
+			
+			if (mapData.get(pt).getType().equals("Enemy")) {
+				int enemyNum = (int) pt[2];
+				System.out.println(enemyNum);
+				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
+			}
 			temp.add(god);
 		}
 		return temp;
