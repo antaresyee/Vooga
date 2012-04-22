@@ -30,7 +30,7 @@ public class HozShip extends Ship{
 		
 	}
 	
-	public void move(Game g, int width){
+	public void move(Game g, int width, int height){
 		
 		if (this.getX() > 0 && g.keyDown(java.awt.event.KeyEvent.VK_J)){
 			this.moveX(-myHozSpeed); 
