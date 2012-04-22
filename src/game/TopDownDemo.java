@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import playerObjects.CompanionShip;
-import playerObjects.HozShip;
 import playerObjects.SmallShip;
 
 import states.FullHealthState;

@@ -2,7 +2,7 @@ package playerObjects;
 
 import com.golden.gamedev.Game;
 
-public class FleetOfShips extends HozShip{
+public class FleetOfShips extends HorizontalShip{
 
 	public FleetOfShips(double x, double y, String imgPath) {
 		super(x, y, imgPath);

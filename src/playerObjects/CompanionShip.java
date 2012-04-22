@@ -40,6 +40,7 @@ public class CompanionShip extends Ship{
 		return comp; 
 	}
 	
+	
 
 	
 	
