@@ -1,5 +1,7 @@
 package states;
 
+import java.util.ArrayList;
+
 import movement.Movement;
 import game.PlayerInfo;
 import gameObjects.Enemy;
@@ -11,10 +13,11 @@ public class ProximityState extends State {
 	private int upperBound;
 	private int lowerBound;
 
-	public ProximityState(Enemy e, Movement m, int p, int u, int l) {
+	public ProximityState(Enemy e, Movement m, int u, int l, int p) {
 		playerInfo = new PlayerInfo();
 		myEnemy = e;
 		myMovement = m;
+		priorityLevel = p;
 		upperBound = u;
 		lowerBound = l;
 		
@@ -22,11 +25,32 @@ public class ProximityState extends State {
 
 	@Override
 	public boolean shouldBeCurrentState() {
-		return false;
+		double playerX = playerInfo.getPlayerX();
+		double playerY = playerInfo.getPlayerY();
+		double distance = getDistance(playerX, playerY);
+		return lowerBound < distance && distance < upperBound && takesPriority();
 	}
 	
 	private double getDistance(double x, double y){
 		return Math.sqrt(Math.pow((myEnemy.getX() - x), 2) + Math.pow((myEnemy.getY() - y), 2));
+	}
+	
+	public static class ProximityStateFactory extends StateFactory{
+		
+		public ProximityStateFactory(){
+			myName = "PR";
+		}
+
+		@Override
+		public State makeMyState(Enemy e, String[] parameters,
+				ArrayList<Movement> movementTypes, int index) {
+			int upperBound = Integer.parseInt(parameters[1]);
+			int lowerBound = Integer.parseInt(parameters[2]);
+			int priority = Integer.parseInt(parameters[3]);
+			Movement movement = movementTypes.get(index);
+			return new ProximityState(e, movement, upperBound, lowerBound, priority);
+		}
+		
 	}
 
 }
