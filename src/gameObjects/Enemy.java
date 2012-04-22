@@ -6,16 +6,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.golden.gamedev.Game;
 
+import states.EnemyDataLoader;
 import states.FullHealthState;
 import states.LowHealthState;
 import states.State;
 import states.StateFactories;
 import states.StateFactory;
+
+import weapons.Status;
 import levelLoadSave.ForSave;
-import states.EnemyDataLoader;
+
 import movement.BackForthMovement;
 import movement.Movement;
 import movement.MovementFactories;
@@ -35,17 +39,18 @@ public class Enemy extends GameObject {
 	private State currentState;
 	private EnemyDataLoader loader;
 	private int currentHealth;
-	private static int count=0;
+	private List <Status> myStatuses;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
+		myStatuses = new ArrayList<Status>();
 		setLocation(myX, myY);
-		FileInputStream f;
+		System.out.println(filename);
 		try {
-			f = new FileInputStream(filename);
+			FileInputStream f = new FileInputStream(filename);
 			loader = new EnemyDataLoader(f);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -69,6 +74,9 @@ public class Enemy extends GameObject {
 	public void updateEnemy() {
 		move();
 		checkState();
+		for(Status s: myStatuses){
+			s.iterate(this);
+		}
 	}
 
 	public void checkState() {
@@ -89,6 +97,10 @@ public class Enemy extends GameObject {
 
 	public void sustainDamage(int damage) {
 		currentHealth -= damage;
+	}
+	
+	public void addStatus(Status status){
+		myStatuses.add(status);
 	}
 
 	private ArrayList<Movement> parseMovementTypes() {
@@ -134,9 +146,7 @@ public class Enemy extends GameObject {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();	
-		count++;
-		String filename = "stateInfo"+count+ ".txt";
-		System.out.println(count);
+		String filename = god.getEnemyConfigFile();
 		return new Enemy(x, y, imgPath, filename);
 
 	}

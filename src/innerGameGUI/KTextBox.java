@@ -16,13 +16,14 @@ import com.golden.gamedev.object.font.SystemFont;
  * @author Kaitlyn
  *
  */
-public class KTextBox extends Sprite {
+public class KTextBox extends KComponent {
 	private String myInfo, myMsg;
 	private SystemFont myFont;
 	private boolean displayTextOn, enabled;
 	private Game myGame;
 	
 	public KTextBox(Game game, String info){
+		super(game);
 		myInfo = info;
 		myMsg = "";
 		myGame = game;
@@ -55,13 +56,6 @@ public class KTextBox extends Sprite {
 	public void nonPopBox(){
 		
 	}
-	
-	// take any class, GUIElements, not just GameObjects, ListBoxes, Or Button Press
-	// Design doc how the sywtem will work
-	// super class: game object parent, tab GUI object, template methos2, abstract methods 2
-	// what happens is this:
-	// 
-	
 	
 	
 	/*

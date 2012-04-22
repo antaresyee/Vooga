@@ -101,8 +101,9 @@ public class TopDownDemo extends Game {
 		l.loadLevelData("serializeTest.ser");
 		
 		// this is for testing enemy movement
-		Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
-		e.setImage(getImage(e.getImgPath()));
+
+		//Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
+		//e.setImage(getImage(e.getImgPath()));
 //		myEnemy = e;
 //		myEnemyGroup.add(myEnemy);
 		enemySize=myEnemyGroup.getSize();
@@ -115,11 +116,11 @@ public class TopDownDemo extends Game {
 		
 		
 		// companion
-		myShip.setComp();
-		SmallShip c = myShip.getComp();
-		c.setImage(getImage(c.getImgPath()));; 
-		comp = c; 
-		myPlayerGroup.add(comp);
+
+//		SmallShip c = myShip.getComp();
+//		c.setImage(getImage(c.getImgPath()));; 
+//		comp = c; 
+//		myPlayerGroup.add(comp);
 		
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
@@ -146,13 +147,13 @@ public class TopDownDemo extends Game {
 		myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
 		myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
+
 		// this is for testing enemy movement
 		count =0;
 		for (Sprite elem:myEnemyGroup.getSprites()){
 			if (count>=enemySize) break;
 			Enemy e = (Enemy) elem;
 			e.updateEnemy();
-			System.out.println("a");
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());

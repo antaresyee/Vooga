@@ -13,10 +13,12 @@ public abstract class State {
 	
 	protected Enemy myEnemy;
 	protected Movement myMovement;
+	
 	protected int priorityLevel;
 	
 	public void move(){
 		myMovement.move(myEnemy);
+		
 	}
 	
 	public int getPriorityLevel(){

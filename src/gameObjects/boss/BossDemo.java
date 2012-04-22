@@ -7,6 +7,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.GameLoader;
@@ -15,6 +17,8 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.Timer;
 import com.golden.gamedev.object.font.SystemFont;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class BossDemo extends Game {
 
@@ -105,5 +109,36 @@ public class BossDemo extends Game {
 		GameLoader game = new GameLoader();
 		game.setup(new BossDemo(), new Dimension(800, 600), false);
 		game.start();
+//		BossPart bp = new BossPart();
+//		List<List<Integer>> list = new ArrayList<List<Integer>>();
+//		List<Integer> ll = new ArrayList<Integer>();
+//		ll.add(3);
+//		ll.add(0);
+//		ll.add(-3);
+//		list.add(ll);
+//		ll = new ArrayList<Integer>();
+//		ll.add(3);
+//		ll.add(3);
+//		ll.add(0);
+//		list.add(ll);
+//		ll = new ArrayList<Integer>();
+//		ll.add(3);
+//		ll.add(0);
+//		ll.add(3);
+//		list.add(ll);
+//		ll = new ArrayList<Integer>();
+//		ll.add(3);
+//		ll.add(-3);
+//		ll.add(0);
+//		list.add(ll);
+//		bp.setMovement(list);
+//		bp.setLocation(100, 100);
+//		bp.setBossState(null);
+//		bp.setImagePath("resources/bubble2.jpg");
+//		Gson gson = new Gson();
+//		String json = gson.toJson(bp);
+//		System.out.println(json);
+//		BossPart bp1 = gson.fromJson(json, new TypeToken<BossPart>(){}.getType());
+//		System.out.println(bp1.getX());
 	}
 }

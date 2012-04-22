@@ -12,7 +12,7 @@ public class FireBossCollision extends BasicCollisionGroup{
 	@Override
 	public void collided(Sprite s1, Sprite s2) {
 		// TODO Auto-generated method stub
-		System.out.println(s1);
+//		System.out.println(s1);
 		((BossWeakPoint)s1).hit();
 		s2.setActive(false);
 	}

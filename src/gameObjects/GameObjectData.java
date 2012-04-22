@@ -25,6 +25,7 @@ public class GameObjectData implements Serializable {
     private Movement myMovement;
     //used ONLY for enemies. testing enemy state framework
     private ArrayList<Movement> myEnemyMovements;
+    private String myEnemyConfigFile;
     
     public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
@@ -52,6 +53,10 @@ public class GameObjectData implements Serializable {
     	myEnemyMovements = movements;
     }
     
+    public void setEnemyConfigFile(String s){
+    	myEnemyConfigFile = s;
+    }
+    
     
     //GETTERS
     public String getType() {
@@ -77,6 +82,11 @@ public class GameObjectData implements Serializable {
     public ArrayList<Movement> getMovements(){
     	return myEnemyMovements;
     }
+    
+    public String getEnemyConfigFile(){
+    	return myEnemyConfigFile;
+    }
+    
     
     //JAVA OVERRIDES
     public String toString() {

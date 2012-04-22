@@ -23,8 +23,9 @@ public class PlayerSprite extends Sprites {
 	}
 
 	@Override
-	public void askQuestions(Question q, Game g) {
-		
+	public String askQuestions(Question q, Game g) {
+		String str = "a";
+		return str;
 		
 	}
 	@Override

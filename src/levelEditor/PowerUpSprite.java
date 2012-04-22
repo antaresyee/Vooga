@@ -20,9 +20,9 @@ public class PowerUpSprite extends Sprites {
 	}
 
 	@Override
-	public void askQuestions(Question q, Game g) {
-		// TODO Auto-generated method stub
-		
+	public String askQuestions(Question q, Game g) {
+		String str = " ";
+		return " ";		
 	}
 	@Override
 	public String getType() {

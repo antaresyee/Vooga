@@ -1,41 +1,43 @@
 package weapons;
 
+import gameObjects.Enemy;
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
-import gameObjects.Enemy;
 
-import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
-public class DamagingProjectile extends Projectile{
-	int myDamage;
+public class StatusProjectile extends Projectile{
+	Status myStatus;
 
-	DamagingProjectile(String imgPath, SpriteGroup g, int damage) {
+	StatusProjectile(String imgPath, SpriteGroup g, Status s) {
 		super(imgPath, g);
-		myDamage = damage;
+		myStatus = s;
 	}
 
 	@Override
 	public void actionOnCollision(GameObject hit) {
 		if(hit.getType().equals("Enemy")){
 			Enemy enemy = (Enemy) hit;
-			enemy.sustainDamage(myDamage);
+			enemy.addStatus(myStatus);
 		}
 		removeProjectile();
+		
 	}
 
 	@Override
-	public void createProjectile(double x, double y, double xspeed, double yspeed) {
-		DamagingProjectile newproj = new DamagingProjectile(myImgPath, myGroup, myDamage);
-		newproj.setPosition(x, y);
+	public void createProjectile(double xpos, double ypos, double xspeed,
+			double yspeed) {
+		StatusProjectile newproj = new StatusProjectile(myImgPath, myGroup, myStatus);
+		newproj.setPosition(xpos, ypos);
 		newproj.setSpeed(xspeed, yspeed);
 		myGroup.add(newproj);
+		
 	}
 
 	@Override
 	public GameObject makeGameObject(GameObjectData god) {
 		String path = god.getImgPath();
-		Projectile returning = new DamagingProjectile(path, myGroup, myDamage);
+		Projectile returning = new StatusProjectile(path, myGroup, myStatus);
 		double x = god.getX();
 		double y = god.getY();
 		returning.setPosition(x, y);

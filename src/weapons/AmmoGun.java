@@ -5,8 +5,8 @@ import com.golden.gamedev.object.SpriteGroup;
 public class AmmoGun extends Gun{
 	int myAmmo;
 
-	public AmmoGun(int rate, Projectile p, SpriteGroup g) {
-		super(rate, p, g);
+	public AmmoGun(int rate, Projectile p, SpriteGroup g, ShotPattern pattern) {
+		super(rate, p, g, pattern);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -14,7 +14,7 @@ public class AmmoGun extends Gun{
 	public void actionOnFire(double xpos,double ypos) {
 		if(myAmmo > 0){
 			myAmmo--;
-			myProjectile.createProjectile(xpos, ypos);
+			myPattern.fire(myProjectile, xpos, ypos);
 		}
 		
 	}
