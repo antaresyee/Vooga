@@ -3,7 +3,6 @@ package levelEditor;
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
 
-import innerGameGUI.TabGUIExample;
 import gameObjects.GameObjectData;
 
 import com.golden.gamedev.Game;

@@ -40,5 +40,5 @@ public abstract class Ship extends Player{
 	}
 	
 	
-	public abstract void move(Game g, int width); 
+	public abstract void move(Game g, int width, int height); 
 }

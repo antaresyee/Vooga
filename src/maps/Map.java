@@ -75,7 +75,8 @@ public class Map {
 		// TODO Auto-generated method stub
 		if (timer.action(elapsedTime)){
 			myBack.move(0, -1); 
-			if (counter>0)counter--;
+			if (counter>0)
+				counter--;
 		}
 		
 	}
@@ -92,7 +93,8 @@ public class Map {
 	
 	public void movePlayer(long elapsedTime, Sprite player){
 		if(timer.action(elapsedTime))
-			player.move(0, -1); 
+			if(counter > 0)
+				player.move(0, -1); 
 	}
 	
 	public void setSpeed(int speed){
@@ -102,6 +104,10 @@ public class Map {
 	
 	public int getFrameHeight(){
 		return counter; 
+	}
+	
+	public int getWidth(){
+		return myBack.getWidth(); 
 	}
 	
 	public void setFrameSpeed(int fS){

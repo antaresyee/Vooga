@@ -12,6 +12,7 @@ public class PlayerBarrierCollision extends CollisionGroup {
 			player.setLocation(player.getX(),barrier.getY()+player.getHeight());
 		}
 		if (collisionSide == BOTTOM_TOP_COLLISION) player.setLocation(player.getX(),barrier.getY()-barrier.getHeight());
+		
 		if (collisionSide == RIGHT_LEFT_COLLISION){
 			player.setLocation(barrier.getX()-player.getWidth(), player.getY());
 		}

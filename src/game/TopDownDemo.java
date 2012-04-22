@@ -74,8 +74,8 @@ public class TopDownDemo extends Game {
 		myProjectileGroup = new SpriteGroup("projectile");
 
 		// init background using the new Map class
-		myBackImage = getImage("resources/Back2.png");
-		myMap = new Map(myBackImage, getWidth(), getHeight());
+		myBackImage = getImage("resources/back.png");
+		myMap = new Map(myBackImage, 12, getWidth(), getHeight());
 		myMap.setSpeed(10);
 		myBackground = myMap.getMyBack();
 		myPlayerGroup.setBackground(myBackground);
@@ -115,6 +115,7 @@ public class TopDownDemo extends Game {
 		
 		
 		// companion
+		myShip.setComp();
 		SmallShip c = myShip.getComp();
 		c.setImage(getImage(c.getImgPath()));; 
 		comp = c; 
@@ -144,7 +145,7 @@ public class TopDownDemo extends Game {
 		// updating playerInfo
 		myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
-		myShip.move(this, myMap.getWidth());
+		myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
 		// this is for testing enemy movement
 		count =0;
 		for (Sprite elem:myEnemyGroup.getSprites()){
