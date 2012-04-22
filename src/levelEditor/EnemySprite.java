@@ -15,6 +15,7 @@ import com.golden.gamedev.object.Sprite;
  */
 public class EnemySprite extends Sprites {
 	private final String myType= "Enemy";
+	public static int enemyCount=1;
 	public EnemySprite(String pngPath, int x, int y) {
 		super(pngPath,x,y);
 		// TODO Auto-generated constructor stub
@@ -25,12 +26,14 @@ public class EnemySprite extends Sprites {
 		// TODO Auto-generated method stub
 		String str=q.enemyQuestion(g);
 		if (!str.equals("Path")) q.writeEnemy(str);
+		enemyCount++;
 		return str;
 	}
 	@Override
 	public String getType() {
 		return myType;
 	}
+	
 	
 	
 	public static class Factory extends Sprites.Factory{

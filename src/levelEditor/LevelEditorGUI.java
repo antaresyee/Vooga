@@ -37,7 +37,7 @@ public class LevelEditorGUI extends Game {
 	private Sprite current = null;
 	private double currentX;
 	private double currentY;
-	private Point toRemove=null;
+	private double[] toRemove=null;
 	
 	private Sprite player;
 	private Sprite line;
@@ -59,7 +59,7 @@ public class LevelEditorGUI extends Game {
 	private Background myBackground;
 	public Question q;
 	private ArrayList<Sprites.Factory> factory;
-	public HashMap<Point,Sprites> mapData;
+	public HashMap<double[],Sprites> mapData;
 	private String askQ=" ";
 	public ArrayList<Point> pathCoord;
 	
@@ -101,7 +101,7 @@ public class LevelEditorGUI extends Game {
 		list.add(player);
 		q= new Question();
 		
-		mapData= new HashMap<Point,Sprites>();
+		mapData= new HashMap<double[],Sprites>();
 		pathCoord = new ArrayList<Point>();
 
 	}
@@ -127,6 +127,7 @@ public class LevelEditorGUI extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
+		
 		// Press Spacebar to move to the bottom of screen
 		if (keyDown(java.awt.event.KeyEvent.VK_SPACE))
 			myMap.moveToBottom();
@@ -142,32 +143,7 @@ public class LevelEditorGUI extends Game {
 		
 	
 	if(askQ.equals("Path")){
-			
-			if (click()){
-				Point p = new Point();
-				p.setLocation(getMouseX(), getMouseY());
-				pathCoord.add(p);
-				JOptionPane
-				.showMessageDialog(new JFrame(),
-						"Added coordinate for Enemy Path. Remember press 'D' when done.");
-			}
-			if (keyDown(java.awt.event.KeyEvent.VK_D)){
-				
-				String writeFile = "P,";
-				for (Point pt:pathCoord){
-					writeFile = writeFile +pt.getX()+","+(pt.getY()+myMap.getFrameHeight())+",";
-					System.out.println(pt.getY()+myMap.getFrameHeight());
-				}
-				
-				pathCoord.clear();
-				writeFile= writeFile + " ";
-				q.writeEnemy(writeFile);
-				askQ = " ";
-				JOptionPane
-				.showMessageDialog(new JFrame(),
-						"Finished Enemy Path. Back to LevelEditor.");
-			}
-			
+			setPath();	
 		}
 	else{
 		ALL.update(elapsedTime);
@@ -200,6 +176,33 @@ public class LevelEditorGUI extends Game {
 	}	
 	}
 
+	private void setPath() {
+		if (click()){
+			Point p = new Point();
+			p.setLocation(getMouseX(), getMouseY());
+			pathCoord.add(p);
+			JOptionPane
+			.showMessageDialog(new JFrame(),
+					"Added coordinate for Enemy Path. Remember press 'D' when done.");
+		}
+		if (keyDown(java.awt.event.KeyEvent.VK_D)){
+			
+			String writeFile = "P,";
+			for (Point pt:pathCoord){
+				writeFile = writeFile +pt.getX()+","+(pt.getY()+myMap.getFrameHeight())+",";
+				System.out.println(pt.getY()+myMap.getFrameHeight());
+			}
+			
+			pathCoord.clear();
+			writeFile= writeFile + " ";
+			q.writeEnemy(writeFile);
+			askQ = " ";
+			JOptionPane
+			.showMessageDialog(new JFrame(),
+					"Finished Enemy Path. Back to LevelEditor.");
+		}
+	}
+
 	private String placeAndCreateGameObject() {
 		String str = " ";
 		for (Sprites.Factory check : factory) {
@@ -211,8 +214,8 @@ public class LevelEditorGUI extends Game {
 						newSpr.getStartY());
 					break;
 				}
-				
-				Point loc = findPointToRemove();
+				double []loc = new double[3];
+				loc = findPointToRemove(newSpr);
 				if (toRemove!=null) mapData.remove(toRemove);
 				
 				mapData.put(loc,newSpr);
@@ -230,12 +233,18 @@ public class LevelEditorGUI extends Game {
 		return str;
 	}
 
-	private Point findPointToRemove() {
-		Point loc = new Point();
-		loc.setLocation(current.getX(),current.getY());
-		for (Point p: mapData.keySet()) {
-			if (p.getX()==currentX &&p.getY()==currentY){
-				toRemove =p;
+	private double[] findPointToRemove(Sprites spr) {
+		double[] loc = new double[3];
+		loc[0]=current.getX();
+		loc[1]=current.getY();
+		if (spr.getType().equals("Enemy")) {
+			loc[2]=EnemySprite.enemyCount;
+			System.out.println(EnemySprite.enemyCount);
+		}
+		else loc[2]=0;
+		for (double[] arr: mapData.keySet()) {
+			if (arr[0]==currentX &&arr[1]==currentY){
+				toRemove=arr;
 			}
 		}
 		return loc;
@@ -304,12 +313,17 @@ public class LevelEditorGUI extends Game {
 	// makes a list of GameObjectData after the user presses "control" and "s"
 	private List<GameObjectData> makeGODList() {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
-		for (Point pt: mapData.keySet()){
+		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
-			god.setX(pt.getX());
-			god.setY(pt.getY());
+			god.setX(pt[0]);
+			god.setY(pt[1]);
 			god.setImgPath(mapData.get(pt).getPath());
-			god.setEnemyConfigFile("StateInfo1.txt");
+			
+			if (mapData.get(pt).getType().equals("Enemy")) {
+				int enemyNum = (int) pt[2];
+				System.out.println(enemyNum);
+				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
+			}
 			temp.add(god);
 		}
 		return temp;
