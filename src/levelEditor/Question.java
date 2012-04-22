@@ -14,7 +14,7 @@ public class Question {
 	public int enemies = 1;
 	private String movement=null;
 	public String enemyQuestion(Game g){
-		Object[] options = {"Back and Forth","Targeted", "Path", "No Movement"};
+		Object[] options = {"Back and Forth","Targeted", "Path"};
 
 		String input = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Pick Your Enemy Movement for default state:", "Top Down Demo'",
@@ -30,7 +30,7 @@ public class Question {
 			.showMessageDialog(new JFrame(),
 					"Click on the coordinates for your Enemy's Path Movement. Press 'D' when done.");
 		}
-		else movement="";
+		
 		return movement;
 	}
 	
@@ -40,7 +40,7 @@ public class Question {
 			  FileWriter fstream = new FileWriter("StateInfo" + enemies +".txt");
 			  BufferedWriter out = new BufferedWriter(fstream);	  
 			  out.write(input);
-			  if (!input.equals(""))out.write("FH,1 ");
+			  out.write("FH,1 ");
 			  //Close the output stream
 			  out.close();
 			  }catch (Exception e){//Catch exception if any
