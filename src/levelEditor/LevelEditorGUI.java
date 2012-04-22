@@ -83,7 +83,7 @@ public class LevelEditorGUI extends Game {
 		
 		
 		// create Map
-		myBackImage = getImage(prop.getProperty("backImgPath"));
+		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
 		myBackground = myMap.getMyBack();
 		backHeight = myBackImage.getHeight();

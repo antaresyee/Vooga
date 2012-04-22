@@ -30,7 +30,7 @@ public class BarrierSprite extends Sprites {
 	}
 	public static class Factory extends Sprites.Factory{
         
-		private final String imagePath = "resources/black.png";
+		private final String imagePath = "resources/blueBarrier.png";
 		private final int startX = 130;
 		private final int startY = 2929;
 		private final String myType = "Barrier";

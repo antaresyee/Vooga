@@ -40,7 +40,7 @@ public class Map {
 	public Map(BufferedImage image, int numTiles, int width, int height){
 		BufferedImage[] backPics = new BufferedImage[1]; 
 		backPics[0] = image; 
-		myBack = new TileBackground(backPics, 1, numTiles);
+		myBack = new TileBackground(backPics, 1, numTiles); 
 		init(width, height); 
 	}
 	

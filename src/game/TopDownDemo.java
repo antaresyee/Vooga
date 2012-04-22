@@ -46,11 +46,11 @@ import com.golden.gamedev.object.background.ImageBackground;
 
 public class TopDownDemo extends Game {
 
-	private CompanionShip myShip;
+	//private CompanionShip myShip;
 	private SmallShip comp;
 	private Player myPlayer;
 	private Enemy myEnemy;
-	private HealthBar myBar; 
+	// private HealthBar myBar; 
 	
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
@@ -74,10 +74,12 @@ public class TopDownDemo extends Game {
 		myProjectileGroup = new SpriteGroup("projectile");
 
 		// init background using the new Map class
-		myBackImage = getImage("resources/back.png");
-		myMap = new Map(myBackImage, 12, getWidth(), getHeight());
+		myBackImage = getImage("resources/BackFinal.png");
+		myMap = new Map(myBackImage, getWidth(), getHeight());
+		
 		myMap.setSpeed(10);
 		myBackground = myMap.getMyBack();
+		
 		myPlayerGroup.setBackground(myBackground);
 		myBarrierGroup.setBackground(myBackground);
 		myEnemyGroup.setBackground(myBackground);
@@ -108,31 +110,29 @@ public class TopDownDemo extends Game {
 //		myEnemyGroup.add(myEnemy);
 		enemySize=myEnemyGroup.getSize();
 		// testing ship movement
-		CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
-		s.setImage(getImage(s.getImgPath()));
-		myShip = s;
-		//myShip.setHozSpeed(5);
-		myPlayerGroup.add(myShip);
-		
-		
-		// companion
+//		CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
+//		s.setImage(getImage(s.getImgPath()));
+//		myShip = s;
+//		//myShip.setHozSpeed(5);
+//		myPlayerGroup.add(myShip);
 
+		// companion
 //		SmallShip c = myShip.getComp();
 //		c.setImage(getImage(c.getImgPath()));; 
 //		comp = c; 
 //		myPlayerGroup.add(comp);
-		
+//		
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
 		
-		myBar = new HealthBar(myShip); 
+//		myBar = new HealthBar(myShip); 
 
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
-		myBar.render(pen); 
+//		myBar.render(pen); 
 		// this is for testing enemy movement
 		// myEnemy.render(pen);
 		// myShip.render(pen);
@@ -144,9 +144,9 @@ public class TopDownDemo extends Game {
 		playerMovement();
 		myPlayfield.update(elapsedTime);
 		// updating playerInfo
-		myMap.movePlayer(elapsedTime, myShip);
+//		myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
-		myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
+//		myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
 
 		// this is for testing enemy movement
 		count =0;
