@@ -13,22 +13,22 @@ public class ProximityState extends State {
 	private int upperBound;
 	private int lowerBound;
 
-	public ProximityState(Enemy e, Movement m, int u, int l, int p) {
+	public ProximityState(Enemy e, Movement m, int l, int u, int p) {
 		playerInfo = new PlayerInfo();
 		myEnemy = e;
 		myMovement = m;
 		priorityLevel = p;
-		upperBound = u;
 		lowerBound = l;
-		
+		upperBound = u;
 	}
 
 	@Override
-	public boolean shouldBeCurrentState() {
+	public boolean changeCondition() {
 		double playerX = playerInfo.getPlayerX();
 		double playerY = playerInfo.getPlayerY();
 		double distance = getDistance(playerX, playerY);
-		return lowerBound < distance && distance < upperBound && takesPriority();
+		System.out.println("distance = " + distance);
+		return lowerBound < distance && distance < upperBound;
 	}
 	
 	private double getDistance(double x, double y){

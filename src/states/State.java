@@ -32,5 +32,17 @@ public abstract class State {
 		
 	}
 	
-	public abstract boolean shouldBeCurrentState();
+	public abstract boolean changeCondition();
+	
+	public boolean shouldBeCurrentState(){
+		if (changeCondition()){
+			if (!myEnemy.getCurrentState().changeCondition()){
+				return true;
+			}
+			else if (takesPriority()){
+				return true;
+			}
+		}
+		return false;
+	}
 }
