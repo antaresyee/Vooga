@@ -46,12 +46,6 @@ public class LevelLoader {
 
     public LevelLoader(List<LoadObserver> loadObservers) {
         myLoadObservers = loadObservers;
-
-//        myAllFactories = new ArrayList<GameObjectFactory>();
-//        myAllFactories.add(Player.getFactory());
-//        myAllFactories.add(Barrier.getFactory());
-//        myAllFactories.add(Enemy.getFactory());
-//        myAllFactories.add(Boss.getFactory());
         myAllFactories = new ArrayList<GameObjectFactory>();
         addAllFactories();
     }
@@ -97,7 +91,13 @@ public class LevelLoader {
 
     public void loadLevelData(String fileName) {
         try {
-            List<GameObjectData> gameObjectDatas = serializeLoad(fileName);
+            List<GameObjectData> gameObjectDatas;
+            if (fileName.endsWith(".ser")) {
+                gameObjectDatas = serializeLoad(fileName);
+            }
+            else {
+                gameObjectDatas = jsonLoad(fileName);
+            }
 
             for (GameObjectData god : gameObjectDatas) {
                 for (GameObjectFactory f : myAllFactories) {
