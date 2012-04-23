@@ -175,17 +175,17 @@ public class LevelLoader {
         barrierData.setImgPath("./resources/triangle.png");
         objectsToSave.add(barrierData);
 
-        GameObjectData playerData = new GameObjectData("Player");
-        playerData.setX(3.5);
-        playerData.setY(4.0);
-        playerData.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData);
+        GameObjectData barrierData2 = new GameObjectData("Barrier");
+        barrierData2.setX(3.5);
+        barrierData2.setY(4.0);
+        barrierData2.setImgPath("./resources/triangle.png");
+        objectsToSave.add(barrierData2);
 
-        GameObjectData playerData2 = new GameObjectData("Player");
-        playerData2.setX(100.0);
-        playerData2.setY(500.0);
-        playerData2.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData2);
+        GameObjectData horizontalShip = new GameObjectData("HorizontalShip");
+        horizontalShip.setX(200.0);
+        horizontalShip.setY(2700.0);
+        horizontalShip.setImgPath("./resources/triangle.png");
+        objectsToSave.add(horizontalShip);
 
         // LevelSaver.jsonSave(objectsToSave, "testLevel");
         // System.out.println(l.jsonLoad("testLevel.json"));

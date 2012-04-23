@@ -149,7 +149,7 @@ public class TopDownDemo extends Game {
 	@Override
 	public void update(long elapsedTime) {
 		myMap.moveMap(elapsedTime);
-		playerMovement();
+		//playerMovement();
 		myPlayfield.update(elapsedTime);
 		// updating playerInfo
 
@@ -166,97 +166,10 @@ public class TopDownDemo extends Game {
 			e.updateEnemy();
 			count++;
 		}
-		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
-
-	}
-
-	public void playerMovement() {
-		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
-			myPlayer.moveX(-3);
-		}
-		if (myPlayer.getX() < getWidth() - myPlayer.getWidth() - 3
-				&& keyDown(java.awt.event.KeyEvent.VK_D)) {
-			myPlayer.moveX(3);
-		}
-		if (myPlayer.getY() > myMap.getFrameHeight()
-				&& keyDown(java.awt.event.KeyEvent.VK_W)) {
-			myPlayer.moveY(-3);
-		}
-		if (myPlayer.getY() < getHeight() - myPlayer.getHeight() - 3
-				+ myMap.getFrameHeight()
-				&& keyDown(java.awt.event.KeyEvent.VK_S)) {
-			myPlayer.moveY(3);
-		}
 	}
 
 	public void setPlayer(Player g) {
 		myPlayer = g;
 	}
-
-	// public void loadLevelData() {
-	// // //THIS IS IDEAL IMPLEMENTATION, BUT CAN'T USE YET BECAUSE MUST SET
-	// myPlayer, setImage(), etc.
-	// // List<GameObjectFactory> allFactories = new
-	// ArrayList<GameObjectFactory>();
-	// // allFactories.add(Player.getFactory());
-	// // allFactories.add(Barrier.getFactory());
-	// // allFactories.add(Enemy.getFactory());
-	// //
-	// // //load level
-	// // LevelLoader l = new LevelLoader();
-	// // try {
-	// // List<GameObjectData> gameObjectDatas = l.load("savedLevel.json");
-	// // for (GameObjectData god : gameObjectDatas) {
-	// // for (GameObjectFactory factory : allFactories) {
-	// // if (factory.isMyObject(god)) {
-	// // factory.makeGameObject(god);
-	// // break;
-	// // }
-	// // }
-	// // }
-	// //
-	// // }
-	// // catch (FileNotFoundException e) {
-	// // e.printStackTrace();
-	// // }
-	//
-	//
-	// //load level
-	// LevelLoader l = new LevelLoader(myLoadObservers);
-	// l.loadLevelData("serializeTest.ser");
-	//
-	// try {
-	// List<GameObjectData> gameObjectDatas = l.jsonLoad("savedLevel.json");
-	// for (GameObjectData god : gameObjectDatas) {
-	//
-	// GameObjectFactory playerFactory = Player.getFactory();
-	// GameObjectFactory barrierFactory = Barrier.getFactory();
-	// GameObjectFactory enemyFactory = Enemy.getFactory();
-	//
-	// if (playerFactory.isMyObject(god)) {
-	// myPlayer = (Player) playerFactory.makeGameObject(god);
-	// myPlayer.setImage(getImage(myPlayer.getImgPath()));
-	// //myPlayer.setSpeed(0, 20);
-	// myPlayerGroup.add(myPlayer);
-	//
-	// }
-	// if (barrierFactory.isMyObject(god)) {
-	// Barrier b = (Barrier) barrierFactory.makeGameObject(god);
-	// b.setImage(getImage(b.getImgPath()));
-	// myBarrierGroup.add(b);
-	// }
-	// if (enemyFactory.isMyObject(god)) {
-	// Enemy e = (Enemy) enemyFactory.makeGameObject(god);
-	// e.setImage(getImage(e.getImgPath()));
-	// myEnemyGroup.add(e);
-	// }
-	// }
-	//
-	// }
-	// catch (FileNotFoundException e) {
-	// e.printStackTrace();
-	// }
-	// }
-	//
 
 }
