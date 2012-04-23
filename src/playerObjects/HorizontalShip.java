@@ -2,6 +2,8 @@ package playerObjects;
 
 import java.util.ArrayList;
 
+import levelLoadSave.ForSave;
+
 import weapons.Weapon;
 
 import com.golden.gamedev.Game;
@@ -13,6 +15,8 @@ import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
+
+@ForSave
 public class HorizontalShip extends Ship{
 
 	protected int myHozSpeed; 	
@@ -54,8 +58,7 @@ public class HorizontalShip extends Ship{
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();	
-		String filename = god.getEnemyConfigFile();
-		return new Enemy(x, y, imgPath, filename);
+		return new HorizontalShip(x, y, imgPath);
 
 	}
 
@@ -71,6 +74,7 @@ public class HorizontalShip extends Ship{
 	public static GameObjectFactory getFactory() {
 		return new GameObjectFactory(new HorizontalShip());
 	}
+
 
 }
 	
