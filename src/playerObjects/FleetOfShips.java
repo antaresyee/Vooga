@@ -1,5 +1,7 @@
 package playerObjects;
 
+import gameObjects.HorizontalShip;
+
 import com.golden.gamedev.Game;
 
 public class FleetOfShips extends HorizontalShip{
