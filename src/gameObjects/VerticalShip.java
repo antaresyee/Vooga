@@ -1,4 +1,4 @@
-package playerObjects;
+package gameObjects;
 
 import gameObjects.GameObjectFactory;
 
