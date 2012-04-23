@@ -37,6 +37,7 @@ public class HorizontalShip extends Ship{
 		
 		// default ship will be set with generic AmmoGun
 		myWeapons = new ArrayList<Weapon>();
+		myType = "HorizontalShip";
 		
 	}
 	
@@ -69,8 +70,9 @@ public class HorizontalShip extends Ship{
 	 * are used for the factory system.
 	 */
 	protected HorizontalShip() {
-		super(); 
+		super();
 		myType = "HorizontalShip";
+		System.out.println(myType);
 	}
 
 	public static GameObjectFactory getFactory() {

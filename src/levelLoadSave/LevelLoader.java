@@ -160,6 +160,7 @@ public class LevelLoader {
         for (LoadObserver lo : myLoadObservers) {
             if (lo.isMyObserver(go)) {
                 lo.objectLoaded(go);
+                System.out.println(lo.myType);
             }
         }
     }
@@ -182,9 +183,9 @@ public class LevelLoader {
         objectsToSave.add(barrierData2);
 
         GameObjectData horizontalShip = new GameObjectData("HorizontalShip");
-        horizontalShip.setX(200.0);
+        horizontalShip.setX(100.0);
         horizontalShip.setY(2700.0);
-        horizontalShip.setImgPath("./resources/triangle.png");
+        horizontalShip.setImgPath("./resources/ship.png");
         objectsToSave.add(horizontalShip);
 
         // LevelSaver.jsonSave(objectsToSave, "testLevel");

@@ -5,6 +5,7 @@ import gameObjects.Barrier;
 import gameObjects.Enemy;
 import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
+import gameObjects.HorizontalShip;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
@@ -24,7 +25,7 @@ import states.LowHealthState;
 import states.State;
 
 import levelLoadSave.EnemyLoadObserver;
-import levelLoadSave.HorizontalPlayerLoadObserver;
+import levelLoadSave.HorizontalShipLoadObserver;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
@@ -98,10 +99,11 @@ public class TopDownDemo extends Game {
 
 		// load level data
 		myLoadObservers = new ArrayList<LoadObserver>();
+		myLoadObservers.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		myLoadObservers.add(new HorizontalPlayerLoadObserver(myPlayerGroup, this));
+		
 		
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
@@ -155,6 +157,9 @@ public class TopDownDemo extends Game {
 		//playerMovement();
 		myPlayfield.update(elapsedTime);
 		// updating playerInfo
+		
+		HorizontalShip hz = (HorizontalShip) myPlayer;
+		hz.move(this, 400, 3000);
 
 		//myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
