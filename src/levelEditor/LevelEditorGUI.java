@@ -83,7 +83,7 @@ public class LevelEditorGUI extends Game {
 		
 		
 		// create Map
-		myBackImage = getImage(prop.getProperty("backImgPath"));
+		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
 		myBackground = myMap.getMyBack();
 		backHeight = myBackImage.getHeight();
@@ -323,8 +323,7 @@ public class LevelEditorGUI extends Game {
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
 			god.setX(pt[0]);
 			god.setY(pt[1]);
-			god.setImgPath(mapData.get(pt).getPath());
-			
+			god.setImgPath(mapData.get(pt).getPath());			
 			if (mapData.get(pt).getType().equals("Enemy")) {
 				int enemyNum = (int) pt[2];
 				System.out.println(enemyNum);

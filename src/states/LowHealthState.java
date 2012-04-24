@@ -15,16 +15,16 @@ public class LowHealthState extends State {
 
 	private int lowHealthPoint;
 
-	public LowHealthState(Enemy e, Movement m, int p, int l) {
+	public LowHealthState(Enemy e, Movement m, int p) {
 		myEnemy = e;
 		myMovement = m;
 		priorityLevel = p;
-		lowHealthPoint = l;
+		lowHealthPoint = 200;
 	}
 
 	@Override
-	public boolean shouldBeCurrentState() {
-		return myEnemy.getCurrentHealth() < lowHealthPoint && takesPriority();
+	public boolean changeCondition() {
+		return myEnemy.getCurrentHealth() < lowHealthPoint;
 	}
 
 	public static class LHStateFactory extends StateFactory {
@@ -37,10 +37,11 @@ public class LowHealthState extends State {
 		public State makeMyState(Enemy e, String[] parameters,
 				ArrayList<Movement> movementTypes, int index) {
 			return new LowHealthState(e, movementTypes.get(index),
-					Integer.parseInt(parameters[1]),
-					Integer.parseInt(parameters[2]));
+					Integer.parseInt(parameters[1]));
 		}
 
 	}
+
+	
 
 }

@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import com.golden.gamedev.Game;
 
 import weapons.Weapon;
+import gameObjects.Enemy;
+import gameObjects.GameObject;
+import gameObjects.GameObjectData;
+import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
-public abstract class Ship extends Player{
+public class Ship extends Player {
 
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons; 
@@ -40,5 +44,23 @@ public abstract class Ship extends Player{
 	}
 	
 	
-	public abstract void move(Game g, int width); 
+	@Override
+	public GameObject makeGameObject(GameObjectData god) {
+		Double x = god.getX();
+		Double y = god.getY();
+		String imgPath = god.getImgPath();	
+		String filename = god.getEnemyConfigFile();
+		return new Enemy(x, y, imgPath, filename);
+
+	}
+
+	/**
+	 * Ship() and getFactory() must be implemented by each game object; they
+	 * are used for the factory system.
+	 */
+	protected Ship() {
+		super(); 
+		myType = "Ship";
+	}
+
 }

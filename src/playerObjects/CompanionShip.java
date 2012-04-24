@@ -13,18 +13,21 @@ public class CompanionShip extends Ship{
 		super(x, y, imgPath);
 		// TODO Auto-generated constructor stub
 		
-		myHozSpeed = 3; 
-		comp = new SmallShip(this.myX-5, this.myY -5, "resources/smallShip.png"); 
-		
+		myHozSpeed = 3; 		
+	}
+	
+	public void setComp(){
+		comp = new SmallShip(this.myX-5, this.myY -5); 
+
 	}
 
 	@Override
-	public void move(Game g, int width) {
-		comp.move(g, width); 
+	public void move(Game g, int width, int height) {
 		
+		comp.move(g, width, height);
 		if (this.getX() > 0 && g.keyDown(java.awt.event.KeyEvent.VK_J)){
 			this.moveX(-myHozSpeed); 
-			comp.moveX(myHozSpeed);
+			comp.moveX(-myHozSpeed);
 		}
 	
 		if (this.getX() < width - this.getWidth()  && g.keyDown(java.awt.event.KeyEvent.VK_L)){
@@ -36,6 +39,7 @@ public class CompanionShip extends Ship{
 	public SmallShip getComp(){
 		return comp; 
 	}
+	
 	
 
 	

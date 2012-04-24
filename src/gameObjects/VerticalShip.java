@@ -1,12 +1,14 @@
-package playerObjects;
+package gameObjects;
+
+import gameObjects.GameObjectFactory;
 
 import com.golden.gamedev.Game;
 
-public class VertShip extends HozShip{
+public class VerticalShip extends HorizontalShip{
 
 	protected int myVertSpeed; 	
 	
-	public VertShip(double x, double y, String imgPath) {
+	public VerticalShip(double x, double y, String imgPath) {
 		super(x, y, imgPath);
 		// TODO Auto-generated constructor stub
 	}
@@ -24,4 +26,13 @@ public class VertShip extends HozShip{
 			this.moveY(myHozSpeed); 
 		} 
 	}	
+	
+	private VerticalShip() {
+		super(); 
+		myType = "HorizontalShip";
+	}
+
+	public static GameObjectFactory getFactory() {
+		return new GameObjectFactory(new VerticalShip());
+	}
 }

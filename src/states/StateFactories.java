@@ -16,8 +16,10 @@ public class StateFactories {
 		allStateFactories = new ArrayList<StateFactory>();
 		FullHealthState.FHStateFactory fh = new FullHealthState.FHStateFactory();
 		LowHealthState.LHStateFactory lh = new LowHealthState.LHStateFactory();
+		ProximityState.ProximityStateFactory pr = new ProximityState.ProximityStateFactory();
 		allStateFactories.add(fh);
 		allStateFactories.add(lh);
+		allStateFactories.add(pr);
 	}
 	
 	public ArrayList<StateFactory> getAllStateFactories(){

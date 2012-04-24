@@ -1,9 +1,0 @@
-{"myData":{"imgPath":"resources/enemy.png","type":"Enemy","x":"180.0","y":"2630.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"108.0","y":"2654.0"}}
-{"myData":{"imgPath":"resources/ship.png","type":"Player","x":"177.0","y":"2812.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"248.0","y":"2629.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"70.0","y":"2544.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"213.0","y":"2444.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"59.0","y":"2413.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"289.0","y":"2457.0"}}
-{"myData":{"imgPath":"resources/black.png","type":"Barrier","x":"127.0","y":"2378.0"}}

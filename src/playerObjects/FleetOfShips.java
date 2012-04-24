@@ -1,20 +1,20 @@
 package playerObjects;
 
+import gameObjects.HorizontalShip;
+
 import com.golden.gamedev.Game;
 
-public class SmallShip extends Ship{
+public class FleetOfShips extends HorizontalShip{
 
-	public SmallShip(double x, double y) {
-		super(x, y, "resources/smallShip.png");
+	public FleetOfShips(double x, double y, String imgPath) {
+		super(x, y, imgPath);
 		// TODO Auto-generated constructor stub
-		 
 	}
 
 	@Override
 	public void move(Game g, int width, int height) {
 		// TODO Auto-generated method stub
-		//if (this.getY() > height - this.getHeight())
-			this.moveY(-1.3); 
+		
 	}
 
 }

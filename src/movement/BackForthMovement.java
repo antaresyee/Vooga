@@ -25,6 +25,10 @@ public class BackForthMovement extends Movement implements Serializable {
 	@Override
 	public void move(GameObject o) {
 		// System.out.println(o.getX());
+		o.setVerticalSpeed(0);
+		if (o.getHorizontalSpeed() == 0){
+			o.setHorizontalSpeed(mySpeed);
+		}
 		if (o.getX() >= myRightBound) {
 			o.setHorizontalSpeed(-mySpeed);
 		} else if (o.getX() <= myLeftBound) {

@@ -46,12 +46,6 @@ public class LevelLoader {
 
     public LevelLoader(List<LoadObserver> loadObservers) {
         myLoadObservers = loadObservers;
-
-//        myAllFactories = new ArrayList<GameObjectFactory>();
-//        myAllFactories.add(Player.getFactory());
-//        myAllFactories.add(Barrier.getFactory());
-//        myAllFactories.add(Enemy.getFactory());
-//        myAllFactories.add(Boss.getFactory());
         myAllFactories = new ArrayList<GameObjectFactory>();
         addAllFactories();
     }
@@ -97,7 +91,13 @@ public class LevelLoader {
 
     public void loadLevelData(String fileName) {
         try {
-            List<GameObjectData> gameObjectDatas = serializeLoad(fileName);
+            List<GameObjectData> gameObjectDatas;
+            if (fileName.endsWith(".ser")) {
+                gameObjectDatas = serializeLoad(fileName);
+            }
+            else {
+                gameObjectDatas = jsonLoad(fileName);
+            }
 
             for (GameObjectData god : gameObjectDatas) {
                 for (GameObjectFactory f : myAllFactories) {
@@ -160,6 +160,7 @@ public class LevelLoader {
         for (LoadObserver lo : myLoadObservers) {
             if (lo.isMyObserver(go)) {
                 lo.objectLoaded(go);
+                System.out.println(lo.myType);
             }
         }
     }
@@ -175,17 +176,17 @@ public class LevelLoader {
         barrierData.setImgPath("./resources/triangle.png");
         objectsToSave.add(barrierData);
 
-        GameObjectData playerData = new GameObjectData("Player");
-        playerData.setX(3.5);
-        playerData.setY(4.0);
-        playerData.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData);
+        GameObjectData barrierData2 = new GameObjectData("Barrier");
+        barrierData2.setX(3.5);
+        barrierData2.setY(4.0);
+        barrierData2.setImgPath("./resources/triangle.png");
+        objectsToSave.add(barrierData2);
 
-        GameObjectData playerData2 = new GameObjectData("Player");
-        playerData2.setX(100.0);
-        playerData2.setY(500.0);
-        playerData2.setImgPath("./resources/enemy.png");
-        objectsToSave.add(playerData2);
+        GameObjectData horizontalShip = new GameObjectData("HorizontalShip");
+        horizontalShip.setX(100.0);
+        horizontalShip.setY(2700.0);
+        horizontalShip.setImgPath("./resources/ship.png");
+        objectsToSave.add(horizontalShip);
 
         // LevelSaver.jsonSave(objectsToSave, "testLevel");
         // System.out.println(l.jsonLoad("testLevel.json"));
