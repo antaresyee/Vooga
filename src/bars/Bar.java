@@ -15,7 +15,7 @@ public abstract class Bar {
 	SystemFont myF = new SystemFont(myFont);
 	
 	public Bar(Ship s){
-		myType = s.getMyUtility(); 
+//		myType = s.getMyUtility(); 
 	}
 	
 	public void render(Graphics2D pen){
