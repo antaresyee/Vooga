@@ -57,15 +57,21 @@ public class Enemy extends GameObject {
 
 	public void move() {
 		currentState.move();
-		//currentHealth--;
 	}
 
 	public void updateEnemy() {
 		checkState();
 		move();
+		checkIfDead();
 		for(Status s: myStatuses){
 			s.iterate(this);
 		}
+	}
+
+	private void checkIfDead() {
+		if (currentHealth <= 0){
+			this.setActive(false);
+		}	
 	}
 
 	public void checkState() {
