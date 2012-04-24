@@ -11,7 +11,7 @@ import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
-public abstract class Ship extends Player{
+public class Ship extends Player {
 
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons; 
@@ -63,7 +63,4 @@ public abstract class Ship extends Player{
 		myType = "Ship";
 	}
 
-	
-	
-	public abstract void move(Game g, int width, int height); 
 }

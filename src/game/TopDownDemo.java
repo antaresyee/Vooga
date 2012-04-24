@@ -5,6 +5,7 @@ import gameObjects.Barrier;
 import gameObjects.Enemy;
 import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
+import gameObjects.HorizontalShip;
 import gameObjects.Player;
 
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import playerObjects.CompanionShip;
+import playerObjects.Ship;
 import playerObjects.SmallShip;
 
 import states.FullHealthState;
@@ -44,15 +46,19 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
+import decorator.HorizontalDecorator;
+import decorator.MovementDecorator;
+import decorator.SimpleShip;
+import decorator.SpaceShip;
+import decorator.VerticalDecorator;
+
 public class TopDownDemo extends Game {
 
-	//private CompanionShip myShip;
 
-	//private SmallShip comp;
 	private Player myPlayer;
-	private Enemy myEnemy;
-	// private HealthBar myBar; 
-	
+	private Enemy myEnemy;	
+	private Ship myShip; 
+	private SpaceShip decoratedShip; 	
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -87,6 +93,17 @@ public class TopDownDemo extends Game {
 		myEnemyGroup.setBackground(myBackground);
 		myProjectileGroup.setBackground(myBackground);
 
+		
+		myShip = new Ship(200, 2700, "resources/ship.png"); 
+		myShip.setImage(getImage("resources/ship.png")); 
+		
+		VerticalDecorator myV = new VerticalDecorator(new SimpleShip(), myShip);
+		decoratedShip = new HorizontalDecorator(myV, myShip); 
+		
+		myShip.setBackground(myBackground);
+		myPlayerGroup.add(myShip); 
+	
+		
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
 		myPlayfield.addGroup(myPlayerGroup);
@@ -106,33 +123,10 @@ public class TopDownDemo extends Game {
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
 		
-		// this is for testing enemy movement
-
-		//Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
-		//e.setImage(getImage(e.getImgPath()));
-//		myEnemy = e;
-//		myEnemyGroup.add(myEnemy);
 		enemySize=myEnemyGroup.getSize();
-		// testing ship movement
-//		CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
-//		s.setImage(getImage(s.getImgPath()));
-//		myShip = s;
-//		//myShip.setHozSpeed(5);
-//		myPlayerGroup.add(myShip);
-
-
-		// companion
-//		SmallShip c = myShip.getComp();
-//		c.setImage(getImage(c.getImgPath()));; 
-//		comp = c; 
-//		myPlayerGroup.add(comp);
-//		
+		
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
-		
-
-//		myBar = new HealthBar(myShip); 
-
 		
 
 	}
@@ -140,26 +134,15 @@ public class TopDownDemo extends Game {
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
-
-//		myBar.render(pen); 
-
-		
-		// this is for testing enemy movement
-		// myEnemy.render(pen);
-		// myShip.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		myMap.moveMap(elapsedTime);
 		//playerMovement();
-		myPlayfield.update(elapsedTime);
-		// updating playerInfo
-
-		//myMap.movePlayer(elapsedTime, myShip);
-		// myShip.move(this, myMap.getWidth());
-		//myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
-
+		myPlayfield.update(elapsedTime); 
+		decoratedShip.move(this, myShip);
+		
 
 		// this is for testing enemy movement
 		count =0;
