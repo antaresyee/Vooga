@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import enemyLoader.EnemyDataLoader;
+import enemyLoader.MovementFactories;
+import enemyLoader.StateFactories;
+
 import levelLoadSave.ForSave;
 import movement.Movement;
-import movement.MovementFactories;
 import movement.MovementFactory;
-import states.EnemyDataLoader;
 import states.State;
-import states.StateFactories;
 import states.StateFactory;
 import weapons.Status;
 
@@ -27,8 +28,8 @@ public class Enemy extends GameObject {
 	private ArrayList<State> possibleStates;
 	private State currentState;
 	private EnemyDataLoader loader;
-	private int currentHealth;
-	private List <Status> myStatuses;
+	private int currentHealth = 3;;
+	private List<Status> myStatuses;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
@@ -47,7 +48,6 @@ public class Enemy extends GameObject {
 		possibleStates = new ArrayList<State>();
 		parseStates(parseMovementTypes());
 		currentState = possibleStates.get(0);
-		currentHealth = 500;
 	}
 
 	@Override
@@ -63,15 +63,15 @@ public class Enemy extends GameObject {
 		checkState();
 		move();
 		checkIfDead();
-		for(Status s: myStatuses){
+		for (Status s : myStatuses) {
 			s.iterate(this);
 		}
 	}
 
 	private void checkIfDead() {
-		if (currentHealth <= 0){
+		if (currentHealth <= 0) {
 			this.setActive(false);
-		}	
+		}
 	}
 
 	public void checkState() {
@@ -93,15 +93,13 @@ public class Enemy extends GameObject {
 	public void sustainDamage(int damage) {
 		currentHealth -= damage;
 	}
-	
-	public void addStatus(Status status){
+
+	public void addStatus(Status status) {
 		myStatuses.add(status);
 	}
 
 	private ArrayList<Movement> parseMovementTypes() {
-		MovementFactories factoryInfo = new MovementFactories();
-		ArrayList<MovementFactory> movementFactories = factoryInfo
-				.getAllMovementFactories();
+		ArrayList<MovementFactory> movementFactories = loader.getPossibleMovements();
 		ArrayList<String> movementInfo = loader.getMovementInfo();
 		ArrayList<Movement> movementTypes = new ArrayList<Movement>();
 		for (String s : movementInfo) {
@@ -119,9 +117,7 @@ public class Enemy extends GameObject {
 	}
 
 	private void parseStates(ArrayList<Movement> movementTypes) {
-		StateFactories factoryInfo = new StateFactories();
-		ArrayList<StateFactory> stateFactories = factoryInfo
-				.getAllStateFactories();
+		ArrayList<StateFactory> stateFactories = loader.getPossibleStates();
 		ArrayList<String> stateInfo = loader.getStateInfo();
 		for (int i = 0; i < stateInfo.size(); i++) {
 			String[] parameters = stateInfo.get(i).split(",");
@@ -140,7 +136,7 @@ public class Enemy extends GameObject {
 	public GameObject makeGameObject(GameObjectData god) {
 		Double x = god.getX();
 		Double y = god.getY();
-		String imgPath = god.getImgPath();	
+		String imgPath = god.getImgPath();
 		String filename = god.getEnemyConfigFile();
 		return new Enemy(x, y, imgPath, filename);
 
