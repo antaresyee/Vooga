@@ -28,7 +28,7 @@ public class Enemy extends GameObject {
 	private ArrayList<State> possibleStates;
 	private State currentState;
 	private EnemyDataLoader loader;
-	private int currentHealth = 3;;
+	private int currentHealth = 3;
 	private List<Status> myStatuses;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
@@ -99,7 +99,8 @@ public class Enemy extends GameObject {
 	}
 
 	private ArrayList<Movement> parseMovementTypes() {
-		ArrayList<MovementFactory> movementFactories = loader.getPossibleMovements();
+		ArrayList<MovementFactory> movementFactories = loader
+				.getPossibleMovements();
 		ArrayList<String> movementInfo = loader.getMovementInfo();
 		ArrayList<Movement> movementTypes = new ArrayList<Movement>();
 		for (String s : movementInfo) {
