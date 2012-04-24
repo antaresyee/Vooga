@@ -21,12 +21,11 @@ public class VerticalDecorator extends MovementDecorator{
 	}
 	
 	@Override
-	public void move(Game g, Sprite t) {
+	public void action(Game g, Sprite t) {
 		// TODO Auto-generated method stub
-		decoratedSpaceShip.move(g, t); 
+		decoratedSpaceShip.action(g, t); 
 		
 		if (g.keyDown(java.awt.event.KeyEvent.VK_W)){
-			System.out.println(t.getY());
 			t.moveY(-myVertSpeed); 
 		}
 	
@@ -38,7 +37,7 @@ public class VerticalDecorator extends MovementDecorator{
 	@Override
 	public String getDescription() {
 		// TODO Auto-generated method stub
-		return "HorizontalDecorator"; 
+		return "VerticalDecorator"; 
 	}
 
 }

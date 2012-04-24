@@ -5,7 +5,7 @@ import com.golden.gamedev.object.Sprite;
 
 public interface SpaceShip {
 
-	public void move(Game g, Sprite t); 
+	public void action(Game g, Sprite t); 
 	public String getDescription(); 
 	
 }

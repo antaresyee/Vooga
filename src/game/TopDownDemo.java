@@ -1,16 +1,14 @@
 package game;
 
-
-
 import gameObjects.Enemy;
 import gameObjects.Player;
+import gameObjects.Ship;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-import playerObjects.Ship;
 import levelLoadSave.EnemyLoadObserver;
 import levelLoadSave.HorizontalShipLoadObserver;
 import levelLoadSave.LevelLoader;
@@ -18,12 +16,16 @@ import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
 import levelLoadSave.SimpleLoadObserver;
 import maps.Map;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
+
+import decorator.CompanionDecorator;
 import decorator.HorizontalDecorator;
+import decorator.PowerUpDecorator;
 import decorator.SimpleShip;
 import decorator.SpaceShip;
 import decorator.VerticalDecorator;
@@ -31,8 +33,10 @@ import decorator.VerticalDecorator;
 public class TopDownDemo extends Game {
 
 	private Player myPlayer;
-	private Ship myShip; 
-	private SpaceShip decoratedShip; 	
+	private Ship myShip;
+	private SpaceShip decoratedShip;
+	private PowerUpDecorator myPowerUpDecorator;
+
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -66,43 +70,43 @@ public class TopDownDemo extends Game {
 		myEnemyGroup.setBackground(myBackground);
 		myProjectileGroup.setBackground(myBackground);
 
-		
-		myShip = new Ship(200, 2700, "resources/ship.png"); 
-		myShip.setImage(getImage("resources/ship.png")); 
-		
-		VerticalDecorator myV = new VerticalDecorator(new SimpleShip(), myShip);
-		decoratedShip = new HorizontalDecorator(myV, myShip); 
-		
+		myShip = new Ship(200, 2700, "resources/ship.png");
+		myShip.setImage(getImage("resources/ship.png"));
+
+		HorizontalDecorator myV = new HorizontalDecorator(new SimpleShip(),
+				myShip);
+		decoratedShip = new VerticalDecorator(myV, myShip);
+
+		myPowerUpDecorator = new CompanionDecorator(new SimpleShip(), myShip);
+
 		myShip.setBackground(myBackground);
-		myPlayerGroup.add(myShip); 
-	
-		
+		myPlayerGroup.add(myShip);
+
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
 		myPlayfield.addGroup(myPlayerGroup);
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
+
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
 
 		// load level data
 		myLoadObservers = new ArrayList<LoadObserver>();
-		myLoadObservers.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
+		myLoadObservers
+				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		
-		
+
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
 
-		
-		enemySize=myEnemyGroup.getSize();
-		
+		enemySize = myEnemyGroup.getSize();
+
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
-
 
 	}
 
@@ -118,12 +122,23 @@ public class TopDownDemo extends Game {
 
 		playerMovement();
 		myPlayfield.update(elapsedTime); 
-		decoratedShip.move(this, myShip);
+		decoratedShip.action(this, myShip);
 		
-		count = 0;
-		for (Sprite elem : myEnemyGroup.getSprites()) {
-			if (count >= enemySize)
-				break;
+		myPowerUpDecorator.powerUp(this, myShip);
+		
+		
+		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
+		{
+			((CompanionDecorator) myPowerUpDecorator).getCompanion().setBackground(myBackground);
+			myPlayerGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
+			((CompanionDecorator) myPowerUpDecorator).setCreated(); 
+		}
+
+		
+		// this is for testing enemy movement
+		count =0;
+		for (Sprite elem:myEnemyGroup.getSprites()){
+			if (count>=enemySize) break;
 			Enemy e = (Enemy) elem;
 			e.updateEnemy();
 			count++;

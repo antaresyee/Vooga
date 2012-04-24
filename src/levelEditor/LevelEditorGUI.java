@@ -199,7 +199,9 @@ public class LevelEditorGUI extends Game {
 			pathCoord.clear();
 			writeFile= writeFile + " ";
 			finalFile=q.getFileData();
-			finalFile.add(q.addState(writeFile, this));
+			String path=q.addState(writeFile, this);
+			System.out.println(path);
+			finalFile.add(path);
 			q.writeEnemy(finalFile);
 			askQ = " ";
 			JOptionPane
