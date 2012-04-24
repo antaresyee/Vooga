@@ -63,16 +63,20 @@ public class PathMovement extends Movement {
 
 	}
 	
-	private void reversePath(){
-		ArrayList<Point> reversedPath = new ArrayList<Point>();
-		int reverseIndex = myPath.size() - 1;
-		for (int i = 0; i < myPath.size(); i++){
-			Point reversePoint = myPath.get(reverseIndex);
-			reversedPath.add(i, reversePoint);
-			reverseIndex--;
-		}
-		myPath = reversedPath;
+	public void setPath(ArrayList<Point> newPath){
+		myPath = newPath;
 	}
+	
+//	private void reversePath(){
+//		ArrayList<Point> reversedPath = new ArrayList<Point>();
+//		int reverseIndex = myPath.size() - 1;
+//		for (int i = 0; i < myPath.size(); i++){
+//			Point reversePoint = myPath.get(reverseIndex);
+//			reversedPath.add(i, reversePoint);
+//			reverseIndex--;
+//		}
+//		myPath = reversedPath;
+//	}
 
 	public static class PathMovementFactory extends MovementFactory {
 

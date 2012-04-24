@@ -19,9 +19,13 @@ public class MovementFactories {
 		BackForthMovement.BFMovementFactory bf = new BackForthMovement.BFMovementFactory();
 		TargetedMovement.TargetedMovementFactory t = new TargetedMovement.TargetedMovementFactory();
 		PathMovement.PathMovementFactory p = new PathMovement.PathMovementFactory();
+		DiamondMovement.DiamondMovementFactory d = new DiamondMovement.DiamondMovementFactory();
+		TargetedDiamondMovement.TDMovementFactory td = new TargetedDiamondMovement.TDMovementFactory();
 		allMovementFactories.add(bf);
 		allMovementFactories.add(t);
 		allMovementFactories.add(p);
+		allMovementFactories.add(d);
+		allMovementFactories.add(td);
 	}
 
 	public ArrayList<MovementFactory> getAllMovementFactories() {
