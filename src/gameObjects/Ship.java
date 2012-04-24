@@ -49,8 +49,7 @@ public class Ship extends Player {
 		Double x = god.getX();
 		Double y = god.getY();
 		String imgPath = god.getImgPath();	
-		String filename = god.getEnemyConfigFile();
-		return new Enemy(x, y, imgPath, filename);
+		return new Ship(x, y, imgPath);
 
 	}
 
