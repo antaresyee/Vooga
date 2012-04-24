@@ -13,7 +13,6 @@ public class CreationProjectile extends Projectile{
 		super(imgPath, g);
 		myCreated = created;
 		myCreatedSpriteGroup = sg;
-		
 	}
 
 	@Override

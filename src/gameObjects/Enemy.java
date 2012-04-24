@@ -1,30 +1,19 @@
 package gameObjects;
 
-import game.PlayerInfo;
-
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.golden.gamedev.Game;
-
-import states.EnemyDataLoader;
-import states.FullHealthState;
-import states.LowHealthState;
-import states.State;
-import states.StateFactories;
-import states.StateFactory;
-
-import weapons.Status;
 import levelLoadSave.ForSave;
-
-import movement.BackForthMovement;
 import movement.Movement;
 import movement.MovementFactories;
 import movement.MovementFactory;
-import movement.TargetedMovement;
+import states.EnemyDataLoader;
+import states.State;
+import states.StateFactories;
+import states.StateFactory;
+import weapons.Status;
 
 /**
  * 

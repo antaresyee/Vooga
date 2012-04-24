@@ -1,6 +1,7 @@
 package weapons;
 
 import gameObjects.GameObject;
+
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;

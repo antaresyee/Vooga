@@ -9,9 +9,11 @@ public class DiamondMovement extends Movement {
 	
 	private PathMovement myPathMovement;
 	private Point myTarget;
+	private int myRadius;
 
 	public DiamondMovement(double x, double y){
 		myTarget = new Point((int) x, (int) y);
+		myRadius = 75;
 		myPathMovement = new PathMovement(calculatePath());
 	}
 	
@@ -22,10 +24,10 @@ public class DiamondMovement extends Movement {
 	
 	public ArrayList<Point> calculatePath(){
 		ArrayList<Point> path = new ArrayList<Point>();
-		Point right = new Point(myTarget.x + 50, myTarget.y);
-		Point up = new Point(myTarget.x, myTarget.y + 50);
-		Point left = new Point(myTarget.x - 50, myTarget.y);
-		Point down = new Point(myTarget.x, myTarget.y - 50);
+		Point right = new Point(myTarget.x + myRadius, myTarget.y);
+		Point up = new Point(myTarget.x, myTarget.y + myRadius);
+		Point left = new Point(myTarget.x - myRadius, myTarget.y);
+		Point down = new Point(myTarget.x, myTarget.y - myRadius);
 		path.add(right);
 		path.add(up);
 		path.add(left);
