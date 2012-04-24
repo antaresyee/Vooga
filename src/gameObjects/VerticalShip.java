@@ -1,7 +1,5 @@
 package gameObjects;
 
-import gameObjects.GameObjectFactory;
-
 import com.golden.gamedev.Game;
 
 public class VerticalShip extends HorizontalShip{

@@ -1,4 +1,4 @@
-package playerObjects;
+package gameObjects;
 
 import java.util.ArrayList;
 
@@ -11,22 +11,24 @@ import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
 import gameObjects.Player;
 
-public abstract class Ship extends Player{
+public class Ship extends Player {
 
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons; 
-	protected String myUtility; 
 	
 	public Ship(double x, double y, String imgPath) {
 		super(x, y, imgPath);
 		
 		// automatically sets health
 		myHealth = 10; 
-		myUtility = "health"; 
 	}
 	
-	public void setHealth(int h){
-		myHealth = h; 
+	public void reduceHealth(){
+		myHealth--; 
+	}
+	
+	public int getHealth(){
+		return myHealth; 
 	}
 	
 	public void addWeapon(Weapon w){
@@ -38,11 +40,6 @@ public abstract class Ship extends Player{
 			myWeapons.get(0).fire(elapsedTime, this.myX, this.myY); 
 		}
 	}
-	
-	public String getMyUtility(){
-		return myUtility; 
-	}
-	
 	
 	@Override
 	public GameObject makeGameObject(GameObjectData god) {
@@ -63,7 +60,4 @@ public abstract class Ship extends Player{
 		myType = "Ship";
 	}
 
-	
-	
-	public abstract void move(Game g, int width, int height); 
 }

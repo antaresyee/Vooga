@@ -1,11 +1,11 @@
 package states;
 
+import game.PlayerInfo;
+import gameObjects.Enemy;
+
 import java.util.ArrayList;
 
 import movement.Movement;
-import game.PlayerInfo;
-import gameObjects.Enemy;
-import gameObjects.GameObject;
 
 public class ProximityState extends State {
 
@@ -27,17 +27,17 @@ public class ProximityState extends State {
 		double playerX = playerInfo.getPlayerX();
 		double playerY = playerInfo.getPlayerY();
 		double distance = getDistance(playerX, playerY);
-		System.out.println("distance = " + distance);
 		return lowerBound < distance && distance < upperBound;
 	}
-	
-	private double getDistance(double x, double y){
-		return Math.sqrt(Math.pow((myEnemy.getX() - x), 2) + Math.pow((myEnemy.getY() - y), 2));
+
+	private double getDistance(double x, double y) {
+		return Math.sqrt(Math.pow((myEnemy.getX() - x), 2)
+				+ Math.pow((myEnemy.getY() - y), 2));
 	}
-	
-	public static class ProximityStateFactory extends StateFactory{
-		
-		public ProximityStateFactory(){
+
+	public static class ProximityStateFactory extends StateFactory {
+
+		public ProximityStateFactory() {
 			myName = "PR";
 		}
 
@@ -48,9 +48,10 @@ public class ProximityState extends State {
 			int lowerBound = Integer.parseInt(parameters[2]);
 			int priority = Integer.parseInt(parameters[3]);
 			Movement movement = movementTypes.get(index);
-			return new ProximityState(e, movement, upperBound, lowerBound, priority);
+			return new ProximityState(e, movement, upperBound, lowerBound,
+					priority);
 		}
-		
+
 	}
 
 }

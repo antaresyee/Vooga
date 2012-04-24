@@ -1,8 +1,5 @@
 package movement;
 
-import java.io.Serializable;
-
-import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -11,7 +8,7 @@ import gameObjects.GameObject;
  * 
  */
 
-public class BackForthMovement extends Movement implements Serializable {
+public class BackForthMovement extends Movement {
 
 	private double myLeftBound;
 	private double myRightBound;
@@ -26,7 +23,7 @@ public class BackForthMovement extends Movement implements Serializable {
 	public void move(GameObject o) {
 		// System.out.println(o.getX());
 		o.setVerticalSpeed(0);
-		if (o.getHorizontalSpeed() == 0){
+		if (o.getHorizontalSpeed() == 0) {
 			o.setHorizontalSpeed(mySpeed);
 		}
 		if (o.getX() >= myRightBound) {
@@ -35,10 +32,10 @@ public class BackForthMovement extends Movement implements Serializable {
 			o.setHorizontalSpeed(mySpeed);
 		}
 	}
-	
-	public static class BFMovementFactory extends MovementFactory{
-		
-		public BFMovementFactory(){
+
+	public static class BFMovementFactory extends MovementFactory {
+
+		public BFMovementFactory() {
 			myName = "BF";
 		}
 
@@ -46,11 +43,9 @@ public class BackForthMovement extends Movement implements Serializable {
 		public Movement makeMyMovement(String[] parameters) {
 			double leftBound = Double.parseDouble(parameters[1]);
 			double rightBound = Double.parseDouble(parameters[2]);
-			return new BackForthMovement(leftBound,
-					rightBound);
+			return new BackForthMovement(leftBound, rightBound);
 		}
-		
-	}
 
+	}
 
 }
