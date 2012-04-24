@@ -46,13 +46,13 @@ import com.golden.gamedev.object.background.ImageBackground;
 
 public class TopDownDemo extends Game {
 
-	//private CompanionShip myShip;
+	// private CompanionShip myShip;
 
-	//private SmallShip comp;
+	// private SmallShip comp;
 	private Player myPlayer;
 	private Enemy myEnemy;
-	// private HealthBar myBar; 
-	
+	// private HealthBar myBar;
+
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -64,7 +64,7 @@ public class TopDownDemo extends Game {
 
 	private BufferedImage myBackImage;
 	private Map myMap;
-	private int count=0;
+	private int count = 0;
 	private List<LoadObserver> myLoadObservers;
 
 	@Override
@@ -77,11 +77,10 @@ public class TopDownDemo extends Game {
 		// init background using the new Map class
 		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
-		
 
 		myMap.setSpeed(10);
 		myBackground = myMap.getMyBack();
-		
+
 		myPlayerGroup.setBackground(myBackground);
 		myBarrierGroup.setBackground(myBackground);
 		myEnemyGroup.setBackground(myBackground);
@@ -103,35 +102,32 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
-		
+
 		// this is for testing enemy movement
 
-		//Enemy e = new Enemy(100, 2400, "resources/enemy.png", "stateInfo.txt");
-		//e.setImage(getImage(e.getImgPath()));
-//		myEnemy = e;
-//		myEnemyGroup.add(myEnemy);
-		enemySize=myEnemyGroup.getSize();
+		// Enemy e = new Enemy(100, 2400, "resources/enemy.png",
+		// "stateInfo.txt");
+		// e.setImage(getImage(e.getImgPath()));
+		// myEnemy = e;
+		// myEnemyGroup.add(myEnemy);
+		enemySize = myEnemyGroup.getSize();
 		// testing ship movement
-//		CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
-//		s.setImage(getImage(s.getImgPath()));
-//		myShip = s;
-//		//myShip.setHozSpeed(5);
-//		myPlayerGroup.add(myShip);
-
+		// CompanionShip s = new CompanionShip(200, 2950, "resources/ship.png");
+		// s.setImage(getImage(s.getImgPath()));
+		// myShip = s;
+		// //myShip.setHozSpeed(5);
+		// myPlayerGroup.add(myShip);
 
 		// companion
-//		SmallShip c = myShip.getComp();
-//		c.setImage(getImage(c.getImgPath()));; 
-//		comp = c; 
-//		myPlayerGroup.add(comp);
-//		
+		// SmallShip c = myShip.getComp();
+		// c.setImage(getImage(c.getImgPath()));;
+		// comp = c;
+		// myPlayerGroup.add(comp);
+		//
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
-		
 
-//		myBar = new HealthBar(myShip); 
-
-		
+		// myBar = new HealthBar(myShip);
 
 	}
 
@@ -139,9 +135,8 @@ public class TopDownDemo extends Game {
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
 
-//		myBar.render(pen); 
+		// myBar.render(pen);
 
-		
 		// this is for testing enemy movement
 		// myEnemy.render(pen);
 		// myShip.render(pen);
@@ -154,15 +149,15 @@ public class TopDownDemo extends Game {
 		myPlayfield.update(elapsedTime);
 		// updating playerInfo
 
-		//myMap.movePlayer(elapsedTime, myShip);
+		// myMap.movePlayer(elapsedTime, myShip);
 		// myShip.move(this, myMap.getWidth());
-		//myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
-
+		// myShip.move(this, myMap.getWidth(), myMap.getFrameHeight());
 
 		// this is for testing enemy movement
-		count =0;
-		for (Sprite elem:myEnemyGroup.getSprites()){
-			if (count>=enemySize) break;
+		count = 0;
+		for (Sprite elem : myEnemyGroup.getSprites()) {
+			if (count >= enemySize)
+				break;
 			Enemy e = (Enemy) elem;
 			e.updateEnemy();
 			count++;
@@ -188,6 +183,13 @@ public class TopDownDemo extends Game {
 				&& keyDown(java.awt.event.KeyEvent.VK_S)) {
 			myPlayer.moveY(3);
 		}
+
+		// Used for movements or states that need access to info about player's
+		// movement
+		playerInfo.setUpwardMovement(keyDown(java.awt.event.KeyEvent.VK_W));
+		playerInfo.setDownwardMovement(keyDown(java.awt.event.KeyEvent.VK_S));
+		playerInfo.setLeftwardMovement(keyDown(java.awt.event.KeyEvent.VK_A));
+		playerInfo.setRightwardMovement(keyDown(java.awt.event.KeyEvent.VK_D));
 	}
 
 	public void setPlayer(Player g) {
