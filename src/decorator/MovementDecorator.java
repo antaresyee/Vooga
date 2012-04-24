@@ -21,19 +21,12 @@ public abstract class MovementDecorator implements SpaceShip{
 	}
 	
 	@Override
-	public void move(Game g, Sprite t) {
+	public void action(Game g, Sprite t) {
 		// TODO Auto-generated method stub
-		decoratedSpaceShip.move(g, t); 
+		decoratedSpaceShip.action(g, t); 
 	}
 	
 	
-	public GameObject makeGameObject(GameObjectData god) {
-		Double x = god.getX();
-		Double y = god.getY();
-		String imgPath = god.getImgPath();	
-		//return new MovementDecorator(x, y, imgPath);
-		return null;
-	}
 
 	@Override
 	public String getDescription() {

@@ -1,6 +1,6 @@
 package bars;
 
-import playerObjects.Ship;
+import gameObjects.Ship;
 
 public class HealthBar extends Bar{
 

@@ -2,7 +2,7 @@ package gameObjects;
 
 import java.util.ArrayList;
 
-import playerObjects.Ship;
+import gameObjects.Ship;
 
 import levelLoadSave.ForSave;
 
