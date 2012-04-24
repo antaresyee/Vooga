@@ -2,7 +2,7 @@ package game;
 
 import gameObjects.Enemy;
 import gameObjects.Player;
-import gameObjects.Ship;
+import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -38,7 +38,8 @@ public class TopDownDemo extends Game {
 	private Enemy myEnemy;	
 	private HealthBar myHealthBar; 
 	
-	private Ship myShip; 
+	private Player myShip; 
+	private Player myCompanion; 
 
 	private SpaceShip decoratedShip;
 	private PowerUpDecorator myPowerUpDecorator;
@@ -46,6 +47,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
+	private SpriteGroup myCompanionGroup;
 	private SpriteGroup myProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
@@ -63,6 +65,7 @@ public class TopDownDemo extends Game {
 		myPlayerGroup = new SpriteGroup("player");
 		myEnemyGroup = new SpriteGroup("enemy");
 		myProjectileGroup = new SpriteGroup("projectile");
+		myCompanionGroup = new SpriteGroup("companion");
 
 		// init background using the new Map class
 		myBackImage = getImage("resources/BackFinal.png");
@@ -76,7 +79,7 @@ public class TopDownDemo extends Game {
 		myEnemyGroup.setBackground(myBackground);
 		myProjectileGroup.setBackground(myBackground);
 
-		myShip = new Ship(200, 2700, "resources/ship.png");
+		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
 
 		HorizontalDecorator myV = new HorizontalDecorator(new SimpleShip(),
@@ -135,16 +138,21 @@ public class TopDownDemo extends Game {
 
 		playerMovement();
 		myPlayfield.update(elapsedTime); 
-		decoratedShip.action(this, myShip);
+		decoratedShip.move(this, myShip);
 		
 		myPowerUpDecorator.powerUp(this, myShip);
 		
 		
 		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
 		{
-			((CompanionDecorator) myPowerUpDecorator).getCompanion().setBackground(myBackground);
-			myPlayerGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
+			myCompanion = ((CompanionDecorator) myPowerUpDecorator).getCompanion();
+			myCompanion.setBackground(myBackground); 
+			myCompanionGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
 			((CompanionDecorator) myPowerUpDecorator).setCreated(); 
+		}
+		
+		else{
+			decoratedShip.move(this, myCompanion); 
 		}
 
 		
@@ -161,23 +169,7 @@ public class TopDownDemo extends Game {
 	}
 
 	public void playerMovement() {
-		if (myPlayer.getX() > 0 && keyDown(java.awt.event.KeyEvent.VK_A)) {
-			myPlayer.moveX(-3);
-		}
-		if (myPlayer.getX() < getWidth() - myPlayer.getWidth() - 3
-				&& keyDown(java.awt.event.KeyEvent.VK_D)) {
-			myPlayer.moveX(3);
-		}
-		if (myPlayer.getY() > myMap.getFrameHeight()
-				&& keyDown(java.awt.event.KeyEvent.VK_W)) {
-			myPlayer.moveY(-3);
-		}
-		if (myPlayer.getY() < getHeight() - myPlayer.getHeight() - 3
-				+ myMap.getFrameHeight()
-				&& keyDown(java.awt.event.KeyEvent.VK_S)) {
-			myPlayer.moveY(3);
-		}
-
+		
 		// Used for movements or states that need access to info about player's
 		// movement
 		playerInfo.setUpwardMovement(keyDown(java.awt.event.KeyEvent.VK_W));
