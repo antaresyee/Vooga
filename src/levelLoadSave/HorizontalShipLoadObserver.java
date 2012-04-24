@@ -1,38 +1,31 @@
 package levelLoadSave;
 
 import java.awt.image.BufferedImage;
-
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.golden.gamedev.object.SpriteGroup;
+
 import game.TopDownDemo;
 import gameObjects.GameObject;
 import gameObjects.Player;
 
-import com.golden.gamedev.object.SpriteGroup;
-
-/**
- * 
- * @author antaresyee
- *
- */
-
-public class PlayerLoadObserver extends LoadObserver {
+public class HorizontalShipLoadObserver extends LoadObserver{
     SpriteGroup myPlayerGroup;
     TopDownDemo myGame;
 
-    public PlayerLoadObserver(SpriteGroup playerGroup, TopDownDemo game) {
-        super.myType = "Player";
+    public HorizontalShipLoadObserver(SpriteGroup playerGroup, TopDownDemo game) {
+        super.myType = "HorizontalShip";
         myPlayerGroup = playerGroup;
         myGame = game;
     }
 
     @Override
     public void objectLoaded(GameObject go) {
-        System.out.println("entered player object loaded");
         myPlayerGroup.add(go);
+        System.out.println("entered objectLoaded");
         myGame.setPlayer((Player) go);
 
         //set sprite image

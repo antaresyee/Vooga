@@ -26,7 +26,7 @@ import states.LowHealthState;
 import states.State;
 
 import levelLoadSave.EnemyLoadObserver;
-import levelLoadSave.HorizontalPlayerLoadObserver;
+import levelLoadSave.HorizontalShipLoadObserver;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
@@ -115,10 +115,11 @@ public class TopDownDemo extends Game {
 
 		// load level data
 		myLoadObservers = new ArrayList<LoadObserver>();
+		myLoadObservers.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		myLoadObservers.add(new HorizontalPlayerLoadObserver(myPlayerGroup, this));
+		
 		
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		l.loadLevelData("serializeTest.ser");
@@ -143,6 +144,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.update(elapsedTime); 
 		decoratedShip.move(this, myShip);
 		
+
 
 		// this is for testing enemy movement
 		count =0;
