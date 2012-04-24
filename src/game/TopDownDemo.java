@@ -17,9 +17,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import playerObjects.CompanionShip;
-import playerObjects.Ship;
-import playerObjects.SmallShip;
+import gameObjects.Ship;
+
 
 import states.FullHealthState;
 import states.LowHealthState;
@@ -46,8 +45,10 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 import com.golden.gamedev.object.background.ImageBackground;
 
+import decorator.CompanionDecorator;
 import decorator.HorizontalDecorator;
 import decorator.MovementDecorator;
+import decorator.PowerUpDecorator;
 import decorator.SimpleShip;
 import decorator.SpaceShip;
 import decorator.VerticalDecorator;
@@ -58,7 +59,9 @@ public class TopDownDemo extends Game {
 	private Player myPlayer;
 	private Enemy myEnemy;	
 	private Ship myShip; 
-	private SpaceShip decoratedShip; 	
+	private SpaceShip decoratedShip;
+	private PowerUpDecorator myPowerUpDecorator; 
+	
 	private SpriteGroup myPlayerGroup;
 	private SpriteGroup myBarrierGroup;
 	private SpriteGroup myEnemyGroup;
@@ -97,8 +100,10 @@ public class TopDownDemo extends Game {
 		myShip = new Ship(200, 2700, "resources/ship.png"); 
 		myShip.setImage(getImage("resources/ship.png")); 
 		
-		VerticalDecorator myV = new VerticalDecorator(new SimpleShip(), myShip);
-		decoratedShip = new HorizontalDecorator(myV, myShip); 
+		HorizontalDecorator myV = new HorizontalDecorator(new SimpleShip(), myShip);
+		decoratedShip = new VerticalDecorator(myV, myShip); 
+		
+		myPowerUpDecorator = new CompanionDecorator(new SimpleShip(), myShip); 
 		
 		myShip.setBackground(myBackground);
 		myPlayerGroup.add(myShip); 
@@ -110,6 +115,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
+		
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
 
@@ -142,10 +148,19 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		//playerMovement();
 		myPlayfield.update(elapsedTime); 
-		decoratedShip.move(this, myShip);
+		decoratedShip.action(this, myShip);
 		
+		myPowerUpDecorator.powerUp(this, myShip);
+		
+		
+		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
+		{
+			((CompanionDecorator) myPowerUpDecorator).getCompanion().setBackground(myBackground);
+			myPlayerGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
+			((CompanionDecorator) myPowerUpDecorator).setCreated(); 
+		}
 
-
+		
 		// this is for testing enemy movement
 		count =0;
 		for (Sprite elem:myEnemyGroup.getSprites()){

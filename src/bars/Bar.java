@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.golden.gamedev.object.font.SystemFont;
 
-import playerObjects.Ship;
+import gameObjects.Ship;
 
 public abstract class Bar {
 
