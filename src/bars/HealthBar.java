@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 
 import com.golden.gamedev.object.font.SystemFont;
 
-import gameObjects.Ship;
+import gameObjects.Player;
 
 public class HealthBar{
 
@@ -14,9 +14,9 @@ public class HealthBar{
 	Font myFont = new Font("test", Font.BOLD, 15);
 	Color c = Color.BLUE; 
 	SystemFont myF = new SystemFont(myFont, c); 	
-	Ship myShip; 
+	Player myShip; 
 	
-	public HealthBar(Ship myS) {
+	public HealthBar(Player myS) {
 		myShip = myS; 
 	}
 	

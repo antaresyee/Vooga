@@ -17,8 +17,8 @@ public class FollowDecorator extends MovementDecorator{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void action(Game g, Sprite t){
-		decoratedSpaceShip.action(g, t);
+	public void move(Game g, Sprite t){
+		decoratedSpaceShip.move(g, t);
 		
 		
 	}

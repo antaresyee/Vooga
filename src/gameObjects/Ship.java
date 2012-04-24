@@ -18,13 +18,11 @@ public class Ship extends Player {
 	
 	public Ship(double x, double y, String imgPath) {
 		super(x, y, imgPath);
-		
-		// automatically sets health
 		myHealth = 10; 
 	}
 	
-	public void reduceHealth(){
-		myHealth--; 
+	public void reduceHealth(int damage){
+		myHealth -= damage; 
 	}
 	
 	public int getHealth(){
