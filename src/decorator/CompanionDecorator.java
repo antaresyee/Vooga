@@ -1,14 +1,15 @@
 package decorator;
 
-import gameObjects.Ship;
+import gameObjects.Player;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
 public class CompanionDecorator extends PowerUpDecorator{
 
-	Ship comp;
+	Player comp;
 	public boolean hasBeenCreated = false; 
+	SpaceShip compDecorator;
 	
 	public CompanionDecorator(SpaceShip decoratedSpaceShip) {
 		super(decoratedSpaceShip);
@@ -26,8 +27,10 @@ public class CompanionDecorator extends PowerUpDecorator{
 	@Override
 	public void powerUp(Game g, Sprite t) {
 		// TODO Auto-generated method stub
-		comp = new Ship(t.getX()-5, t.getY() -5,"resources/smallShip.png"); 
+		comp = new Player(t.getX()-10, t.getY() -15,"resources/smallShip.png"); 
 		comp.setImage(g.getImage("resources/smallShip.png"));
+		compDecorator = new HorizontalDecorator(new SimpleShip()); 
+		
 	}
 
 	@Override
@@ -37,7 +40,7 @@ public class CompanionDecorator extends PowerUpDecorator{
 	}
 	
 	
-	public Ship getCompanion(){
+	public Player getCompanion(){
 		return comp; 
 	}
 	

@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import com.golden.gamedev.object.font.SystemFont;
 
-import gameObjects.Ship;
+import gameObjects.Player;
 
 public abstract class Bar {
 
@@ -14,7 +14,7 @@ public abstract class Bar {
 	Font myFont = new Font("test", Font.BOLD, 15);
 	SystemFont myF = new SystemFont(myFont);
 	
-	public Bar(Ship s){
+	public Bar(Player s){
 //		myType = s.getMyUtility(); 
 	}
 	

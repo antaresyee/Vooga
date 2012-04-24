@@ -2,7 +2,7 @@ package gameObjects;
 
 import java.util.ArrayList;
 
-import gameObjects.Ship;
+import gameObjects.Player;
 
 import levelLoadSave.ForSave;
 import weapons.Weapon;
@@ -10,7 +10,7 @@ import weapons.Weapon;
 import com.golden.gamedev.Game;
 
 @ForSave
-public class HorizontalShip extends Ship {
+public class HorizontalShip extends Player {
 
 	protected int myHozSpeed;
 

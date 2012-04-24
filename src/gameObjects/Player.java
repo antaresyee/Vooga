@@ -1,10 +1,19 @@
 package gameObjects;
 
+import java.util.ArrayList;
+
+import weapons.Weapon;
+
+import com.golden.gamedev.Game;
+
 import levelLoadSave.ForSave;
 
 @ForSave
 public class Player extends GameObject {
 
+	
+	protected int myHealth; 
+	protected ArrayList<Weapon> myWeapons;
 
     public Player(double x, double y, String imgPath){
         myX = x;
@@ -12,6 +21,8 @@ public class Player extends GameObject {
         myImgPath = imgPath;
         myType = "Player";
         setLocation(myX, myY);
+        
+        myHealth = 10; 
     }
     
     public String getImgPath()
@@ -27,6 +38,25 @@ public class Player extends GameObject {
         return new Player(x, y, imgPath);
     }
 
+    
+    public void reduceHealth(int damage){
+		myHealth -= damage; 
+	}
+	
+	public int getHealth(){
+		return myHealth; 
+	}
+	
+	public void addWeapon(Weapon w){
+		myWeapons.add(w); 
+	}
+	
+	public void fire(Game g, long elapsedTime){
+		if(g.keyDown(java.awt.event.KeyEvent.VK_SPACE)){
+			myWeapons.get(0).fire(elapsedTime, this.myX, this.myY); 
+		}
+	}
+    
     /**
      * Player() and getFactory() must be implemented by each game object; 
      * they are used for the factory system.

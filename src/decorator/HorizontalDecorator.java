@@ -20,9 +20,9 @@ public class HorizontalDecorator extends MovementDecorator{
 		myHozSpeed = 3; 
 	}
 	
-	public void action(Game g, Sprite t) {
+	public void move(Game g, Sprite t) {
 		// TODO Auto-generated method stub
-		decoratedSpaceShip.action(g, t);
+		decoratedSpaceShip.move(g, t);
 		if (g.keyDown(java.awt.event.KeyEvent.VK_A)){ 
 			t.moveX(-myHozSpeed); 
 		}
