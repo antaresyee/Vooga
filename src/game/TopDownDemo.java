@@ -17,6 +17,8 @@ import levelLoadSave.PlayerLoadObserver;
 import levelLoadSave.SimpleLoadObserver;
 import maps.Map;
 
+import bars.HealthBar;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
@@ -33,7 +35,11 @@ import decorator.VerticalDecorator;
 public class TopDownDemo extends Game {
 
 	private Player myPlayer;
-	private Ship myShip;
+	private Enemy myEnemy;	
+	private HealthBar myHealthBar; 
+	
+	private Ship myShip; 
+
 	private SpaceShip decoratedShip;
 	private PowerUpDecorator myPowerUpDecorator;
 
@@ -91,6 +97,8 @@ public class TopDownDemo extends Game {
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
+		myPlayfield.addCollisionGroup(myPlayerGroup, myEnemyGroup,
+				new PlayerEnemyCollision());
 
 		// load level data
 		myLoadObservers = new ArrayList<LoadObserver>();
@@ -107,12 +115,17 @@ public class TopDownDemo extends Game {
 
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
+		
+		//HealthBar
+		myHealthBar = new HealthBar(myShip); 
+
 
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		myPlayfield.render(pen);
+		myHealthBar.render(pen); 
 
 	}
 
