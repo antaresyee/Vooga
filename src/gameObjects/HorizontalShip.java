@@ -1,21 +1,22 @@
-package playerObjects;
+package gameObjects;
 
 import java.util.ArrayList;
 
+import levelLoadSave.ForSave;
+import playerObjects.Ship;
 import weapons.Weapon;
 
 import com.golden.gamedev.Game;
-import com.golden.gamedev.object.SpriteGroup;
 
-import gameObjects.Player;
 
-public class HozShip extends Ship{
+@ForSave
+public class HorizontalShip extends Ship{
 
 	protected int myHozSpeed; 	
 	
 	protected ArrayList<Weapon> myWeapons; 
 	
-	public HozShip(double x, double y, String imgPath) {
+	public HorizontalShip(double x, double y, String imgPath) {
 		super(x, y, imgPath);
 		/*
 		 * Sets the default speed and health
@@ -27,6 +28,7 @@ public class HozShip extends Ship{
 		
 		// default ship will be set with generic AmmoGun
 		myWeapons = new ArrayList<Weapon>();
+		myType = "HorizontalShip";
 		
 	}
 	
@@ -45,5 +47,31 @@ public class HozShip extends Ship{
 		myHozSpeed = i; 
 	}
 	
+	@Override
+	public GameObject makeGameObject(GameObjectData god) {
+		Double x = god.getX();
+		Double y = god.getY();
+		String imgPath = god.getImgPath();	
+		return new HorizontalShip(x, y, imgPath);
+
+	}
+
+	/**
+	 * HorizontalShip() and getFactory() must be implemented by each game object; they
+	 * are used for the factory system.
+	 */
+	protected HorizontalShip() {
+		super();
+		myType = "HorizontalShip";
+		System.out.println(myType);
+	}
+
+	public static GameObjectFactory getFactory() {
+		return new GameObjectFactory(new HorizontalShip());
+	}
+
 
 }
+	
+
+

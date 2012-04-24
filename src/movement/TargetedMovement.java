@@ -1,7 +1,6 @@
 package movement;
 
 import game.PlayerInfo;
-import gameObjects.Enemy;
 import gameObjects.GameObject;
 
 /**
@@ -18,8 +17,7 @@ public class TargetedMovement extends Movement {
 
 	public TargetedMovement() {
 		playerInfo = new PlayerInfo();
-		myTargetX = playerInfo.getPlayerX();
-		myTargetY = playerInfo.getPlayerY();
+		updateTarget();
 		mySpeed = .2;
 	}
 
@@ -27,8 +25,12 @@ public class TargetedMovement extends Movement {
 	public void move(GameObject o) {
 		double myY = o.getY();
 		double myX = o.getX();
-		myTargetX = playerInfo.getPlayerX();
-		myTargetY = playerInfo.getPlayerY();
+		updateTarget();
+		movementDynamics(o, myY, myX);
+
+	}
+
+	private void movementDynamics(GameObject o, double myY, double myX) {
 		if (myY < myTargetY) {
 			o.setVerticalSpeed(mySpeed);
 		}
@@ -54,7 +56,11 @@ public class TargetedMovement extends Movement {
 		if (myY < myTargetY && myY > myTargetY - 5) {
 			o.setVerticalSpeed(0);
 		}
+	}
 
+	private void updateTarget() {
+		myTargetX = playerInfo.getPlayerX();
+		myTargetY = playerInfo.getPlayerY();
 	}
 	
 	public void setSpeed(double s){

@@ -9,34 +9,15 @@
 package bossEditor;
 
 
-import gameObjects.Barrier;
-import gameObjects.GameObject;
 import gameObjects.GameObjectFactory;
-import gameObjects.Player;
 
-import java.awt.Container;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-
-
-import levelLoadSave.LevelSaver;
-
 import com.golden.gamedev.Game;
-import com.golden.gamedev.GameLoader;
 import com.golden.gamedev.object.background.TileBackground;
 import com.golden.gamedev.util.ImageUtil;
 

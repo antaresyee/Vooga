@@ -11,10 +11,10 @@ public class TargetedDiamondMovement extends Movement {
 	private int myRadius;
 	private Point currentPoint;
 	private int currentTarget;
-	private static final int right = 0;
-	private static final int up = 1;
-	private static final int left = 2;
-	private static final int down = 3;
+	private final int right = 0;
+	private final int up = 1;
+	private final int left = 2;
+	private final int down = 3;
 
 	public TargetedDiamondMovement() {
 		playerInfo = new PlayerInfo();
@@ -26,12 +26,17 @@ public class TargetedDiamondMovement extends Movement {
 
 	@Override
 	public void move(GameObject o) {
-		updateCurrentPoint();
-		compensateSpeed(o);
 		double myY = o.getY();
 		double myX = o.getX();
+		updateCurrentPoint();
+		
 		int targetX = currentPoint.x;
 		int targetY = currentPoint.y;
+		movementDynamics(o, myY, myX, targetX, targetY);
+	}
+
+	private void movementDynamics(GameObject o, double myY, double myX,
+			int targetX, int targetY) {
 		if (myY < targetY) {
 			o.setVerticalSpeed(mySpeed);
 		}
@@ -59,7 +64,7 @@ public class TargetedDiamondMovement extends Movement {
 				currentTarget = right;
 			}
 		}
-
+		compensateSpeed(o);
 	}
 
 	private void updateCurrentPoint() {
