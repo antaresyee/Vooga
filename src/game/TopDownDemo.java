@@ -6,6 +6,7 @@ import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,11 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
 import decorator.CompanionDecorator;
+import decorator.DecoratorManager;
 import decorator.HorizontalDecorator;
 import decorator.PowerUpDecorator;
 import decorator.SimpleShip;
-import decorator.SpaceShip;
+import decorator.DecoratedShip;
 import decorator.VerticalDecorator;
 
 public class TopDownDemo extends Game {
@@ -41,7 +43,7 @@ public class TopDownDemo extends Game {
 	private Player myShip; 
 	private Player myCompanion; 
 
-	private SpaceShip decoratedShip;
+	private DecoratedShip decoratedShip;
 	private PowerUpDecorator myPowerUpDecorator;
 
 	private SpriteGroup myPlayerGroup;
@@ -77,14 +79,30 @@ public class TopDownDemo extends Game {
 		myPlayerGroup.setBackground(myBackground);
 		myBarrierGroup.setBackground(myBackground);
 		myEnemyGroup.setBackground(myBackground);
+		myCompanionGroup.setBackground(myBackground); 
 		myProjectileGroup.setBackground(myBackground);
 
 		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
 
-		HorizontalDecorator myV = new HorizontalDecorator(new SimpleShip(),
-				myShip);
-		decoratedShip = new VerticalDecorator(myV, myShip);
+		DecoratorManager decman = null;
+		try {
+			decman = new DecoratorManager();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		ArrayList<String> myDecs = new ArrayList<String>(); 
+		myDecs.add("VerticalDecorator"); 
+		myDecs.add("HorizontalDecorator"); 
+		try {
+			decman.addDecorators(myDecs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			System.out.println("error: " + e);
+			e.printStackTrace();
+		} 
+		decoratedShip = decman.getDecorators();
 
 		myPowerUpDecorator = new CompanionDecorator(new SimpleShip(), myShip);
 
@@ -97,6 +115,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
+		myPlayfield.addGroup(myCompanionGroup); 
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
@@ -138,6 +157,7 @@ public class TopDownDemo extends Game {
 
 		playerMovement();
 		myPlayfield.update(elapsedTime); 
+		System.out.println(decoratedShip);
 		decoratedShip.move(this, myShip);
 		
 		myPowerUpDecorator.powerUp(this, myShip);

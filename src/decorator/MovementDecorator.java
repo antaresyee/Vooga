@@ -6,15 +6,15 @@ import gameObjects.GameObjectData;
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
-public abstract class MovementDecorator implements SpaceShip {
+public abstract class MovementDecorator implements DecoratedShip {
 
-	protected SpaceShip decoratedSpaceShip;
+	protected DecoratedShip decoratedSpaceShip;
 
-	public MovementDecorator(SpaceShip decoratedSpaceShip) {
+	public MovementDecorator(DecoratedShip decoratedSpaceShip) {
 		this.decoratedSpaceShip = decoratedSpaceShip;
 	}
 
-	public MovementDecorator(SpaceShip decoratedSpaceShip, Sprite t) {
+	public MovementDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
 		this.decoratedSpaceShip = decoratedSpaceShip;
 	}
 

@@ -7,14 +7,14 @@ public class VerticalDecorator extends MovementDecorator{
 
 	protected int myVertSpeed; 	
 
-	public VerticalDecorator (SpaceShip decoratedSpaceShip){
+	public VerticalDecorator (DecoratedShip decoratedSpaceShip){
 		super(decoratedSpaceShip);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		myVertSpeed = 3; 
 	}
 	
 
-	public VerticalDecorator(SpaceShip decoratedSpaceShip, Sprite t){
+	public VerticalDecorator(DecoratedShip decoratedSpaceShip, Sprite t){
 		super(decoratedSpaceShip,t);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		myVertSpeed = 3; 
