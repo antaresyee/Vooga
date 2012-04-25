@@ -26,6 +26,8 @@ public class ProximityState extends State {
 	public boolean changeCondition() {
 		double playerX = playerInfo.getPlayerX();
 		double playerY = playerInfo.getPlayerY();
+		System.out.println("playerX = " + playerX);
+		System.out.println("playerY = " + playerY);
 		double distance = getDistance(playerX, playerY);
 		return lowerBound < distance && distance < upperBound;
 	}

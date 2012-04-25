@@ -164,7 +164,7 @@ public class TopDownDemo extends Game {
 			e.updateEnemy();
 			count++;
 		}
-		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
+		playerInfo.updatePlayerPosition(myShip.getX(), myShip.getY());
 
 	}
 
