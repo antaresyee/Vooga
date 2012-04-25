@@ -5,13 +5,13 @@ import com.golden.gamedev.object.Sprite;
 
 public class FollowDecorator extends MovementDecorator{
 
-	public FollowDecorator(SpaceShip decoratedSpaceShip) {
+	public FollowDecorator(DecoratedShip decoratedSpaceShip) {
 		super(decoratedSpaceShip);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		// TODO Auto-generated constructor stub
 	}
 
-	public FollowDecorator(SpaceShip decoratedSpaceShip, Sprite t) {
+	public FollowDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
 		super(decoratedSpaceShip, t);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		// TODO Auto-generated constructor stub

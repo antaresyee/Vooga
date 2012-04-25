@@ -5,7 +5,7 @@ import com.golden.gamedev.object.Sprite;
 
 public class InvisibilityDecorator extends PowerUpDecorator{
 
-	public InvisibilityDecorator(SpaceShip decoratedSpaceShip, Sprite t) {
+	public InvisibilityDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
 		super(decoratedSpaceShip, t);
 		// TODO Auto-generated constructor stub
 	

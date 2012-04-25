@@ -9,15 +9,15 @@ public class CompanionDecorator extends PowerUpDecorator{
 
 	Player comp;
 	public boolean hasBeenCreated = false; 
-	SpaceShip compDecorator;
+	DecoratedShip compDecorator;
 	
-	public CompanionDecorator(SpaceShip decoratedSpaceShip) {
+	public CompanionDecorator(DecoratedShip decoratedSpaceShip) {
 		super(decoratedSpaceShip);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CompanionDecorator(SpaceShip decoratedSpaceShip, Sprite t) {
+	public CompanionDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
 		super(decoratedSpaceShip, t);
 		this.decoratedSpaceShip = decoratedSpaceShip;
 		// TODO Auto-generated constructor stub
