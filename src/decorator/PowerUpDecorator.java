@@ -18,13 +18,11 @@ public abstract class PowerUpDecorator implements PowerUp{
 
 	@Override
 	public void powerUp(Game g, Sprite t) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public String getDescription() {
-		// TODO Auto-generated method stub
 		return "PowerUp Decorator";
 	}
 
