@@ -48,7 +48,6 @@ import decorator.VerticalDecorator;
 
 public class TopDownDemo extends Game {
 
-	private Player myPlayer;
 	private Enemy myEnemy;	
 	private HealthBar myHealthBar;
 	private Weapon myWeapon;
@@ -56,7 +55,6 @@ public class TopDownDemo extends Game {
 	private Player myShip; 
 	private Player myCompanion; 
 
-	private DecoratedShip decorations;
 	private DecoratedShip decCompanion; 
 	private PowerUp decoratedPowerUp;
 	
@@ -107,26 +105,13 @@ public class TopDownDemo extends Game {
 
 		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
+		System.out.println ("1"); 
+		myShip.addDecoration("VerticalDecorator");
+		myShip.addDecoration("HorizontalDecorator");
 
 		start = new StartGUI(this);
 		
-		DecoratorManager decman = null;
-		try {
-			decman = new DecoratorManager();
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		ArrayList<String> myDecs = new ArrayList<String>(); 
-		myDecs.add("VerticalDecorator"); 
-		myDecs.add("HorizontalDecorator"); 
-		try {
-			decman.addDecorators(myDecs);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		decorations = decman.getDecorators();
+		
 		
 		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
 		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
@@ -174,11 +159,17 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-
-		LevelLoader l = new LevelLoader(myLoadObservers);
-		l.loadLevelData(path);
-
+		//LevelLoader l = new LevelLoader(myLoadObservers);
+		//l.loadLevelData("serializeTest.ser");
 		enemySize = myEnemyGroup.getSize();
+
+		// initializing PlayerInfo
+		playerInfo = new PlayerInfo();
+		
+		//HealthBar
+		myHealthBar = new HealthBar(myShip); 
+
+
 	}
 
 	@Override
@@ -194,6 +185,7 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
+
 		if(initialScreen){
 			start.update(elapsedTime);
 			String path = start.getLoadPath();
@@ -210,30 +202,33 @@ public class TopDownDemo extends Game {
 		playerMovement();
 
 		myPlayfield.update(elapsedTime); 
-		myPlayfield.update(elapsedTime);
 
-		decorations.move(this, myShip);
+//		decorations.move(this, myShip);
+		
+		
+
+		myShip.move(this); 
+		
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);
 		}
 		
 		
 		
-		myPowerUpDecorator.powerUp(this, myShip, myPlayerGroup);
+		//myPowerUpDecorator.powerUp(this, myShip, myPlayerGroup);
 		
-		
-		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
-		{
-			myCompanion = ((CompanionDecorator) myPowerUpDecorator).getCompanion();
-			myCompanion.setBackground(myBackground); 
-			myCompanionGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
-			((CompanionDecorator) myPowerUpDecorator).setCreated();  
-		}
-		
-		else{
-			decorations.move(this, myCompanion); 
-			decCompanion.move(this, myCompanion); 
-		}
+//		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
+//		{
+//			myCompanion = ((CompanionDecorator) myPowerUpDecorator).getCompanion();
+//			myCompanion.setBackground(myBackground); 
+//			myCompanionGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
+//			((CompanionDecorator) myPowerUpDecorator).setCreated();  
+//		}
+//		
+//		else{
+//			//decorations.move(this, myCompanion); 
+//			decCompanion.move(this, myCompanion); 
+//		}
 
 		
 		// this is for testing enemy movement
@@ -246,7 +241,6 @@ public class TopDownDemo extends Game {
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myShip.getX(), myShip.getY());
-
 	}
 
 	public void playerMovement() {
@@ -260,7 +254,7 @@ public class TopDownDemo extends Game {
 	}
 
 	public void setPlayer(Player g) {
-		myPlayer = g;
+		myShip = g;
 	}
 	
 

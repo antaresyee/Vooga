@@ -6,10 +6,17 @@ import weapons.Weapon;
 
 import com.golden.gamedev.Game;
 
+import decorator.DecoratedShip;
+import decorator.DecoratorManager;
+
 import levelLoadSave.ForSave;
 
 @ForSave
 public class Player extends GameObject {
+
+	private static DecoratedShip decorations;
+	private ArrayList<String> myDecs = new ArrayList<String>();
+	DecoratorManager decman = null;
 
 	
 	protected int myHealth; 
@@ -22,8 +29,51 @@ public class Player extends GameObject {
         myType = "Player";
         setLocation(myX, myY);
         myWeapons = new ArrayList<Weapon>();
-        
-        myHealth = 10; 
+        myHealth = 10;
+        this.createDecorator(); 
+        decorations = null; 
+    }
+    
+    
+    public void move(Game g){
+    	System.out.println("2 " + decorations);
+		decorations.move(g, this);
+    }
+    
+    
+    public DecoratedShip getDecorations(){
+    	return decorations; 
+    }
+    private void createDecorator(){
+		try {
+			decman = new DecoratorManager();
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+//		 
+//		myDecs.add("HorizontalDecorator"); 	
+//		try {
+//			decman.addDecorators(myDecs);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+//		decorations = decman.getDecorators();
+    }
+    
+    public void addDecoration(String decorator){
+    	myDecs.add(decorator); 
+		try {
+			decman.addDecorators(myDecs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		System.out.println("1 " + decorations);
+		decorations = decman.getDecorators();
+		
+		System.out.println("added " + decorations);
     }
     
     public String getImgPath()
