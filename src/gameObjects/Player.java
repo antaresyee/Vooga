@@ -21,6 +21,7 @@ public class Player extends GameObject {
         myImgPath = imgPath;
         myType = "Player";
         setLocation(myX, myY);
+        myWeapons = new ArrayList<Weapon>();
         
         myHealth = 10; 
     }

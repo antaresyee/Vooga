@@ -4,8 +4,8 @@ import com.golden.gamedev.object.SpriteGroup;
 
 public class UnlimitedGun extends Gun{
 
-	public UnlimitedGun(int rate, Projectile p, SpriteGroup g, ShotPattern pattern) {
-		super(rate, p, g,pattern);
+	public UnlimitedGun(int rate, Projectile p, ShotPattern pattern) {
+		super(rate, p,pattern);
 		
 	}
 

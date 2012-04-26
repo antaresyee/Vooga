@@ -10,6 +10,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
+import weapons.DamagingProjectile;
+import weapons.Projectile;
+import weapons.ShotPattern;
+import weapons.SinglePattern;
+import weapons.UnlimitedGun;
+import weapons.Weapon;
+
 import levelLoadSave.EnemyLoadObserver;
 import levelLoadSave.HorizontalShipLoadObserver;
 import levelLoadSave.LevelLoader;
@@ -38,7 +45,8 @@ public class TopDownDemo extends Game {
 
 	private Player myPlayer;
 	private Enemy myEnemy;	
-	private HealthBar myHealthBar; 
+	private HealthBar myHealthBar;
+	private Weapon myWeapon;
 	
 	private Player myShip; 
 	private Player myCompanion; 
@@ -108,6 +116,13 @@ public class TopDownDemo extends Game {
 
 		myShip.setBackground(myBackground);
 		myPlayerGroup.add(myShip);
+		
+		//intit weapons
+		Projectile p = new DamagingProjectile("resources/enemy.png",myProjectileGroup,1);
+		p.setImage(getImage("resources/enemy.png"));
+		ShotPattern s = new SinglePattern(-3);
+		myWeapon = new UnlimitedGun(300,p,s);
+		myShip.addWeapon(myWeapon);
 
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
@@ -156,9 +171,13 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 
 		playerMovement();
-		myPlayfield.update(elapsedTime); 
-		System.out.println(decoratedShip);
+		myPlayfield.update(elapsedTime);
+		
 		decoratedShip.move(this, myShip);
+		if(myShip != null){
+		myShip.fire(this, elapsedTime);
+		}
+		
 		
 		myPowerUpDecorator.powerUp(this, myShip);
 		
@@ -181,7 +200,7 @@ public class TopDownDemo extends Game {
 		for (Sprite elem:myEnemyGroup.getSprites()){
 			if (count>=enemySize) break;
 			Enemy e = (Enemy) elem;
-			e.updateEnemy();
+			e.updateEnemy(elapsedTime);
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myShip.getX(), myShip.getY());
