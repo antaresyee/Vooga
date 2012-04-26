@@ -25,8 +25,9 @@ public class TeleportProjectile extends Projectile{
 	public void createProjectile(double xpos, double ypos, double xspeed,
 			double yspeed) {
 		TeleportProjectile newproj = new TeleportProjectile(myImgPath, myGroup, tobeTeleported);
-		newproj.setPosition(xpos, ypos);
+		newproj.setLocation(xpos, ypos);
 		newproj.setSpeed(xspeed, yspeed);
+		newproj.setImage(this.getImage());
 		myGroup.add(newproj);
 		
 	}
@@ -37,7 +38,7 @@ public class TeleportProjectile extends Projectile{
 		Projectile returning = new TeleportProjectile(path, myGroup, tobeTeleported);
 		double x = god.getX();
 		double y = god.getY();
-		returning.setPosition(x, y);
+		returning.setLocation(x, y);
 		return returning;
 	}
 

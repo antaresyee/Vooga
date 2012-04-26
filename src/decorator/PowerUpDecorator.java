@@ -5,19 +5,19 @@ import com.golden.gamedev.object.Sprite;
 
 public abstract class PowerUpDecorator implements PowerUp{
 	
-	protected DecoratedShip decoratedSpaceShip;
+	protected PowerUp decoratedPowerUp;
 	
-	public PowerUpDecorator (DecoratedShip decoratedSpaceShip){
-		this.decoratedSpaceShip = decoratedSpaceShip;
+	public PowerUpDecorator (PowerUp decoratedPowerUp){
+		this.decoratedPowerUp = decoratedPowerUp;
 	}
 	
-	public PowerUpDecorator(DecoratedShip decoratedSpaceShip, Sprite t){
-		this.decoratedSpaceShip = decoratedSpaceShip;
+	public PowerUpDecorator(PowerUp decoratedPowerUp, Sprite t){
+		this.decoratedPowerUp = decoratedPowerUp;
 	}
 	
 
 	@Override
-	public void powerUp(Game g, Sprite t) {
+	public void powerUp(Game g, Sprite t, Object o) {
 		
 	}
 

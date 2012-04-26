@@ -2,19 +2,22 @@ package decorator;
 
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.object.SpriteGroup;
 
 public class InvisibilityDecorator extends PowerUpDecorator{
 
-	public InvisibilityDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
-		super(decoratedSpaceShip, t);
+	SpriteGroup toAlter; 
+	public InvisibilityDecorator(PowerUp decoratedPowerUp, Sprite t) {
+		super(decoratedPowerUp, t);
 		// TODO Auto-generated constructor stub
 	
 	}
 	
 	
 	@Override
-	public void powerUp(Game g, Sprite t) {
+	public void powerUp(Game g, Sprite t, Object o) {
 		// TODO Auto-generated method stub
+		((SpriteGroup) o).remove(t); 
 		
 	}
 

@@ -9,27 +9,26 @@ public class CompanionDecorator extends PowerUpDecorator{
 
 	Player comp;
 	public boolean hasBeenCreated = false; 
-	DecoratedShip compDecorator;
 	
-	public CompanionDecorator(DecoratedShip decoratedSpaceShip) {
-		super(decoratedSpaceShip);
-		this.decoratedSpaceShip = decoratedSpaceShip;
+	public CompanionDecorator(PowerUp decoratedPowerUp) {
+		super(decoratedPowerUp);
+		this.decoratedPowerUp = decoratedPowerUp;
 		// TODO Auto-generated constructor stub
 	}
 	
-	public CompanionDecorator(DecoratedShip decoratedSpaceShip, Sprite t) {
-		super(decoratedSpaceShip, t);
-		this.decoratedSpaceShip = decoratedSpaceShip;
+	public CompanionDecorator(PowerUp decoratedPowerUp, Sprite t) {
+		super(decoratedPowerUp, t);
+		this.decoratedPowerUp = decoratedPowerUp;
 		// TODO Auto-generated constructor stub
 	}
 	
 	
 	@Override
-	public void powerUp(Game g, Sprite t) {
+	public void powerUp(Game g, Sprite t, Object o) {
 		// TODO Auto-generated method stub
 		comp = new Player(t.getX()-10, t.getY() -15,"resources/smallShip.png"); 
 		comp.setImage(g.getImage("resources/smallShip.png"));
-		compDecorator = new HorizontalDecorator(new SimpleShip()); 
+		
 		
 	}
 
