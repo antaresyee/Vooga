@@ -26,7 +26,7 @@ public class CreationProjectile extends Projectile{
 	@Override
 	public void createProjectile(double xpos, double ypos, double xspeed, double yspeed) {
 		CreationProjectile createdProjectile = new CreationProjectile(myImgPath, myGroup, myCreated, myCreatedSpriteGroup);
-		createdProjectile.setPosition(xpos,ypos);
+		createdProjectile.setLocation(xpos,ypos);
 		createdProjectile.setSpeed(xspeed, yspeed);
 		myGroup.add(createdProjectile);
 	}
@@ -37,7 +37,7 @@ public class CreationProjectile extends Projectile{
 		Projectile returning = new CreationProjectile(path, myGroup, myCreated, myCreatedSpriteGroup);
 		double x = god.getX();
 		double y = god.getY();
-		returning.setPosition(x, y);
+		returning.setLocation(x, y);
 		return returning;
 	}
 

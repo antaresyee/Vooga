@@ -28,8 +28,9 @@ public class StatusProjectile extends Projectile{
 	public void createProjectile(double xpos, double ypos, double xspeed,
 			double yspeed) {
 		StatusProjectile newproj = new StatusProjectile(myImgPath, myGroup, myStatus);
-		newproj.setPosition(xpos, ypos);
+		newproj.setLocation(xpos, ypos);
 		newproj.setSpeed(xspeed, yspeed);
+		newproj.setImage(this.getImage());
 		myGroup.add(newproj);
 		
 	}
@@ -40,7 +41,7 @@ public class StatusProjectile extends Projectile{
 		Projectile returning = new StatusProjectile(path, myGroup, myStatus);
 		double x = god.getX();
 		double y = god.getY();
-		returning.setPosition(x, y);
+		returning.setLocation(x, y);
 		return returning;
 	}
 

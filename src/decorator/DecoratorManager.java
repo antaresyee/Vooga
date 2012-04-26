@@ -12,8 +12,8 @@ import java.util.HashMap;
  */
 public class DecoratorManager {
 	
-	private static HashMap<String,Class<?>> myDecorators; 
-	private static MovementDecorator toReturn;
+	private HashMap<String,Class<?>> myDecorators; 
+	private MovementDecorator toReturn;
 	
 	public DecoratorManager() throws ClassNotFoundException{
 		myDecorators = new HashMap<String, Class<?>>(); 
@@ -40,7 +40,6 @@ public class DecoratorManager {
 			decorated = decorated2; 
 		}
 		toReturn = decorated; 
-		System.out.println(toReturn);
 	}
 	
 

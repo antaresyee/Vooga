@@ -15,6 +15,7 @@ import movement.MovementFactory;
 import states.State;
 import states.StateFactory;
 import weapons.Status;
+import weapons.Weapon;
 
 /**
  * 
@@ -30,6 +31,7 @@ public class Enemy extends GameObject {
 	private EnemyDataLoader loader;
 	private int currentHealth = 3;
 	private List<Status> myStatuses;
+	private Weapon myWeapon;
 
 	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
@@ -58,13 +60,20 @@ public class Enemy extends GameObject {
 	public void move() {
 		currentState.move();
 	}
+	
+	public void setWeapon(Weapon w){
+		myWeapon = w;
+	}
 
-	public void updateEnemy() {
+	public void updateEnemy(long elapsedTime) {
 		checkState();
 		move();
 		checkIfDead();
 		for (Status s : myStatuses) {
 			s.iterate(this);
+		}
+		if(myWeapon != null){
+			myWeapon.fire(elapsedTime, myX, myY);
 		}
 	}
 
