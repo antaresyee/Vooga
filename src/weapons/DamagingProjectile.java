@@ -1,5 +1,7 @@
 package weapons;
 
+import java.io.Serializable;
+
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
 import gameObjects.Enemy;
@@ -7,7 +9,7 @@ import gameObjects.Enemy;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
-public class DamagingProjectile extends Projectile{
+public class DamagingProjectile extends Projectile implements Serializable{
 	int myDamage;
 
 	public DamagingProjectile(String imgPath, SpriteGroup g, int damage) {

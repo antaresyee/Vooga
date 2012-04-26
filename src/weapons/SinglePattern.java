@@ -1,6 +1,8 @@
 package weapons;
 
-public class SinglePattern extends ShotPattern{
+import java.io.Serializable;
+
+public class SinglePattern extends ShotPattern implements Serializable{
 	int mySpeed;
 	
 	public SinglePattern(int speed){
