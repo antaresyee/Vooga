@@ -55,7 +55,7 @@ public class TopDownDemo extends Game {
 	private Player myShip; 
 	private Player myCompanion; 
 
-	private DecoratedShip decoratedShip;
+	private DecoratedShip decorations;
 	private DecoratedShip decCompanion; 
 	private PowerUp decoratedPowerUp;
 	
@@ -119,7 +119,7 @@ public class TopDownDemo extends Game {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		decoratedShip = decman.getDecorators();
+		decorations = decman.getDecorators();
 		
 		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
 		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
@@ -132,7 +132,7 @@ public class TopDownDemo extends Game {
 		//intit weapons
 		Projectile p = new DamagingProjectile("resources/enemy.png",myProjectileGroup,1);
 		p.setImage(getImage("resources/enemy.png"));
-		ShotPattern s = new SinglePattern(-3);
+		ShotPattern s = new SinglePattern(-1);
 		myWeapon = new UnlimitedGun(300,p,s);
 		myShip.addWeapon(myWeapon);
 
@@ -187,7 +187,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.update(elapsedTime); 
 		myPlayfield.update(elapsedTime);
 
-		decoratedShip.move(this, myShip);
+		decorations.move(this, myShip);
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);
 		}
@@ -206,7 +206,7 @@ public class TopDownDemo extends Game {
 		}
 		
 		else{
-			decoratedShip.move(this, myCompanion); 
+			decorations.move(this, myCompanion); 
 			decCompanion.move(this, myCompanion); 
 		}
 

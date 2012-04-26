@@ -28,6 +28,7 @@ public class DecoratorManager {
 	}
 	
 	public void addDecorators(ArrayList<String> toDecorate) throws IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, ClassNotFoundException{
+	
 		Class<?> firstFilter = myDecorators.get(toDecorate.get(0)); 
 		// constructor.newinstance()
 		Constructor<?> construct = getCorrectConstructor(firstFilter); 
@@ -56,4 +57,5 @@ public class DecoratorManager {
 		}
 		return null;
 	}
+
 }
