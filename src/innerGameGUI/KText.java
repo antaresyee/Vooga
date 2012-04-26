@@ -15,19 +15,20 @@ public class KText extends KComponent{
 	private String myText;
 	private SystemFont myFont;
 	
-	public KText(Game game, String text, Font font, Color color) {
-		super(game);
+	public KText(KComponent parent, Game game, String text, Font font, Color color) {
+		super(parent, game);
 		myText = text;
 		myFont = new SystemFont(font, color);
+		this.setWidthHeight(myFont.getWidth(text), myFont.getHeight());
 		// TODO Auto-generated constructor stub
 	}
 	
-	public KText(Game game, String text, Font font){
-		this(game, text, font, Color.BLACK);
+	public KText(KComponent parent, Game game, String text, Font font){
+		this(parent, game, text, font, Color.GREEN);
 	}
 	
-	public KText(Game game, String text){
-		this(game, text, new Font("Comic Sans MS", Font.PLAIN, 18));
+	public KText(KComponent parent, Game game, String text){
+		this(parent, game, text, new Font("Comic Sans MS", Font.PLAIN, 18));
 	}
 	
 	public void render(Graphics2D pen){

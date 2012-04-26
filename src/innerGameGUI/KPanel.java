@@ -18,12 +18,16 @@ import com.golden.gamedev.util.ImageUtil;
  *
  */
 public class KPanel extends KComponent{
+	private static final int SPACING = 10;
+	public final static int VERTICAL = 1;
+	public final static int HORIZONTAL = 0;
+	private int ordering;
 	private List<KComponent> myComponents;
-	private Color myColor;
 	private Grid myGrid;
 	
-	public KPanel(Game game, Color color, Grid grid, int x, int y, int width, int height){
-		super(game);
+	public KPanel(KComponent parent, Game game, Color color, Grid grid, int order, int x, int y, int width, int height){
+		super(parent, game);
+		ordering = order;
 		setLocation(x,y);
 		setColor(color);
 		setGrid(grid);
@@ -31,17 +35,17 @@ public class KPanel extends KComponent{
 		myComponents = new ArrayList<KComponent>();
 	}
 	
-	public KPanel (Game game){
-		this(game, Color.BLACK);
+	public KPanel (KComponent parent, Game game){
+		this(parent, game, Color.BLACK);
 	}
 	
-	public KPanel (Game game, Color color)
+	public KPanel (KComponent parent, Game game, Color color)
 	{
-		this(game, color, 0, 0, game.getWidth(), game.getHeight());
+		this(parent, game, color, 0, 0, game.getWidth(), game.getHeight());
 	}
 	
-	public KPanel (Game game, Color color, int x, int y, int width, int height){
-		this(game, color, new VerticalGrid(), x, y, width, height);
+	public KPanel (KComponent parent, Game game, Color color, int x, int y, int width, int height){
+		this(parent, game, color, null, 0, x, y, width, height);
 	}
 	
 	/*
@@ -60,23 +64,73 @@ public class KPanel extends KComponent{
 		updatePanel(kc);
 	}
 	
-	public void setColor(Color color)
-	{
-		myColor = color;
-	}
-	
 	public void setGrid(Grid grid){
 		myGrid = grid;
-		myGrid.setComponent(this);
+		if(myGrid != null) myGrid.setComponent(this);
+	}
+	
+	public void setOrdering(int o){
+		ordering = o;
 	}
 	
 	public void updatePanel(KComponent kc){
+		if(myGrid == null){
+			if(ordering == VERTICAL) defaultVerticalUpdatePanel(kc);
+			else if(ordering == HORIZONTAL) defaultHorizontalUpdatePanel(kc);
+			return;
+		}
 		myGrid.setGridSize(myComponents.size());
 		for(int i = 0; i < myComponents.size(); i++){
 			int[] xy = myGrid.getGridXYCoordinate(i);
-			myComponents.get(i).setLocation(getX()+xy[0], getY()+xy[1]);
+			KComponent current = myComponents.get(i);
+//			System.out.println(getX() +","+getY()+","+xy[0]+","+xy[1]+","+current.getWidth()/2. + ","+current.getHeight()/2.);
+			current.setLocation(getX()+xy[0]-current.getWidth()/2., getY()+xy[1]-current.getHeight()/2.);
 		}
 	}
+	
+	public void defaultVerticalUpdatePanel(KComponent kc)
+	{
+		int spacing = SPACING;
+		double x = getX()+spacing;
+		double y = getY()+spacing;
+		if(myComponents.size() > 1){
+			KComponent lastComp = myComponents.get(myComponents.size()-2);
+			x = lastComp.getX();
+			y = lastComp.getY() + lastComp.getHeight();
+		}
+		y+=spacing;
+		if(myParent == null && (y+kc.getHeight())> myGame.getHeight()){
+			x = getX() + getWidth() + spacing;
+			y = getY()+spacing;
+			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()));
+		}else{
+			setWidthHeight(Math.max(getWidth(), kc.getWidth()), getHeight()+spacing+kc.getHeight());
+		}
+		kc.setLocation(x, y);
+	}
+	
+	public void defaultHorizontalUpdatePanel(KComponent kc){
+		int spacing = SPACING;
+		double x = getX()+spacing;
+		double y = getY()+spacing;
+		if(myComponents.size() > 1){
+			KComponent lastComp = myComponents.get(myComponents.size()-2);
+			x = lastComp.getX() + lastComp.getWidth();
+			y = lastComp.getY();
+		}
+		x+=spacing;
+//		System.out.println(x+","+y);
+		if(myParent == null && (x+kc.getWidth())> myGame.getWidth()){
+			x = getX()+spacing;
+			y = getY() + getHeight() + spacing;
+			setWidthHeight(Math.max(getWidth(), kc.getWidth()), getHeight()+spacing+kc.getHeight());
+		}else{
+			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()));
+		}
+//		System.out.println(x+","+y);
+		kc.setLocation(x, y);
+	}
+	
 	
 	
 	@Override
