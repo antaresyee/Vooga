@@ -21,12 +21,19 @@ public class KButton extends KComponent{
 	private SystemFont myFont;
 	private ActionListener myListener;
 	
-	public KButton(Game game, String text) {
-		super(game);
+	public KButton(KComponent parent, Game game, String text, Color color) {
+		super(parent, game);
 		myText=text;
+		setColor(color);
 		myFont = new SystemFont(new Font("Comic Sans MS", Font.PLAIN, 18),
 				Color.ORANGE);
+		setWidthHeight(MY_TAB_WIDTH, MY_TAB_HEIGHT);
 		
+	}
+	
+	public KButton(KComponent parent, Game game, String text)
+	{
+		this(parent, game, text, parent != null? parent.getColor():Color.MAGENTA);
 	}
 	
 	/*
@@ -39,7 +46,7 @@ public class KButton extends KComponent{
 	
 	public void render(Graphics2D pen) {
 //		pen.fillRect(0, 0, myWindowWidth, myWindowHeight);
-		pen.setColor(Color.MAGENTA);
+		pen.setColor(myColor);
 		pen.fillRoundRect((int)getX(), (int)getY(), MY_TAB_WIDTH, MY_TAB_HEIGHT, 10, 10);
 		myFont.drawString(pen, myText, SystemFont.CENTER, (int)getX(), (int)getY(),
 				MY_TAB_WIDTH);

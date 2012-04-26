@@ -4,6 +4,8 @@ import gameObjects.Enemy;
 import gameObjects.Player;
 import gameObjects.Player;
 
+import innerGameGUI.StartGUI;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
@@ -75,9 +77,13 @@ public class TopDownDemo extends Game {
 	private Map myMap;
 	private int count = 0;
 	private List<LoadObserver> myLoadObservers;
+	
+	private StartGUI start;
+	private boolean initialScreen;
 
 	@Override
 	public void initResources() {
+		initialScreen = true;
 		myBarrierGroup = new SpriteGroup("barrier");
 		myPlayerGroup = new SpriteGroup("player");
 		
@@ -103,6 +109,8 @@ public class TopDownDemo extends Game {
 		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
 
+		start = new StartGUI(this);
+		
 		DecoratorManager decman = null;
 		try {
 			decman = new DecoratorManager();
@@ -148,18 +156,8 @@ public class TopDownDemo extends Game {
 				new PlayerBarrierCollision());
 		
 
-		// load level data
-		myLoadObservers = new ArrayList<LoadObserver>();
-		myLoadObservers
-				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
-		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-
-		LevelLoader l = new LevelLoader(myLoadObservers);
-		l.loadLevelData("serializeTest.ser");
-
-		enemySize = myEnemyGroup.getSize();
+//		// load level data
+//		loadLevelData();
 
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
@@ -170,8 +168,26 @@ public class TopDownDemo extends Game {
 
 	}
 
+	private void loadLevelData(String path) {
+		myLoadObservers = new ArrayList<LoadObserver>();
+		myLoadObservers
+				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
+		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
+		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
+		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
+
+		LevelLoader l = new LevelLoader(myLoadObservers);
+		l.loadLevelData(path);
+
+		enemySize = myEnemyGroup.getSize();
+	}
+
 	@Override
 	public void render(Graphics2D pen) {
+		if(initialScreen){
+			start.render(pen);
+			return;
+		}
 		myPlayfield.render(pen);
 		myHealthBar.render(pen); 
 
@@ -179,6 +195,16 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
+		if(initialScreen){
+			start.update(elapsedTime);
+			String path = start.getLoadPath();
+//			System.out.println(path);
+			if(path != null && path.length()>0){
+				initialScreen = false;
+				loadLevelData(path);
+			}
+			return;
+		}
 		myMap.moveMap(elapsedTime);
 		
 		myMap.movePlayer(elapsedTime, myShip);
