@@ -1,5 +1,7 @@
 package innerGameGUI;
 
+import java.awt.Color;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.util.ImageUtil;
@@ -14,10 +16,21 @@ public class KComponent extends Sprite{
 	protected Game myGame;
 	protected KComponent myParent;
 	private int myWidth, myHeight;
+	protected Color myColor;
 	
-	public KComponent(Game game)
+	public KComponent(KComponent parent, Game game)
 	{
+		setParent(parent);
 		myGame = game;
+	}
+	
+	public Color getColor(){
+		return myColor;
+	}
+	
+	public void setColor(Color color)
+	{
+		myColor = color;
 	}
 	
 	public void setWidthHeight(int width, int height){

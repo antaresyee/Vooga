@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import weapons.Weapon;
+
 import movement.Movement;
 
 /**
@@ -24,6 +26,7 @@ public class GameObjectData implements Serializable {
     //used ONLY for enemies. testing enemy state framework
     private ArrayList<Movement> myEnemyMovements;
     private String myEnemyConfigFile;
+    private Weapon myWeapon;
     
     public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
@@ -41,6 +44,14 @@ public class GameObjectData implements Serializable {
     
     public void setImgPath(String imgPath) {
         myData.put("imgPath", imgPath);
+    }
+    
+    public void setWeapon(Weapon w){
+        myWeapon = w;
+    }
+    
+    public Weapon getWeapon(){
+        return myWeapon;
     }
     
     public void setMovement(Movement movement) {

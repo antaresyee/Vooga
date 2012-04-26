@@ -4,6 +4,8 @@ import gameObjects.Enemy;
 import gameObjects.Player;
 import gameObjects.Player;
 
+import innerGameGUI.StartGUI;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
@@ -73,9 +75,13 @@ public class TopDownDemo extends Game {
 	private Map myMap;
 	private int count = 0;
 	private List<LoadObserver> myLoadObservers;
+	
+	private StartGUI start;
+	private boolean initialScreen;
 
 	@Override
 	public void initResources() {
+		initialScreen = true;
 		myBarrierGroup = new SpriteGroup("barrier");
 		myPlayerGroup = new SpriteGroup("player");
 		
@@ -104,6 +110,9 @@ public class TopDownDemo extends Game {
 		myShip.addDecoration("VerticalDecorator");
 		myShip.addDecoration("HorizontalDecorator");
 
+		start = new StartGUI(this);
+		
+		
 		
 		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
 		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
@@ -132,7 +141,19 @@ public class TopDownDemo extends Game {
 				new PlayerBarrierCollision());
 		
 
-		// load level data
+//		// load level data
+//		loadLevelData();
+
+		// initializing PlayerInfo
+		playerInfo = new PlayerInfo();
+		
+		//HealthBar
+		myHealthBar = new HealthBar(myShip); 
+
+
+	}
+
+	private void loadLevelData(String path) {
 		myLoadObservers = new ArrayList<LoadObserver>();
 		myLoadObservers
 				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
@@ -149,10 +170,15 @@ public class TopDownDemo extends Game {
 		//HealthBar
 		myHealthBar = new HealthBar(myShip); 
 
+
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
+		if(initialScreen){
+			start.render(pen);
+			return;
+		}
 		myPlayfield.render(pen);
 		myHealthBar.render(pen); 
 
@@ -160,7 +186,17 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-		
+
+		if(initialScreen){
+			start.update(elapsedTime);
+			String path = start.getLoadPath();
+//			System.out.println(path);
+			if(path != null && path.length()>0){
+				initialScreen = false;
+				loadLevelData(path);
+			}
+			return;
+		}
 		myMap.moveMap(elapsedTime);
 		
 		myMap.movePlayer(elapsedTime, myShip);

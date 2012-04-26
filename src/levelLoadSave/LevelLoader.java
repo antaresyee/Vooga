@@ -18,6 +18,11 @@ import java.util.Scanner;
 import states.FullHealthState;
 import states.LowHealthState;
 import states.State;
+import weapons.DamagingProjectile;
+import weapons.Projectile;
+import weapons.SinglePattern;
+import weapons.UnlimitedGun;
+import weapons.Weapon;
 
 import movement.BackForthMovement;
 import movement.Movement;
@@ -170,11 +175,15 @@ public class LevelLoader {
 
         List<GameObjectData> objectsToSave = new ArrayList<GameObjectData>();
 
-        GameObjectData barrierData = new GameObjectData("Barrier");
-        barrierData.setX(200.5);
-        barrierData.setY(1000.0);
-        barrierData.setImgPath("./resources/triangle.png");
-        objectsToSave.add(barrierData);
+        GameObjectData enemyData = new GameObjectData("Player");
+        enemyData.setX(200.5);
+        enemyData.setY(1000.0);
+        enemyData.setImgPath("./resources/triangle.png");
+        Projectile p = new DamagingProjectile("resources/enemy.png", null, 5);
+        Weapon w = new UnlimitedGun(5, p, new SinglePattern(5));
+        enemyData.setWeapon(w);
+        
+        objectsToSave.add(enemyData);
 
         GameObjectData barrierData2 = new GameObjectData("Barrier");
         barrierData2.setX(3.5);
