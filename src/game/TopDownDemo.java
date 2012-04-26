@@ -123,8 +123,8 @@ public class TopDownDemo extends Game {
 		myPlayerGroup.add(myShip);
 		
 		//intit weapons
-		Projectile p = new DamagingProjectile("resources/enemy.png",myProjectileGroup,1);
-		p.setImage(getImage("resources/enemy.png"));
+		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
+		p.setImage(getImage("resources/fire.png"));
 		ShotPattern s = new SinglePattern(-1);
 		myWeapon = new UnlimitedGun(300,p,s);
 		myShip.addWeapon(myWeapon);
@@ -141,7 +141,7 @@ public class TopDownDemo extends Game {
 				new PlayerBarrierCollision());
 		
 
-//		// load level data
+		// load level data
 //		loadLevelData();
 
 		// initializing PlayerInfo
@@ -160,8 +160,11 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		//LevelLoader l = new LevelLoader(myLoadObservers);
-		//l.loadLevelData("serializeTest.ser");
+		
+		LevelLoader l = new LevelLoader(myLoadObservers);
+		System.out.println("1" +myShip.getDecorations());
+		l.loadLevelData("serializeTest.ser");
+		System.out.println("2" +myShip.getDecorations());
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -208,7 +211,7 @@ public class TopDownDemo extends Game {
 		
 		
 
-		myShip.move(this); 
+		//myShip.move(this); 
 		
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);
