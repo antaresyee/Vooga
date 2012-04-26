@@ -1,8 +1,10 @@
 package weapons;
 
+import java.io.Serializable;
+
 import com.golden.gamedev.object.SpriteGroup;
 
-public abstract class Gun extends Weapon{
+public abstract class Gun extends Weapon implements Serializable{
 	Projectile myProjectile;
 	ShotPattern myPattern;
 
