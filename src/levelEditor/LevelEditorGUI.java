@@ -212,6 +212,7 @@ public class LevelEditorGUI extends Game {
 
 	private String placeAndCreateGameObject() {
 		String str = " ";
+		System.out.println(current.getClass());
 		for (Sprites.Factory check : factory) {
 			if (check.isType(current.getImage(),this)) {
 				int input = q.yesOrNo(check.getType());
@@ -308,7 +309,8 @@ public class LevelEditorGUI extends Game {
 		Sprite temp = null;
 
 		for (Sprite elem : list) {
-			if (click() && (checkPosMouse(elem, true))) {
+			if (click() && (checkPosMouse(elem, true)))
+			{
 				temp = elem;
 				break;
 			}

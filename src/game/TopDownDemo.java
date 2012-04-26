@@ -2,7 +2,6 @@ package game;
 
 import gameObjects.Enemy;
 import gameObjects.Player;
-import gameObjects.Player;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
