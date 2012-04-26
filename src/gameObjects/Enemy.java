@@ -33,12 +33,13 @@ public class Enemy extends GameObject {
 	private List<Status> myStatuses;
 	private Weapon myWeapon;
 
-	public Enemy(double x, double y, String imgPath, String filename) {
+	public Enemy(double x, double y, String imgPath, String filename, Weapon w) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
 		myStatuses = new ArrayList<Status>();
+		myWeapon = w;
 		setLocation(myX, myY);
 		System.out.println(filename);
 		try {
@@ -148,7 +149,8 @@ public class Enemy extends GameObject {
 		Double y = god.getY();
 		String imgPath = god.getImgPath();
 		String filename = god.getEnemyConfigFile();
-		return new Enemy(x, y, imgPath, filename);
+		Weapon w = god.getWeapon();
+		return new Enemy(x, y, imgPath, filename, w);
 
 	}
 

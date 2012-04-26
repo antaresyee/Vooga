@@ -1,8 +1,10 @@
 package weapons;
 
+import java.io.Serializable;
+
 import com.golden.gamedev.object.Timer;
 
-public abstract class Weapon {
+public abstract class Weapon implements Serializable{
 	Timer myTimer;
 	
 	public Weapon(int rate){

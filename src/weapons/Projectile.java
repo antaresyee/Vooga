@@ -3,6 +3,7 @@ package weapons;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
@@ -18,7 +19,7 @@ import gameObjects.GameObjectData;
  */
 
 
-public abstract class Projectile extends GameObject{
+public abstract class Projectile extends GameObject implements Serializable{
 	
 	SpriteGroup myGroup;
 	double myXSpeed;
