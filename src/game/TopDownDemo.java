@@ -77,11 +77,12 @@ public class TopDownDemo extends Game {
 	private List<LoadObserver> myLoadObservers;
 
 	private StartGUI start;
-	private boolean initialScreen;
+	private boolean initialScreen, bossLoaded;
 
 	@Override
 	public void initResources() {
 		initialScreen = true;
+		bossLoaded = false;
 		myBarrierGroup = new SpriteGroup("barrier");
 		myPlayerGroup = new SpriteGroup("player");
 
@@ -128,7 +129,7 @@ public class TopDownDemo extends Game {
 		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
 
-		myMap.setSpeed(10);
+		myMap.setSpeed(1);
 		myBackground = myMap.getMyBack();
 
 		myPlayerGroup.setBackground(myBackground);
@@ -241,6 +242,18 @@ public class TopDownDemo extends Game {
 		}
 		myMap.moveMap(elapsedTime);
 		myMap.movePlayer(elapsedTime, myPlayer);
+		if(myMap.getFrameHeight() == 0 && !bossLoaded){
+			bossLoaded = true;
+			myPlayfield.add(myBoss);
+			myPlayfield.addGroup(BossProjectiles);
+			myPlayfield.addGroup(BossWeakPoints);
+			myPlayfield.addCollisionGroup(BossWeakPoints, myProjectileGroup, new FireBossCollision()); 
+			myPlayfield.addCollisionGroup(BossProjectiles, myPlayerGroup, new ProjectileAnythingCollision());
+		}
+		if (myBoss.transformed())
+			myPlayfield.addCollisionGroup(myBoss.getSpriteGroup(), myProjectileGroup, new FireBossCollision()); 
+		if (myBoss.isDead())
+			finish();
 		playerMovement();
 		myPlayer.move();
 		myPlayfield.update(elapsedTime);

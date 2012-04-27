@@ -3,12 +3,17 @@ package gameObjects.boss;
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
 
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 import com.golden.gamedev.object.Sprite;
+import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +21,7 @@ public class BossWeakPoint extends GameObject{
 	private double relX, relY; //x, y relative to boss
 	private List<BossWeakPoint> parents, children;
 	private BossState myBS;
+	private String myImagePath;
 	private boolean hit;//extends Sprite, active = vulnerable
 	private String jsonString;
 	
@@ -81,7 +87,7 @@ public class BossWeakPoint extends GameObject{
 
 	@Override
 	public String getImgPath() {
-		return "";
+		return myImagePath;
 	}
 
 	@Override
@@ -103,7 +109,7 @@ public class BossWeakPoint extends GameObject{
 		}
 	}
 	
-	public int load(List<String> list, int index, BossState bs, String prefix)
+	public int load(List<String> list, int index, BossState bs, String prefix) throws IOException
 	{
 		myBS = bs;
 		Gson gson = new Gson();
@@ -114,6 +120,7 @@ public class BossWeakPoint extends GameObject{
 			String jsonGod = list.get(index);
 			if(jsonGod.startsWith(prefix)){
 				BossWeakPoint parsedGod = gson.fromJson(jsonGod.substring(prefix.length()), godClass);
+				parsedGod.setImage(ImageUtil.resize(ImageIO.read(new File(parsedGod.getImgPath())),5,5));
 				bsl.add(parsedGod);
 				index = parsedGod.load(list, index+1, myBS, prefix+'-');
 			}
