@@ -237,6 +237,7 @@ public class TopDownDemo extends Game {
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
+		
 	}
 
 	public void playerMovement() {
