@@ -19,8 +19,8 @@ public abstract class MovementDecorator implements DecoratedShip {
 	}
 
 	@Override
-	public void move(Game g, Sprite t) {
-		decoratedSpaceShip.move(g, t);
+	public void move(Sprite t) {
+		decoratedSpaceShip.move(t);
 		
 	}
 

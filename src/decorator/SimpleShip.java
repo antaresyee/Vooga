@@ -6,7 +6,7 @@ import com.golden.gamedev.object.Sprite;
 public class SimpleShip implements DecoratedShip{
 
 	@Override
-	public void move(Game g, Sprite t) {
+	public void move(Sprite t) {
 		// TODO Auto-generated method stub
 		// base case
 	}

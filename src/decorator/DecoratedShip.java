@@ -5,7 +5,7 @@ import com.golden.gamedev.object.Sprite;
 
 public interface DecoratedShip {
 
-	public void move(Game g, Sprite t); 
+	public void move(Sprite t); 
 	public String getDescription(); 
 	
 }

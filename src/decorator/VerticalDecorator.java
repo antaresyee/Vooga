@@ -1,15 +1,21 @@
 package decorator;
 
+import game.PlayerInfo;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
 public class VerticalDecorator extends MovementDecorator{
 
-	protected int myVertSpeed; 	
+	protected int myVertSpeed;
+	private PlayerInfo playerInfo;
+
 
 	public VerticalDecorator (DecoratedShip decoratedSpaceShip){
 		super(decoratedSpaceShip);
 		this.decoratedSpaceShip = decoratedSpaceShip;
+		playerInfo = new PlayerInfo();
+
 		myVertSpeed = 3; 
 	}
 	
@@ -17,19 +23,21 @@ public class VerticalDecorator extends MovementDecorator{
 	public VerticalDecorator(DecoratedShip decoratedSpaceShip, Sprite t){
 		super(decoratedSpaceShip,t);
 		this.decoratedSpaceShip = decoratedSpaceShip;
+		playerInfo = new PlayerInfo();
+
 		myVertSpeed = 3; 
 	}
 	
 	@Override
-	public void move(Game g, Sprite t) {
+	public void move(Sprite t) {
 		// TODO Auto-generated method stub
-		decoratedSpaceShip.move(g, t); 
+		decoratedSpaceShip.move(t); 
 		
-		if (g.keyDown(java.awt.event.KeyEvent.VK_W)){
+		if (playerInfo.getUpwardMovement()){
 			t.moveY(-myVertSpeed); 
 		}
 	
-		if (g.keyDown(java.awt.event.KeyEvent.VK_S)){
+		if (playerInfo.getDownwardMovement()){
 			t.moveY(myVertSpeed); 
 		}
 	}
