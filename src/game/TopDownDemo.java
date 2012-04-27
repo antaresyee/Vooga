@@ -30,7 +30,7 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
 import decorator.CompanionDecorator;
-import decorator.ConstantlyMoveDecorator;
+import decorator.MoveUpFastDecorator;
 import decorator.DecoratedShip;
 import decorator.InvisibilityDecorator;
 import decorator.PowerUp;
