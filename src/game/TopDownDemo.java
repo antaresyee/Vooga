@@ -184,6 +184,7 @@ public class TopDownDemo extends Game {
 	public void update(long elapsedTime) {
 		//System.out.println(myPlayerGroup.getSize());
 		//System.out.println(myProjectileGroup.getSize());
+		//System.out.println(myPlayer);
 
 		if (initialScreen) {
 			start.update(elapsedTime);
@@ -196,7 +197,7 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myMap.moveMap(elapsedTime);
-		System.out.println(myPlayer);
+		//System.out.println(myPlayer);
 		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();
