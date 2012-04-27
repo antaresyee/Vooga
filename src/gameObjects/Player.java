@@ -99,6 +99,7 @@ public class Player extends GameObject {
 
     @Override
     public GameObject makeGameObject(GameObjectData god) {
+    	System.out.println("entered makeGameObject");
         Double x = god.getX();
         Double y = god.getY();
         String imgPath = god.getImgPath();
