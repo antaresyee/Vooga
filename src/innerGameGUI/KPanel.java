@@ -41,7 +41,7 @@ public class KPanel extends KComponent{
 	
 	public KPanel (KComponent parent, Game game, Color color)
 	{
-		this(parent, game, color, 0, 0, game.getWidth(), game.getHeight());
+		this(parent, game, color, parent == null? 0 : (int) parent.getX(), parent == null? 0 : (int) parent.getY(), 0, 0);
 	}
 	
 	public KPanel (KComponent parent, Game game, Color color, int x, int y, int width, int height){
@@ -66,6 +66,11 @@ public class KPanel extends KComponent{
 	
 	public void setGrid(Grid grid){
 		myGrid = grid;
+		if(myParent == null){
+			setWidthHeight(myGame.getWidth(), myGame.getHeight());
+		}else{
+			setWidthHeight(myParent.getWidth(), myParent.getHeight());
+		}
 		if(myGrid != null) myGrid.setComponent(this);
 	}
 	
@@ -102,9 +107,9 @@ public class KPanel extends KComponent{
 		if(myParent == null && (y+kc.getHeight())> myGame.getHeight()){
 			x = getX() + getWidth() + spacing;
 			y = getY()+spacing;
-			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()));
+			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()+spacing));
 		}else{
-			setWidthHeight(Math.max(getWidth(), kc.getWidth()), getHeight()+spacing+kc.getHeight());
+			setWidthHeight(Math.max(getWidth(), kc.getWidth()+spacing), getHeight()+spacing+kc.getHeight());
 		}
 		kc.setLocation(x, y);
 	}
@@ -123,9 +128,9 @@ public class KPanel extends KComponent{
 		if(myParent == null && (x+kc.getWidth())> myGame.getWidth()){
 			x = getX()+spacing;
 			y = getY() + getHeight() + spacing;
-			setWidthHeight(Math.max(getWidth(), kc.getWidth()), getHeight()+spacing+kc.getHeight());
+			setWidthHeight(Math.max(getWidth(), kc.getWidth()+spacing), getHeight()+spacing+kc.getHeight());
 		}else{
-			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()));
+			setWidthHeight(getWidth()+spacing+kc.getWidth(), Math.max(getHeight(), kc.getHeight()+spacing));
 		}
 //		System.out.println(x+","+y);
 		kc.setLocation(x, y);

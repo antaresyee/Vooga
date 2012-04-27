@@ -5,6 +5,7 @@ import gameObjects.Player;
 import gameObjects.boss.Boss;
 import gameObjects.boss.FireBossCollision;
 import innerGameGUI.StartGUI;
+import innerGameGUI.StartGUIUpdated;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -32,6 +33,7 @@ import com.golden.gamedev.object.Background;
 import com.golden.gamedev.object.PlayField;
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.util.ImageUtil;
 
 import decorator.CompanionDecorator;
 //import decorator.MoveUpFastDecorator;
@@ -70,13 +72,16 @@ public class TopDownDemo extends Game {
 	private PlayerInfo playerInfo;
 	private int enemySize;
 	private Player myPlayer;
+	
+	private String playerImagePath;
+	private BufferedImage playerImage;
 
 	private BufferedImage myBackImage;
 	private Map myMap;
 	private int count = 0;
 	private List<LoadObserver> myLoadObservers;
 
-	private StartGUI start;
+	private StartGUIUpdated start;
 	private boolean initialScreen, bossLoaded;
 
 	@Override
@@ -145,7 +150,7 @@ public class TopDownDemo extends Game {
 		//myShip.setImage(getImage("resources/ship.png"));
 		//System.out.println("1");
 
-		start = new StartGUI(this);
+		start = new StartGUIUpdated(this);
 		
 		
 		
@@ -234,6 +239,12 @@ public class TopDownDemo extends Game {
 			start.update(elapsedTime);
 			String path = start.getLoadPath();
 			if (path != null && path.length() > 0) {
+				if(start.newScreen()){
+					playerImage = ImageUtil.resize(getImage(start.getLoadPath()), 35, 35);
+					playerImagePath = start.getLoadPath();
+					start.setNewScreen(false);
+					return;
+				}
 				initialScreen = false;
 				loadLevelData();
 			}
@@ -251,14 +262,21 @@ public class TopDownDemo extends Game {
 		}
 		if (myBoss.transformed())
 			myPlayfield.addCollisionGroup(myBoss.getSpriteGroup(), myProjectileGroup, new FireBossCollision()); 
-		if (myBoss.isDead())
+		if (myBoss.isDead()){
+			System.out.println("YOU WIN!!!!!!!!!!!!!!");
 			finish();
+		}
 		playerMovement();
 		myPlayer.move();
 		myPlayfield.update(elapsedTime);
 
 		if (myPlayer != null) {
 			myPlayer.fire(this, elapsedTime);
+		}
+		
+		if (myPlayer != null && myPlayer.getHealth()==0){
+			System.out.println("YOU LOSE");
+			finish();
 		}
 
 		// this is for testing enemy movement
@@ -267,7 +285,8 @@ public class TopDownDemo extends Game {
 			if (count >= enemySize)
 				break;
 			Enemy e = (Enemy) elem;
-			e.updateEnemy(elapsedTime);
+			if(e!=null)
+				e.updateEnemy(elapsedTime);
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
@@ -285,6 +304,7 @@ public class TopDownDemo extends Game {
 
 	public void setPlayer(Player g) {
 		myPlayer = g;
+		myPlayer.setImage(playerImage);
 		myPlayerGroup.add(g);
 	}
 	

@@ -44,9 +44,9 @@ public class PlayerLoadObserver extends LoadObserver {
 
     @Override
     public void objectLoaded(GameObject go) {
-        System.out.println("entered player object loaded");
-       // myPlayerGroup.add(go);
-        myGame.setPlayer((Player) go);
+//        System.out.println("entered player object loaded");
+//       // myPlayerGroup.add(go);
+//        myGame.setPlayer((Player) go);
         
         Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
         
@@ -66,6 +66,7 @@ public class PlayerLoadObserver extends LoadObserver {
             File imgSrc = new File(go.getImgPath());
             BufferedImage sourceImage = ImageIO.read(imgSrc);
             go.setImage(sourceImage);
+            myGame.setPlayer((Player) go);
         } catch (IOException e1) {
             e1.printStackTrace();
         }
