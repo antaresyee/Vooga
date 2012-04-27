@@ -58,6 +58,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myEnemyGroup;
 	private SpriteGroup myCompanionGroup;
 	private SpriteGroup myProjectileGroup;
+	private SpriteGroup myEnemyProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
 	private PlayerInfo playerInfo;
@@ -80,6 +81,7 @@ public class TopDownDemo extends Game {
 		
 		myEnemyGroup = new SpriteGroup("enemy");
 		myProjectileGroup = new SpriteGroup("projectile");
+		myEnemyProjectileGroup = new SpriteGroup("enemy projectile");
 		myCompanionGroup = new SpriteGroup("companion");
 
 		
@@ -96,12 +98,13 @@ public class TopDownDemo extends Game {
 		myEnemyGroup.setBackground(myBackground);
 		myCompanionGroup.setBackground(myBackground); 
 		myProjectileGroup.setBackground(myBackground);
+		myEnemyProjectileGroup.setBackground(myBackground);
 
-		myShip = new Player(200, 2700, "resources/ship.png");
-		myShip.setImage(getImage("resources/ship.png"));
-		System.out.println ("1"); 
-		myShip.addDecoration("VerticalDecorator");
-		myShip.addDecoration("HorizontalDecorator");
+//		myShip = new Player(200, 2700, "resources/ship.png");
+//		myShip.setImage(getImage("resources/ship.png"));
+//		System.out.println ("1"); 
+//		myShip.addDecoration("VerticalDecorator");
+//		myShip.addDecoration("HorizontalDecorator");
 
 		start = new StartGUI(this);
 		
@@ -111,9 +114,6 @@ public class TopDownDemo extends Game {
 		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
 		
 		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
-
-		myShip.setBackground(myBackground);
-//		myPlayerGroup.add(myShip);
 		
 		//intit weapons
 		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
@@ -129,6 +129,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
 		myPlayfield.addGroup(myCompanionGroup); 
+		myPlayfield.addGroup(myEnemyProjectileGroup);
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
@@ -150,14 +151,15 @@ public class TopDownDemo extends Game {
 		myLoadObservers = new ArrayList<LoadObserver>();
 		myLoadObservers
 				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
+		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, myProjectileGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
-		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		
+
+		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup, myEnemyProjectileGroup));
+
 		LevelLoader l = new LevelLoader(myLoadObservers);
-		System.out.println("1" +myShip.getDecorations());
+	
 		l.loadLevelData("serializeTest.ser");
-		System.out.println("2" +myShip.getDecorations());
+		
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -198,34 +200,14 @@ public class TopDownDemo extends Game {
 		playerMovement();
 		myPlayer.move();
 		myPlayfield.update(elapsedTime); 
-
-//		decorations.move(this, myShip);
 		
 		
 
-		myShip.move(); 
+
 		
-		if(myShip != null){
-		myShip.fire(this, elapsedTime);
+		if(myPlayer != null){
+		myPlayer.fire(this, elapsedTime);
 		}
-		
-		
-		
-		//myPowerUpDecorator.powerUp(this, myShip, myPlayerGroup);
-		
-//		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
-//		{
-//			myCompanion = ((CompanionDecorator) myPowerUpDecorator).getCompanion();
-//			myCompanion.setBackground(myBackground); 
-//			myCompanionGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
-//			((CompanionDecorator) myPowerUpDecorator).setCreated();  
-//		}
-//		
-//		else{
-//			//decorations.move(this, myCompanion); 
-//			decCompanion.move(this, myCompanion); 
-//		}
-
 		
 		// this is for testing enemy movement
 		count =0;
@@ -246,7 +228,6 @@ public class TopDownDemo extends Game {
 		playerInfo.setDownwardMovement(keyDown(java.awt.event.KeyEvent.VK_S));
 		playerInfo.setLeftwardMovement(keyDown(java.awt.event.KeyEvent.VK_A));
 		playerInfo.setRightwardMovement(keyDown(java.awt.event.KeyEvent.VK_D));
-		
 	}
 
 	public void setPlayer(Player g) {

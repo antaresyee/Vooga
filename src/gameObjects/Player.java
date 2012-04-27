@@ -6,18 +6,24 @@ import weapons.Weapon;
 
 import com.golden.gamedev.Game;
 
+<<<<<<< HEAD
 import decorator.DecoratedShip;
 import decorator.MovementFactory;
 
+=======
+>>>>>>> cba747cdf7222909d8f7d73e8e4fa63bc0cb9047
 import levelLoadSave.ForSave;
 
 @ForSave
 public class Player extends GameObject {
 
+<<<<<<< HEAD
 	private static DecoratedShip decorations;
 	private ArrayList<String> myDecs = new ArrayList<String>();
 	MovementFactory decman = null;
 
+=======
+>>>>>>> cba747cdf7222909d8f7d73e8e4fa63bc0cb9047
 	
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons;
@@ -29,6 +35,7 @@ public class Player extends GameObject {
         myType = "Player";
         setLocation(myX, myY);
         myWeapons = new ArrayList<Weapon>();
+<<<<<<< HEAD
         myHealth = 10;
         this.createDecorator(); 
         decorations = null; 
@@ -88,6 +95,10 @@ public class Player extends GameObject {
 			e.printStackTrace();
 		} 
 		decorations = decman.getDecorators();
+=======
+        
+        myHealth = 10; 
+>>>>>>> cba747cdf7222909d8f7d73e8e4fa63bc0cb9047
     }
     
     public String getImgPath()
@@ -100,8 +111,10 @@ public class Player extends GameObject {
         Double x = god.getX();
         Double y = god.getY();
         String imgPath = god.getImgPath();
-        ArrayList <String> theseDecorations = god.getDecorations(); 
-        return new Player(x, y, imgPath, theseDecorations);
+        
+        
+        
+        return new Player(x, y, imgPath);
     }
 
     
