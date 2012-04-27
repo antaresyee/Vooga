@@ -9,7 +9,9 @@ import javax.imageio.ImageIO;
 
 import weapons.DamagingProjectile;
 import weapons.Projectile;
+import weapons.ScatterPattern;
 import weapons.ShotPattern;
+import weapons.SidePattern;
 import weapons.SinglePattern;
 import weapons.UnlimitedGun;
 import weapons.Weapon;
@@ -18,6 +20,7 @@ import com.golden.gamedev.object.SpriteGroup;
 
 import gameObjects.Enemy;
 import gameObjects.GameObject;
+import gameObjects.Player;
 import levelLoadSave.LoadObserver;
 
 public class EnemyLoadObserver extends LoadObserver {
@@ -35,11 +38,29 @@ public class EnemyLoadObserver extends LoadObserver {
     public void objectLoaded(GameObject go) {
         mySpriteGroup.add(go);
         
-        Projectile p = new DamagingProjectile("resources/enemy.png",myEnemyProjectileGroup,1);
-        ShotPattern s = new SinglePattern(-3);
-        Weapon w = new UnlimitedGun(300,p,s);
+        Projectile p = new DamagingProjectile("resources/fire.png",myEnemyProjectileGroup,1);
+        try{
+        	File projImgSrc = new File(p.getImgPath());
+        	BufferedImage projImage = ImageIO.read(projImgSrc);
+        	p.setImage(projImage);
+        }
+        catch(IOException e){
+        	e.printStackTrace();
+        }
+        ShotPattern s1 = new SinglePattern(-1);
+        ShotPattern s2 = new ScatterPattern(5, -1, 5);
+        ShotPattern s3 = new SidePattern(-1, 1);
+        Weapon w1 = new UnlimitedGun(300,p,s1);
+        Weapon w2 = new UnlimitedGun(300, p ,s2);
+        Weapon w3 = new UnlimitedGun(300, p ,s3);
+        Player player = (Player) go;
+        player.addWeapon(w1);
+        player.addWeapon(w2);
+        player.addWeapon(w3);
         Enemy e = (Enemy) go;
-        e.addWeapon(w);
+        e.addWeapon(w1);
+        e.addWeapon(w2);
+        e.addWeapon(w3);
 
         
         //set sprite image
