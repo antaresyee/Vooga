@@ -189,7 +189,7 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myMap.moveMap(elapsedTime);
-		myMap.movePlayer(elapsedTime, myShip);
+		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();
 		myPlayfield.update(elapsedTime);
