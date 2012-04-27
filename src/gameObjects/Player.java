@@ -34,9 +34,21 @@ public class Player extends GameObject {
         decorations = null; 
     }
     
+    public Player(double x, double y, String imgPath, ArrayList<String> startDecorations){
+        myX = x;
+        myY = y;
+        myImgPath = imgPath;
+        myType = "Player";
+        setLocation(myX, myY);
+        myWeapons = new ArrayList<Weapon>();
+        myHealth = 10;
+        this.createDecorator(); 
+        myDecs = startDecorations; 
+        this.addDecorationCollection(myDecs); 
+    }
+    
     
     public void move(Game g){
-    	System.out.println("2 " + decorations);
 		decorations.move(g, this);
     }
     
@@ -51,15 +63,6 @@ public class Player extends GameObject {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-//		 
-//		myDecs.add("HorizontalDecorator"); 	
-//		try {
-//			decman.addDecorators(myDecs);
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} 
-//		decorations = decman.getDecorators();
     }
     
     public void addDecoration(String decorator){
@@ -76,6 +79,17 @@ public class Player extends GameObject {
 		System.out.println("added " + decorations);
     }
     
+    public void addDecorationCollection(ArrayList <String> incomingDecs){
+    	myDecs = incomingDecs; 
+    	try {
+			decman.addDecorators(myDecs);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		decorations = decman.getDecorators();
+    }
+    
     public String getImgPath()
     {
     	return myImgPath;
@@ -86,7 +100,8 @@ public class Player extends GameObject {
         Double x = god.getX();
         Double y = god.getY();
         String imgPath = god.getImgPath();
-        return new Player(x, y, imgPath);
+        ArrayList <String> theseDecorations = god.getDecorations(); 
+        return new Player(x, y, imgPath, theseDecorations);
     }
 
     

@@ -28,9 +28,19 @@ public class GameObjectData implements Serializable {
     private String myEnemyConfigFile;
     private Weapon myWeapon;
     
+    private ArrayList<String> myDecorations; 
+    
     public GameObjectData(String type) {
         myData = new TreeMap<String, String>();
         myData.put("type", type);
+    }
+    
+    public void setDecorations(ArrayList<String> decorations){
+    	myDecorations =decorations;
+    }
+    
+    public ArrayList<String> getDecorations(){
+    	return myDecorations;
     }
     
     //SETTERS
