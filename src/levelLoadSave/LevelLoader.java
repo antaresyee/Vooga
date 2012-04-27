@@ -95,6 +95,7 @@ public class LevelLoader {
     }
 
     public void loadLevelData(String fileName) {
+    	System.out.println("entered loadLevelData()");
         try {
             List<GameObjectData> gameObjectDatas;
             if (fileName.endsWith(".ser")) {
@@ -108,6 +109,7 @@ public class LevelLoader {
                 for (GameObjectFactory f : myAllFactories) {
                     if (f.isMyObject(god)) {
                         GameObject loadedObject = f.makeGameObject(god);
+                        System.out.println("called makeGameObject() on " + god.getType());
                         notifyObservers(loadedObject);
                         break;
                     }
@@ -163,10 +165,9 @@ public class LevelLoader {
 
     public void notifyObservers(GameObject go) {
         for (LoadObserver lo : myLoadObservers) {
+        	System.out.println(lo.myType);
             if (lo.isMyObserver(go)) {
                 lo.objectLoaded(go);
-                System.out.println(lo.myType);
-                System.out.println(go.getType());
             }
         }
     }

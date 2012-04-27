@@ -73,7 +73,6 @@ public class Player extends GameObject {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		System.out.println("1 " + decorations);
 		decorations = decman.getDecorators();
 		
 		System.out.println("added " + decorations);
