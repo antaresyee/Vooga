@@ -1,10 +1,10 @@
 package weapons;
 
 public class SidePattern extends ShotPattern{
-	int forwardspeed;
-	int sidespeed;
+	double forwardspeed;
+	double sidespeed;
 	
-	public SidePattern(int forward, int side){
+	public SidePattern(double forward, double side){
 		forwardspeed = forward;
 		sidespeed = side;
 	}

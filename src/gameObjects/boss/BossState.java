@@ -5,29 +5,47 @@ import gameObjects.GameObjectData;
 import gameObjects.GameObjectFactory;
 
 import java.awt.Graphics2D;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
+import weapons.Projectile;
+import weapons.ShotPattern;
+import weapons.Weapon;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.SpriteGroup;
+import com.golden.gamedev.util.ImageUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 public class BossState extends GameObject {
+	private List<List<Integer>> movement;
 	private List<BossWeakPoint> myWeakPoints;
 	private List<BossPart> myBossParts;
-	private SpriteGroup mySpriteGroup;
+	private List<WeaponInfo> myWeaponInfo;
+	private List<Weapon> myWeapons;
+	private SpriteGroup mySpriteGroup, myProjectiles;
 	private boolean isDead;
+	private long start;
 	private String jsonString;
-
+	private int index;
+	
 	public BossState() {
 		this(new ArrayList<BossWeakPoint>());
 	}
 
 	public BossState(List<BossWeakPoint> bwps) {
 		mySpriteGroup = new SpriteGroup("BossWeakPoints");
+		start = 0;
+		index = 0;
 		isDead = false;
 		setParts(new ArrayList<BossPart>());
 		setWeakPoints(bwps);
@@ -35,12 +53,34 @@ public class BossState extends GameObject {
 
 	public BossState(double x, double y, String imgPath) {
 		setLocation(x, y);
+		start = 0;
+		index = 0;
 		myImgPath = imgPath;
+	}
+	
+	public List<WeaponInfo> getWeaponInfo(){
+		return myWeaponInfo;
+	}
+	
+	public void setMovement(List<List<Integer>> list){
+		movement = list;
+	}
+	
+	public void setProjectiles(SpriteGroup sp){
+		myProjectiles = sp;
 	}
 	
 	public void setParts(List<BossPart> bps){
 		myBossParts = bps;
 //		System.out.println(myBossParts.size());
+	}
+	
+	public void setWeaponInfo(List<WeaponInfo> wi){
+		myWeaponInfo = wi;
+	}
+	
+	public void setWeapons(List<Weapon> w){
+		myWeapons = w;
 	}
 
 	public void setWeakPoints(List<BossWeakPoint> bwps) {
@@ -88,12 +128,25 @@ public class BossState extends GameObject {
 
 	public void update(long elapsedTime) {
 		super.update(elapsedTime);
+		start += elapsedTime;
+		if (movement != null && movement.get(index).size() > 2) {
+			if (start / 100.0 > movement.get(index).get(0)) {
+				start = 0;
+				index++;
+				index %= movement.size();
+			}
+			moveX(movement.get(index).get(1));
+			moveY(movement.get(index).get(2));
+		}
 		for (BossWeakPoint bwp : myWeakPoints) {
 			if (!bwp.isHit())
 				bwp.update(elapsedTime);
 		}
 		for (BossPart bp : myBossParts){
 			bp.update(elapsedTime);
+		}
+		for (Weapon w : myWeapons){
+			w.fire(elapsedTime, w.getX()+getX(), w.getY()+getY());
 		}
 		checkDead();
 	}
@@ -139,7 +192,7 @@ public class BossState extends GameObject {
 		return jsonString;
 	}
 
-	public int load(Game game, List<String> list, int index, String prefix) {
+	public int load(Game game, List<String> list, int index, String prefix) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
 		// TODO Auto-generated method stub
 		Gson gson = new Gson();
 		List<BossWeakPoint> bsl = new ArrayList<BossWeakPoint>();
@@ -152,6 +205,29 @@ public class BossState extends GameObject {
 				if(jsonGod.startsWith(prefix+"*")){
 					BossPart bp = gson.fromJson(jsonGod.substring(prefix.length()+1), new TypeToken<BossPart>(){}.getType());
 					bp.setImage(game.getImage(bp.getImgPath()));
+					bp.setRelXY((int)bp.getX(), (int)bp.getY());
+					List<WeaponInfo> wi = bp.getWeaponInfo();
+					List<Weapon> w = new ArrayList<Weapon>();
+					for(WeaponInfo winfo : wi){
+						Class<?> projectile = Class.forName("weapons." + winfo.getProjectile());
+						Class<?>[] typeList = {String.class, SpriteGroup.class, int.class};
+						Constructor<?> c = projectile.getDeclaredConstructor(typeList);
+						Object[] objs = {winfo.getProjImgPath(), myProjectiles, 1};
+						Projectile proj = (Projectile) c.newInstance(objs);
+						Class<?> pattern = Class.forName("weapons."+ winfo.getPattern());
+						Class<?>[] typeList2 = {int.class};
+						c = pattern.getDeclaredConstructor(typeList2);
+						Object[] objs2 = {winfo.getSpeed()};
+						ShotPattern pat = (ShotPattern) c.newInstance(objs2);
+						Class<?> weapon = Class.forName("weapons." + winfo.getWeaponName());
+						Class<?>[] typeList3 = {int.class, Projectile.class, ShotPattern.class};
+						c = weapon.getDeclaredConstructor(typeList3);
+						Object[] objs3 = {winfo.getFireRate(), proj, pat};
+						Weapon weap = (Weapon) c.newInstance(objs3);
+						weap.setLocation(winfo.getX(), winfo.getY());
+						w.add(weap);
+					}
+					bp.setWeapons(w);
 					bps.add(bp);
 //					System.out.println(bps.size());
 //					System.out.println(jsonGod);
@@ -160,6 +236,7 @@ public class BossState extends GameObject {
 				}
 				BossWeakPoint parsedGod = gson.fromJson(
 						jsonGod.substring(prefix.length()), godClass);
+				parsedGod.setImage(ImageUtil.resize(ImageIO.read(new File(parsedGod.getImgPath())),5,5));
 				bsl.add(parsedGod);
 				index = parsedGod.load(list, index+1, this, prefix + '-');
 				

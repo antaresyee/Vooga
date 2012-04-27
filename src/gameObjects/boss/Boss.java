@@ -3,10 +3,17 @@ package gameObjects.boss;
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import weapons.Projectile;
+import weapons.ShotPattern;
+import weapons.Weapon;
 
 import levelLoadSave.ForSave;
 
@@ -25,7 +32,9 @@ import com.google.gson.reflect.TypeToken;
 public class Boss extends GameObject {
 
 	private List<BossState> myStates;
+	private SpriteGroup myProjectiles;
 	private BossState currentState;
+	private SpriteGroup mySpriteGroup;
 	private BossTransition transition;
 	private boolean isDead, transformed;
 	private String jsonString;
@@ -37,6 +46,7 @@ public class Boss extends GameObject {
 		transformed = false;
 		this.myImgPath = imgPath;
 		myStates = new ArrayList<BossState>();
+		myProjectiles = new SpriteGroup("projectiles");
 	}
 
 	public Boss() {
@@ -49,13 +59,18 @@ public class Boss extends GameObject {
 			setCurrent(0);
 	}
 
+	public SpriteGroup getProjectiles(){
+		return myProjectiles;
+	}
+	
 	public SpriteGroup getSpriteGroup() {
-		return currentState.getSpriteGroup();
+		return mySpriteGroup;
 	}
 
 	public void setCurrent(int index) {
 		if (myStates.size() > index) {
 			currentState = myStates.get(index);
+			mySpriteGroup = currentState.getSpriteGroup();
 		} else {
 			throw new ArrayIndexOutOfBoundsException();
 		}
@@ -71,7 +86,7 @@ public class Boss extends GameObject {
 			int index = myStates.indexOf(currentState);
 			if (index < myStates.size() - 1){
 				transformed = true;
-				currentState = myStates.get(index + 1);
+				setCurrent(index + 1);
 			}else{
 				isDead = true;
 			}
@@ -124,7 +139,7 @@ public class Boss extends GameObject {
 		return jsonString;
 	}
 
-	public void load(Game game) {
+	public void load(Game game) throws ClassNotFoundException, SecurityException, NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException, IOException {
 		try {
 			Gson gson = new Gson();
 			Scanner scanner = new Scanner(new File("boss2.json"));
@@ -141,6 +156,29 @@ public class Boss extends GameObject {
 				if (jsonGod.startsWith("-") && jsonGod.charAt(1) != '-') {
 					BossState parsedGod = gson.fromJson(jsonGod.substring(1), godClass);
 					parsedGod.setImage(game.getImage(parsedGod.getImgPath()));
+					List<WeaponInfo> wi = parsedGod.getWeaponInfo();
+					List<Weapon> w = new ArrayList<Weapon>();
+					for(WeaponInfo winfo : wi){
+						Class<?> projectile = Class.forName("weapons." + winfo.getProjectile());
+						Class<?>[] typeList = {String.class, SpriteGroup.class, int.class};
+						Constructor<?> c = projectile.getDeclaredConstructor(typeList);
+						Object[] objs = {winfo.getProjImgPath(), myProjectiles, 1};
+						Projectile proj = (Projectile) c.newInstance(objs);
+						Class<?> pattern = Class.forName("weapons."+ winfo.getPattern());
+						Class<?>[] typeList2 = {int.class};
+						c = pattern.getDeclaredConstructor(typeList2);
+						Object[] objs2 = {winfo.getSpeed()};
+						ShotPattern pat = (ShotPattern) c.newInstance(objs2);
+						Class<?> weapon = Class.forName("weapons." + winfo.getWeaponName());
+						Class<?>[] typeList3 = {int.class, Projectile.class, ShotPattern.class};
+						c = weapon.getDeclaredConstructor(typeList3);
+						Object[] objs3 = {winfo.getFireRate(), proj, pat};
+						Weapon weap = (Weapon) c.newInstance(objs3);
+						weap.setLocation(winfo.getX(), winfo.getY());
+						w.add(weap);
+					}
+					parsedGod.setWeapons(w);
+					parsedGod.setProjectiles(myProjectiles);
 //					System.out.println(parsedGod.getImgPath());
 					bsl.add(parsedGod);
 					index = parsedGod.load(game, list, index+1, "--");
