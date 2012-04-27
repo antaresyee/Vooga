@@ -27,7 +27,7 @@ public class TeleportProjectile extends Projectile{
 		TeleportProjectile newproj = new TeleportProjectile(myImgPath, myGroup, tobeTeleported);
 		newproj.setLocation(xpos, ypos);
 		newproj.setSpeed(xspeed, yspeed);
-		newproj.setImage(this.getImage());
+		
 		myGroup.add(newproj);
 		
 	}

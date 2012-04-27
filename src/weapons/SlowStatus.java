@@ -6,7 +6,7 @@ import gameObjects.GameObject;
 public class SlowStatus extends Status{
 	int slowfactor;
 	SlowStatus(int dur, int slow) {
-		super(dur);
+		super(dur, "Slow");
 		slowfactor = slow;
 	}
 	@Override
