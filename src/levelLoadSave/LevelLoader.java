@@ -95,7 +95,7 @@ public class LevelLoader {
     }
 
     public void loadLevelData(String fileName) {
-    	System.out.println("entered loadLevelData()");
+//    	System.out.println("entered loadLevelData()");
         try {
             List<GameObjectData> gameObjectDatas;
             if (fileName.endsWith(".ser")) {
@@ -109,7 +109,7 @@ public class LevelLoader {
                 for (GameObjectFactory f : myAllFactories) {
                     if (f.isMyObject(god)) {
                         GameObject loadedObject = f.makeGameObject(god);
-                        System.out.println("called makeGameObject() on " + god.getType());
+//                        System.out.println("called makeGameObject() on " + god.getType());
                         notifyObservers(loadedObject);
                         break;
                     }
@@ -165,7 +165,7 @@ public class LevelLoader {
 
     public void notifyObservers(GameObject go) {
         for (LoadObserver lo : myLoadObservers) {
-        	System.out.println(lo.myType);
+//        	System.out.println(lo.myType);
             if (lo.isMyObserver(go)) {
                 lo.objectLoaded(go);
             }
@@ -203,7 +203,7 @@ public class LevelLoader {
         // System.out.println(l.jsonLoad("testLevel.json"));
 
         LevelSaver.serializeSave(objectsToSave, "serializeTest");
-        System.out.println(l.serializeLoad("serializeTest.ser"));
+//        System.out.println(l.serializeLoad("serializeTest.ser"));
 
     }
 
