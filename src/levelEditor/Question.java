@@ -164,7 +164,7 @@ public class Question {
 		 Object[] options1 = {"Vertical", "Horizontal"};
 			String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
 					"Pick Decorator:", "Player Movement",
-					JOptionPane.PLAIN_MESSAGE, null, options1, options1[0]);
+					JOptionPane.PLAIN_MESSAGE, null, options1, options1[1]);
 		 if (input1.equals("Vertical")) 
 			 return "VerticalDecorator";
 		 else
