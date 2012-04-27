@@ -47,8 +47,8 @@ public class EnemyLoadObserver extends LoadObserver {
             File imgFile = new File(go.getImgPath());
             BufferedImage img = ImageIO.read(imgFile);
             go.setImage(img);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException e1) {
+            e1.printStackTrace();
         }
         
     }
