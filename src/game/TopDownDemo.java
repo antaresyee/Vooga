@@ -175,7 +175,7 @@ public class TopDownDemo extends Game {
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
-//		myPlayfield.addCollisionGroup(myProjectileGroup, myEnemyGroup, new ProjectileAnythingCollision());
+		myPlayfield.addCollisionGroup(myProjectileGroup, myEnemyGroup, new ProjectileAnythingCollision());
 		myPlayfield.addCollisionGroup(myProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
 		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myPlayerGroup, new ProjectileAnythingCollision());
 		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
