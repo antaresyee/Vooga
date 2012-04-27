@@ -100,11 +100,11 @@ public class TopDownDemo extends Game {
 		myProjectileGroup.setBackground(myBackground);
 		myEnemyProjectileGroup.setBackground(myBackground);
 
-		myShip = new Player(200, 2700, "resources/ship.png");
-		myShip.setImage(getImage("resources/ship.png"));
-		System.out.println ("1"); 
-		myShip.addDecoration("VerticalDecorator");
-		myShip.addDecoration("HorizontalDecorator");
+//		myShip = new Player(200, 2700, "resources/ship.png");
+//		myShip.setImage(getImage("resources/ship.png"));
+//		System.out.println ("1"); 
+//		myShip.addDecoration("VerticalDecorator");
+//		myShip.addDecoration("HorizontalDecorator");
 
 		start = new StartGUI(this);
 		
@@ -114,9 +114,6 @@ public class TopDownDemo extends Game {
 		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
 		
 		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
-
-		myShip.setBackground(myBackground);
-//		myPlayerGroup.add(myShip);
 		
 		//intit weapons
 		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
@@ -160,9 +157,9 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup, myEnemyProjectileGroup));
 
 		LevelLoader l = new LevelLoader(myLoadObservers);
-		System.out.println("1" +myShip.getDecorations());
+	
 		l.loadLevelData("serializeTest.ser");
-		System.out.println("2" +myShip.getDecorations());
+		
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -203,34 +200,13 @@ public class TopDownDemo extends Game {
 		playerMovement();
 		myPlayer.move(this);
 		myPlayfield.update(elapsedTime); 
-
-//		decorations.move(this, myShip);
 		
 		
 
-		myShip.move(this); 
 		
-		if(myShip != null){
-		myShip.fire(this, elapsedTime);
+		if(myPlayer != null){
+		myPlayer.fire(this, elapsedTime);
 		}
-		
-		
-		
-		//myPowerUpDecorator.powerUp(this, myShip, myPlayerGroup);
-		
-//		if (!((CompanionDecorator) myPowerUpDecorator).beenCreated())
-//		{
-//			myCompanion = ((CompanionDecorator) myPowerUpDecorator).getCompanion();
-//			myCompanion.setBackground(myBackground); 
-//			myCompanionGroup.add(((CompanionDecorator) myPowerUpDecorator).getCompanion()); 
-//			((CompanionDecorator) myPowerUpDecorator).setCreated();  
-//		}
-//		
-//		else{
-//			//decorations.move(this, myCompanion); 
-//			decCompanion.move(this, myCompanion); 
-//		}
-
 		
 		// this is for testing enemy movement
 		count =0;
