@@ -49,14 +49,7 @@ public class PlayerLoadObserver extends LoadObserver {
         myGame.setPlayer((Player) go);
         
         Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
-        try{
-        	File projImgSrc = new File(p.getImgPath());
-        	BufferedImage projImage = ImageIO.read(projImgSrc);
-        	p.setImage(projImage);
-        }
-        catch(IOException e){
-        	e.printStackTrace();
-        }
+        
         ShotPattern s1 = new SinglePattern(-1);
         ShotPattern s2 = new ScatterPattern(5, -1, 5);
         ShotPattern s3 = new SidePattern(-1, 1);
