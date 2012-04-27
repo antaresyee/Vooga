@@ -184,7 +184,6 @@ public class TopDownDemo extends Game {
 	public void update(long elapsedTime) {
 		//System.out.println(myPlayerGroup.getSize());
 		//System.out.println(myProjectileGroup.getSize());
-
 		if (initialScreen) {
 			start.update(elapsedTime);
 			String path = start.getLoadPath();
@@ -212,7 +211,6 @@ public class TopDownDemo extends Game {
 			if (count >= enemySize)
 				break;
 			Enemy e = (Enemy) elem;
-
 			e.updateEnemy(elapsedTime);
 			count++;
 		}
