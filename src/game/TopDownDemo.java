@@ -103,8 +103,8 @@ public class TopDownDemo extends Game {
 		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
 		System.out.println ("1"); 
-		myShip.addDecoration("VerticalDecorator");
-		myShip.addDecoration("HorizontalDecorator");
+		//myShip.addDecoration("VerticalDecorator");
+		//myShip.addDecoration("HorizontalDecorator");
 
 		start = new StartGUI(this);
 		
@@ -160,9 +160,9 @@ public class TopDownDemo extends Game {
 		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup, myEnemyProjectileGroup));
 
 		LevelLoader l = new LevelLoader(myLoadObservers);
-		System.out.println("1" +myShip.getDecorations());
+		//System.out.println("1" +myShip.getDecorations());
 		l.loadLevelData("serializeTest.ser");
-		System.out.println("2" +myShip.getDecorations());
+		//System.out.println("2" +myShip.getDecorations());
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -201,14 +201,14 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		myMap.movePlayer(elapsedTime, myShip);
 		playerMovement();
-		myPlayer.move(this);
+		//myPlayer.move(this);
 		myPlayfield.update(elapsedTime); 
 
 //		decorations.move(this, myShip);
 		
 		
 
-		myShip.move(this); 
+		//myShip.move(this); 
 		
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);
