@@ -8,7 +8,6 @@ import com.golden.gamedev.Game;
 
 import decorator.DecoratedShip;
 import decorator.MovementFactory;
-
 import levelLoadSave.ForSave;
 
 @ForSave
@@ -17,7 +16,6 @@ public class Player extends GameObject {
 	private static DecoratedShip decorations;
 	private ArrayList<String> myDecs = new ArrayList<String>();
 	MovementFactory decman = null;
-
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons;
     
@@ -87,7 +85,6 @@ public class Player extends GameObject {
 			e.printStackTrace();
 		} 
 		decorations = decman.getDecorators();
-        
         myHealth = 10; 
     }
     

@@ -17,8 +17,6 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import weapons.UnlimitedGun;
-
 import levelLoadSave.LevelSaver;
 import maps.Map;
 

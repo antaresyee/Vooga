@@ -46,10 +46,6 @@ public class EnemyLoadObserver extends LoadObserver {
         Weapon w1 = new UnlimitedGun(300,p,s1);
         Weapon w2 = new UnlimitedGun(300, p ,s2);
         Weapon w3 = new UnlimitedGun(300, p ,s3);
-        Enemy enemy = (Enemy) go;
-        enemy.addWeapon(w1);
-        enemy.addWeapon(w2);
-        enemy.addWeapon(w3);
         Enemy e = (Enemy) go;
         e.addWeapon(w1);
         e.addWeapon(w2);
