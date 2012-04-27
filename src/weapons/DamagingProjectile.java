@@ -32,7 +32,7 @@ public class DamagingProjectile extends Projectile implements Serializable{
 		newproj.setBackground(myGroup.getBackground());
 		newproj.setLocation(x, y);
 		newproj.setSpeed(xspeed, yspeed);
-		newproj.setImage(this.getImage());
+		//newproj.setImage(this.getImage());
 		myGroup.add(newproj);
 		//System.out.println("here1");
 	}

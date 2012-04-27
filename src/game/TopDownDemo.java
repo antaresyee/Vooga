@@ -30,7 +30,7 @@ import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
 
 import decorator.CompanionDecorator;
-import decorator.MoveUpFastDecorator;
+//import decorator.MoveUpFastDecorator;
 import decorator.DecoratedShip;
 import decorator.InvisibilityDecorator;
 import decorator.PowerUp;
@@ -44,7 +44,7 @@ public class TopDownDemo extends Game {
 	private HealthBar myHealthBar;
 	private Weapon myWeapon;
 
-	private Player myShip;
+	//private Player myShip;
 	private Player myCompanion;
 
 	private DecoratedShip decCompanion;

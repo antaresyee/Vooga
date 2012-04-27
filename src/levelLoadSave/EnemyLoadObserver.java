@@ -40,7 +40,7 @@ public class EnemyLoadObserver extends LoadObserver {
         
         Projectile p = new DamagingProjectile("resources/fire.png",myEnemyProjectileGroup,1);
         
-        ShotPattern s1 = new SinglePattern(-1);
+        ShotPattern s1 = new SinglePattern(1);
         ShotPattern s2 = new ScatterPattern(5, -1, 5);
         ShotPattern s3 = new SidePattern(-1, 1);
         Weapon w1 = new UnlimitedGun(300,p,s1);
