@@ -196,14 +196,14 @@ public class TopDownDemo extends Game {
 		myMap.moveMap(elapsedTime);
 		myMap.movePlayer(elapsedTime, myShip);
 		playerMovement();
-		myPlayer.move(this);
+		myPlayer.move();
 		myPlayfield.update(elapsedTime); 
 
 //		decorations.move(this, myShip);
 		
 		
 
-		myShip.move(this); 
+		myShip.move(); 
 		
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);

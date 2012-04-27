@@ -1,21 +1,28 @@
 package decorator;
 
+import game.PlayerInfo;
+
 import com.golden.gamedev.Game;
 import com.golden.gamedev.object.Sprite;
 
 public class HorizontalDecorator extends MovementDecorator{
 
 	protected int myHozSpeed; 	
+	private PlayerInfo playerInfo;
+
 	
 	public HorizontalDecorator()
 	{
 		super(null);
+		playerInfo = new PlayerInfo();
 		myHozSpeed = 0;
 	}
 
 	public HorizontalDecorator (DecoratedShip decoratedSpaceShip){
 		super(decoratedSpaceShip);
 		this.decoratedSpaceShip = decoratedSpaceShip;
+		playerInfo = new PlayerInfo();
+
 		myHozSpeed = 3; 
 	}
 	
@@ -26,14 +33,14 @@ public class HorizontalDecorator extends MovementDecorator{
 		myHozSpeed = 3; 
 	}
 	
-	public void move(Game g, Sprite t) {
+	public void move(Sprite t) {
 		// TODO Auto-generated method stub
-		decoratedSpaceShip.move(g, t);
-		if (g.keyDown(java.awt.event.KeyEvent.VK_A)){ 
+		decoratedSpaceShip.move(t);
+		if (playerInfo.getLeftwardMovement()){ 
 			t.moveX(-myHozSpeed); 
 		}
 	
-		if (g.keyDown(java.awt.event.KeyEvent.VK_D)){
+		if (playerInfo.getRightwardMovement()){
 			t.moveX(myHozSpeed); 
 		}
 	}

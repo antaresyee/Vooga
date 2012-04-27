@@ -11,12 +11,10 @@ public class ConstantlyMoveDecorator extends MovementDecorator{
 	}
 	
 	@Override
-	public void move(Game g, Sprite t) {
-		decoratedSpaceShip.move(g, t);
+	public void move(Sprite t) {
+		decoratedSpaceShip.move(t);
 		t.moveY(-2); 
-		if (g.keyPressed(java.awt.event.KeyEvent.VK_J)){
-			t.moveY(200); 
-		}
+		
 	}
 
 	@Override

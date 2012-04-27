@@ -7,7 +7,7 @@ import weapons.Weapon;
 import com.golden.gamedev.Game;
 
 import decorator.DecoratedShip;
-import decorator.DecoratorManager;
+import decorator.MovementFactory;
 
 import levelLoadSave.ForSave;
 
@@ -16,7 +16,7 @@ public class Player extends GameObject {
 
 	private static DecoratedShip decorations;
 	private ArrayList<String> myDecs = new ArrayList<String>();
-	DecoratorManager decman = null;
+	MovementFactory decman = null;
 
 	
 	protected int myHealth; 
@@ -48,8 +48,8 @@ public class Player extends GameObject {
     }
     
     
-    public void move(Game g){
-		decorations.move(g, this);
+    public void move(){
+		decorations.move(this);
     }
     
     
@@ -58,7 +58,7 @@ public class Player extends GameObject {
     }
     private void createDecorator(){
 		try {
-			decman = new DecoratorManager();
+			decman = new MovementFactory();
 		} catch (ClassNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
