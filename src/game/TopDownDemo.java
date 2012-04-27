@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import levelLoadSave.EnemyLoadObserver;
-import levelLoadSave.HorizontalShipLoadObserver;
 import levelLoadSave.LevelLoader;
 import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
@@ -101,7 +100,7 @@ public class TopDownDemo extends Game {
 
 		//myShip = new Player(200, 2700, "resources/ship.png");
 		//myShip.setImage(getImage("resources/ship.png"));
-		System.out.println("1");
+		//System.out.println("1");
 
 		start = new StartGUI(this);
 		
@@ -110,7 +109,7 @@ public class TopDownDemo extends Game {
 //		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
 //		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
 		
-		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
+		//decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
 		
 		//intit weapons
 		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
@@ -125,14 +124,15 @@ public class TopDownDemo extends Game {
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
-		myPlayfield.addGroup(myCompanionGroup);
+		//myPlayfield.addGroup(myCompanionGroup);
 		myPlayfield.addGroup(myEnemyProjectileGroup);
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
 
 		// load level data
-		// loadLevelData();
+		loadLevelData();
+		
 
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();		
@@ -142,10 +142,8 @@ public class TopDownDemo extends Game {
 
 	}
 
-	private void loadLevelData(String path) {
+	private void loadLevelData() {
 		myLoadObservers = new ArrayList<LoadObserver>();
-		myLoadObservers
-				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
 		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup,
 				myProjectileGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
@@ -154,6 +152,7 @@ public class TopDownDemo extends Game {
 				myEnemyProjectileGroup));
 
 		LevelLoader l = new LevelLoader(myLoadObservers);
+		l.loadLevelData("serializeTest.ser");
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -171,9 +170,9 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myPlayfield.render(pen);
-		if (myPlayer != null) {
-			myHealthBar.render(pen);
-		}
+		
+		myHealthBar.render(pen);
+		
 
 	}
 
@@ -186,14 +185,12 @@ public class TopDownDemo extends Game {
 			// System.out.println(path);
 			if (path != null && path.length() > 0) {
 				initialScreen = false;
-				loadLevelData(path);
+				loadLevelData();
 			}
 			return;
 		}
 		myMap.moveMap(elapsedTime);
-
 		System.out.println(myPlayer);
-
 		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();

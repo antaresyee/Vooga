@@ -322,6 +322,7 @@ public class LevelEditorGUI extends Game {
 //		guns = q.getWeapons();
 		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
+			System.out.println(mapData.get(pt).getType());
 			god.setX(pt[0]);
 			god.setY(pt[1]);
 			god.setImgPath(mapData.get(pt).getPath());			
