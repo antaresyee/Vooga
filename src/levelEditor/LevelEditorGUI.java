@@ -331,7 +331,7 @@ public class LevelEditorGUI extends Game {
 				int enemyNum = (int) pt[2];
 				System.out.println(enemyNum);
 				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
-				god.setWeapon(guns.get(enemyNum-1));
+//				god.setWeapon(guns.get(enemyNum-1));
 			}
 			if (mapData.get(pt).getType().equals(playerStr)){
 				PlayerSprite ps = (PlayerSprite)mapData.get(pt);

@@ -26,7 +26,7 @@ public class LoadSaveGUIExample extends Game {
 	
 	@Override
 	public void initResources() {
-		myKTB = new KTextBox(this);
+		//myKTB = new KTextBox(this);
 		myKTB.popDialogueBox("your name:");
 //		DisplayBar db = new DisplayName(myKTB.getInfo());
 		//Find all files that are able to be loaded
