@@ -2,10 +2,14 @@ package game;
 
 import gameObjects.Enemy;
 import gameObjects.Player;
+import gameObjects.boss.Boss;
+import gameObjects.boss.FireBossCollision;
 import innerGameGUI.StartGUI;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +50,8 @@ public class TopDownDemo extends Game {
 
 	//private Player myShip;
 	private Player myCompanion;
+	
+	private Boss myBoss;
 
 	private DecoratedShip decCompanion;
 	private PowerUp decoratedPowerUp;
@@ -58,6 +64,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myCompanionGroup;
 	private SpriteGroup myProjectileGroup;
 	private SpriteGroup myEnemyProjectileGroup;
+	private SpriteGroup BossWeakPoints, BossProjectiles;
 	private Background myBackground;
 	private PlayField myPlayfield;
 	private PlayerInfo playerInfo;
@@ -83,6 +90,40 @@ public class TopDownDemo extends Game {
 		myEnemyProjectileGroup = new SpriteGroup("enemy projectile");
 		myCompanionGroup = new SpriteGroup("companion");
 
+		
+		// init boss
+		myBoss = new Boss();
+		try {
+			myBoss.load(this);
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		BossWeakPoints = myBoss.getSpriteGroup();
+		BossProjectiles = myBoss.getProjectiles();
+		
 		// init background using the new Map class
 		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
@@ -97,7 +138,8 @@ public class TopDownDemo extends Game {
 		myCompanionGroup.setBackground(myBackground);
 		myProjectileGroup.setBackground(myBackground);
 		myEnemyProjectileGroup.setBackground(myBackground);
-
+		BossWeakPoints.setBackground(myBackground);
+		BossProjectiles.setBackground(myBackground);
 		//myShip = new Player(200, 2700, "resources/ship.png");
 		//myShip.setImage(getImage("resources/ship.png"));
 		//System.out.println("1");
@@ -120,12 +162,15 @@ public class TopDownDemo extends Game {
 
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
+//		myPlayfield.add(myBoss);
 		myPlayfield.addGroup(myPlayerGroup);
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
 		//myPlayfield.addGroup(myCompanionGroup);
 		myPlayfield.addGroup(myEnemyProjectileGroup);
+//		myPlayfield.addGroup(BossProjectiles);
+//		myPlayfield.addGroup(BossWeakPoints);
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
@@ -133,6 +178,8 @@ public class TopDownDemo extends Game {
 		myPlayfield.addCollisionGroup(myProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
 		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myPlayerGroup, new ProjectileAnythingCollision());
 		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
+//		myPlayfield.addCollisionGroup(BossWeakPoints, myProjectileGroup, new FireBossCollision()); 
+//		myPlayfield.addCollisionGroup(BossProjectiles, myPlayerGroup, new ProjectileAnythingCollision());
 
 		// load level data
 		//loadLevelData();
