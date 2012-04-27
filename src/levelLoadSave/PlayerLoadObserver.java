@@ -49,8 +49,8 @@ public class PlayerLoadObserver extends LoadObserver {
         Projectile p = new DamagingProjectile("resources/enemy.png",myProjectileGroup,1);
         ShotPattern s = new SinglePattern(-3);
         Weapon w = new UnlimitedGun(300,p,s);
-        Enemy e = (Enemy) go;
-        e.addWeapon(w);
+        Player player = (Player) go;
+        player.addWeapon(w);
 
         //set sprite image
         try {

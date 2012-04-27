@@ -110,8 +110,8 @@ public class TopDownDemo extends Game {
 		
 		
 		
-		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
-		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
+//		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
+//		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
 		
 		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
 		
@@ -120,7 +120,6 @@ public class TopDownDemo extends Game {
 		p.setImage(getImage("resources/fire.png"));
 		ShotPattern s = new SinglePattern(-1);
 		myWeapon = new UnlimitedGun(300,p,s);
-		myShip.addWeapon(myWeapon);
 
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
@@ -142,7 +141,7 @@ public class TopDownDemo extends Game {
 		playerInfo = new PlayerInfo();
 		
 		//HealthBar
-		myHealthBar = new HealthBar(myShip); 
+		myHealthBar = new HealthBar(myPlayer); 
 
 
 	}
@@ -166,7 +165,7 @@ public class TopDownDemo extends Game {
 		playerInfo = new PlayerInfo();
 		
 		//HealthBar
-		myHealthBar = new HealthBar(myShip); 
+		myHealthBar = new HealthBar(myPlayer); 
 
 
 	}
@@ -196,7 +195,7 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myMap.moveMap(elapsedTime);
-		myMap.movePlayer(elapsedTime, myShip);
+		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();
 		myPlayfield.update(elapsedTime); 
