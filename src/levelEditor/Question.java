@@ -8,26 +8,42 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import weapons.DamagingProjectile;
+import weapons.ScatterPattern;
+import weapons.SidePattern;
+import weapons.SinglePattern;
+import weapons.UnlimitedGun;
+import weapons.Weapon;
+
+import maps.Map;
+
 import com.golden.gamedev.Game;
 
 public class Question {
 	public static int enemies = 1;
 	private String movement=null;
 	public static ArrayList<String>fileData;
+	public static ArrayList<UnlimitedGun> weapons;
 	int count =1;
+	int count1 =1;
 	public boolean done;
-	
-	public String enemyQuestion(Game g){
+	public String enemyMovement(){
 		done =false;
 		if(count==1) fileData = new ArrayList<String>();
 		count++;
-		Object[] options = {"Back and Forth","Targeted", "Path"};
+		Object[] options = {"Back and Forth","Targeted", "Path", "Diamond"};
 
 		String input = (String) JOptionPane.showInputDialog(new JFrame(),
 				"Pick Your Enemy Movement:", "Top Down Demo'",
 				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
 		if (input.equals("Back and Forth")) movement ="BF,100,200,.2 ";
 		if (input.equals("Targeted")) movement = "T ";
+		if (input.equals("Diamond")) {
+			String[] temp = getCoordinate();
+			double x = Double.parseDouble(temp[0]);
+			double y = Double.parseDouble(temp[1]);
+			movement = "D,"+ x +","+ y+" "; 
+		}
 		if (input.equals("Path")){
 
 			movement = "Path";
@@ -37,26 +53,34 @@ public class Question {
 					"Click on the coordinates for your Enemy's Path Movement. Press 'D' when done.");
 			return movement;
 		}
-		String a = addState(movement,g);
+		String a = addState(movement);
 		fileData.add(a);
 		System.out.println(a);
-		int ans =addAnotherMovement(g);
+		int ans =addAnotherMovement();
 		if (ans ==1) 
 			count=1;
 		
 		return movement;
 	}
 
-	public int addAnotherMovement(Game g) {
+
+	private String[] getCoordinate() {
+		String coordinate = JOptionPane.showInputDialog(null, "Enter X and Y coordinate to move around: (ex. 100,2000) Screen Dimensions: 400 x 3000 ", 
+				"Enemy Movement", 1);
+		String[] temp =coordinate.split(",");
+		return temp;
+	}
+
+	public int addAnotherMovement() {
 		String[] yon = { "yes", "no" };
 		int ans = JOptionPane.showOptionDialog(new JFrame(),
 				"Do you want to add another Movement?","Level Editor", JOptionPane.YES_NO_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, yon, yon[0]);
-		if (ans==0) enemyQuestion(g);
+		if (ans==0) enemyMovement();
 		return ans;
 	}
 
-	public String addState(String move,Game g) {
+	public String addState(String move) {
 		String state ="";
 		Object[] options1 = {"Full Health", "Low Health", "Proximity"};
 		String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
@@ -70,6 +94,33 @@ public class Question {
 		state=state+Integer.parseInt(prior) + " ";
 		
 		return move +state;
+	}
+	
+	public void enemyWeapon(){
+		if (count1==1) weapons = new ArrayList<UnlimitedGun>();
+		count1++;
+		DamagingProjectile proj = new DamagingProjectile("resources/fire.png", null, 3);
+		Object[] options = {"Straight", "Side", "Scatter"};
+		String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
+				"Pick Weapon Pattern:", "Enemy Weapon",
+				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+		if (input1.equals("Straight")) {
+			SinglePattern single = new SinglePattern(-1);
+			UnlimitedGun ug = new UnlimitedGun(1, proj, single);
+			weapons.add(ug);
+		}
+		if (input1.equals("Side")) {
+			SidePattern side = new SidePattern(1,1);
+			UnlimitedGun ug = new UnlimitedGun(1, proj, side);
+			weapons.add(ug);
+		}
+		if (input1.equals("Scatter")) {
+			ScatterPattern scatter = new ScatterPattern(1,1,100);
+			UnlimitedGun ug = new UnlimitedGun(1, proj, scatter);
+			weapons.add(ug);
+		}
+		
+		
 	}
 	
 	public void writeEnemy(ArrayList<String> data){
@@ -92,6 +143,10 @@ public class Question {
 	
 	public ArrayList<String> getFileData() {
 		return fileData;
+	}
+	
+	public ArrayList<UnlimitedGun> getWeapons() {
+		return weapons;
 	}
 	// asks user if he is happy with his location
 	public int yesOrNo(String type) {
