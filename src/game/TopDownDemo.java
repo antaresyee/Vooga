@@ -58,6 +58,7 @@ public class TopDownDemo extends Game {
 	private SpriteGroup myEnemyGroup;
 	private SpriteGroup myCompanionGroup;
 	private SpriteGroup myProjectileGroup;
+	private SpriteGroup myEnemyProjectileGroup;
 	private Background myBackground;
 	private PlayField myPlayfield;
 	private PlayerInfo playerInfo;
@@ -80,6 +81,7 @@ public class TopDownDemo extends Game {
 		
 		myEnemyGroup = new SpriteGroup("enemy");
 		myProjectileGroup = new SpriteGroup("projectile");
+		myEnemyProjectileGroup = new SpriteGroup("enemy projectile");
 		myCompanionGroup = new SpriteGroup("companion");
 
 		
@@ -96,6 +98,7 @@ public class TopDownDemo extends Game {
 		myEnemyGroup.setBackground(myBackground);
 		myCompanionGroup.setBackground(myBackground); 
 		myProjectileGroup.setBackground(myBackground);
+		myEnemyProjectileGroup.setBackground(myBackground);
 
 		myShip = new Player(200, 2700, "resources/ship.png");
 		myShip.setImage(getImage("resources/ship.png"));
@@ -129,6 +132,7 @@ public class TopDownDemo extends Game {
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
 		myPlayfield.addGroup(myCompanionGroup); 
+		myPlayfield.addGroup(myEnemyProjectileGroup);
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
@@ -150,10 +154,11 @@ public class TopDownDemo extends Game {
 		myLoadObservers = new ArrayList<LoadObserver>();
 		myLoadObservers
 				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, this));
+		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, myProjectileGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
-		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup));
-		
+
+		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup, myEnemyProjectileGroup));
+
 		LevelLoader l = new LevelLoader(myLoadObservers);
 		System.out.println("1" +myShip.getDecorations());
 		l.loadLevelData("serializeTest.ser");
@@ -247,7 +252,6 @@ public class TopDownDemo extends Game {
 		playerInfo.setDownwardMovement(keyDown(java.awt.event.KeyEvent.VK_S));
 		playerInfo.setLeftwardMovement(keyDown(java.awt.event.KeyEvent.VK_A));
 		playerInfo.setRightwardMovement(keyDown(java.awt.event.KeyEvent.VK_D));
-		
 	}
 
 	public void setPlayer(Player g) {
