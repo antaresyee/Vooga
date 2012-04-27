@@ -18,8 +18,8 @@ public class Player extends GameObject {
 	MovementFactory decman = null;
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons;
-
-    public Player(double x, double y, String imgPath){
+    
+	public Player(double x, double y, String imgPath){
         myX = x;
         myY = y;
         myImgPath = imgPath;
@@ -28,9 +28,10 @@ public class Player extends GameObject {
         myWeapons = new ArrayList<Weapon>();
         myHealth = 10;
         this.createDecorator(); 
-        decorations = null; 
+        //myDecs = startDecorations; 
+        this.addDecorationCollection(myDecs); 
     }
-    
+	
     public Player(double x, double y, String imgPath, ArrayList<String> startDecorations){
         myX = x;
         myY = y;
@@ -85,7 +86,6 @@ public class Player extends GameObject {
 			e.printStackTrace();
 		} 
 		decorations = decman.getDecorators();
-       
         myHealth = 10; 
     }
     
@@ -96,13 +96,12 @@ public class Player extends GameObject {
 
     @Override
     public GameObject makeGameObject(GameObjectData god) {
+    	System.out.println("entered makeGameObject");
         Double x = god.getX();
         Double y = god.getY();
         String imgPath = god.getImgPath();
-        
-        
-        
-        return new Player(x, y, imgPath);
+        ArrayList<String> incomingDecorations = god.getDecorations(); 
+        return new Player(x, y, imgPath, incomingDecorations);
     }
 
     

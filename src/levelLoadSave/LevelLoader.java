@@ -166,6 +166,7 @@ public class LevelLoader {
             if (lo.isMyObserver(go)) {
                 lo.objectLoaded(go);
                 System.out.println(lo.myType);
+                System.out.println(go.getType());
             }
         }
     }

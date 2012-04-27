@@ -99,25 +99,25 @@ public class TopDownDemo extends Game {
 		myProjectileGroup.setBackground(myBackground);
 		myEnemyProjectileGroup.setBackground(myBackground);
 
-		myShip = new Player(200, 2700, "resources/ship.png");
-		myShip.setImage(getImage("resources/ship.png"));
+		//myShip = new Player(200, 2700, "resources/ship.png");
+		//myShip.setImage(getImage("resources/ship.png"));
 		System.out.println("1");
 
 		start = new StartGUI(this);
-
-		InvisibilityDecorator myInv = new InvisibilityDecorator(
-				new SimplePowerUp(), myShip);
-		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
-
-		decCompanion = new ConstantlyMoveDecorator(new SimpleShip());
-
-		// intit weapons
-		Projectile p = new DamagingProjectile("resources/fire.png",
-				myProjectileGroup, 1);
+		
+		
+		
+//		InvisibilityDecorator myInv = new InvisibilityDecorator(new SimplePowerUp(), myShip); 
+//		myPowerUpDecorator = new CompanionDecorator(myInv, myShip);
+		
+		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
+		
+		//intit weapons
+		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
 		p.setImage(getImage("resources/fire.png"));
 		ShotPattern s = new SinglePattern(-1);
-		myWeapon = new UnlimitedGun(300, p, s);
-		myShip.addWeapon(myWeapon);
+		myWeapon = new UnlimitedGun(300,p,s);
+
 
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
@@ -135,10 +135,10 @@ public class TopDownDemo extends Game {
 		// loadLevelData();
 
 		// initializing PlayerInfo
-		playerInfo = new PlayerInfo();
+		playerInfo = new PlayerInfo();		
+		//HealthBar
+		myHealthBar = new HealthBar(myPlayer); 
 
-		// HealthBar
-		myHealthBar = new HealthBar(myShip);
 
 	}
 
@@ -158,9 +158,9 @@ public class TopDownDemo extends Game {
 
 		// initializing PlayerInfo
 		playerInfo = new PlayerInfo();
-
-		// HealthBar
-		myHealthBar = new HealthBar(myShip);
+		
+		//HealthBar
+		myHealthBar = new HealthBar(myPlayer); 
 
 	}
 
@@ -171,7 +171,9 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myPlayfield.render(pen);
-		myHealthBar.render(pen);
+		if (myPlayer != null) {
+			myHealthBar.render(pen);
+		}
 
 	}
 
@@ -189,6 +191,9 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myMap.moveMap(elapsedTime);
+
+		System.out.println(myPlayer);
+
 		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();

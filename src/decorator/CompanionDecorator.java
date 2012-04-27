@@ -26,7 +26,7 @@ public class CompanionDecorator extends PowerUpDecorator{
 	@Override
 	public void powerUp(Game g, Sprite t, Object o) {
 		// TODO Auto-generated method stub
-		comp = new Player(t.getX()-10, t.getY() -15,"resources/smallShip.png"); 
+		comp = new Player(t.getX()-10, t.getY() -15, "resources/smallShip.png",((Player) t).getDecStrings()); 
 		comp.setImage(g.getImage("resources/smallShip.png"));
 		
 		

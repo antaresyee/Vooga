@@ -14,10 +14,10 @@ public class HealthBar{
 	Font myFont = new Font("test", Font.BOLD, 15);
 	Color c = Color.BLUE; 
 	SystemFont myF = new SystemFont(myFont, c); 	
-	Player myShip; 
+	Player myPlayer; 
 	
 	public HealthBar(Player myS) {
-		myShip = myS; 
+		myPlayer = myS; 
 	}
 	
 	public void setHealth(int n){
@@ -29,7 +29,7 @@ public class HealthBar{
 	}
 	
 	public void render(Graphics2D pen){
-		num = myShip.getHealth(); 
+		num = myPlayer.getHealth(); 
 		myF.drawString(pen, "Health: " +num, 315, 30);
 	}
 		
