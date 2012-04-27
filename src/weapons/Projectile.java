@@ -3,7 +3,11 @@ package weapons;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+
+import javax.imageio.ImageIO;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
@@ -32,6 +36,14 @@ public abstract class Projectile extends GameObject implements Serializable{
 		myImgPath = imgPath;
 		myGroup = g;
 		myType = "Projectile";
+		try{
+        	File projImgSrc = new File(getImgPath());
+        	BufferedImage projImage = ImageIO.read(projImgSrc);
+        	this.setImage(projImage);
+        }
+        catch(IOException e){
+        	e.printStackTrace();
+        }
 		
 		
 	}
