@@ -320,8 +320,8 @@ public class LevelEditorGUI extends Game {
 	// makes a list of GameObjectData after the user presses "control" and "s"
 	private List<GameObjectData> makeGODList() {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
-		ArrayList<UnlimitedGun> guns = new ArrayList<UnlimitedGun>();
-		guns = q.getWeapons();
+//		ArrayList<UnlimitedGun> guns = new ArrayList<UnlimitedGun>();
+//		guns = q.getWeapons();
 		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
 			god.setX(pt[0]);
@@ -331,7 +331,7 @@ public class LevelEditorGUI extends Game {
 				int enemyNum = (int) pt[2];
 				System.out.println(enemyNum);
 				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
-				god.setWeapon(guns.get(enemyNum-1));
+//				god.setWeapon(guns.get(enemyNum-1));
 			}
 			if (mapData.get(pt).getType().equals(playerStr)){
 				PlayerSprite ps = (PlayerSprite)mapData.get(pt);
