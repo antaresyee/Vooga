@@ -79,8 +79,8 @@ public class Enemy extends GameObject {
 		for (Status s : myStatuses) {
 			s.iterate(this);
 		}
-		if(myActiveWeapon != null){
-			myActiveWeapon.fire(elapsedTime, myX, myY);
+		if(myActiveWeapon != null && this.isActive()){
+			myActiveWeapon.fire(elapsedTime, this.getX(), this.getY());
 		}
 	}
 
