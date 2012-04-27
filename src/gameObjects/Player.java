@@ -117,8 +117,8 @@ public class Player extends GameObject {
 	}
 	
 	public void fire(Game g, long elapsedTime){
-		if(g.keyPressed(java.awt.event.KeyEvent.VK_SPACE)){
-			System.out.println("here");
+
+		if(g.keyDown(java.awt.event.KeyEvent.VK_SPACE)){
 			myWeapons.get(0).fire(elapsedTime, this.getX(), this.getY()); 
 		}
 	}

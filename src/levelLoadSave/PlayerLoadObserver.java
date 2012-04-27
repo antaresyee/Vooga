@@ -52,13 +52,13 @@ public class PlayerLoadObserver extends LoadObserver {
         
         ShotPattern s1 = new SinglePattern(-1);
         ShotPattern s2 = new ScatterPattern(5, -1, 5);
-        ShotPattern s3 = new SidePattern(-1, 1);
+        ShotPattern s3 = new SidePattern(-1, .2);
         Weapon w1 = new UnlimitedGun(300,p,s1);
         Weapon w2 = new UnlimitedGun(300, p ,s2);
         Weapon w3 = new UnlimitedGun(300, p ,s3);
         Player player = (Player) go;
-        player.addWeapon(w1);
-        player.addWeapon(w2);
+        //player.addWeapon(w1);
+       // player.addWeapon(w2);
         player.addWeapon(w3);
 
         //set sprite image

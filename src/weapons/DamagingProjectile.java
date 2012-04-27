@@ -5,6 +5,7 @@ import java.io.Serializable;
 import gameObjects.GameObject;
 import gameObjects.GameObjectData;
 import gameObjects.Enemy;
+import gameObjects.Player;
 
 import com.golden.gamedev.object.Sprite;
 import com.golden.gamedev.object.SpriteGroup;
@@ -22,6 +23,10 @@ public class DamagingProjectile extends Projectile implements Serializable{
 		if(hit.getType().equals("Enemy")){
 			Enemy enemy = (Enemy) hit;
 			enemy.sustainDamage(myDamage);
+		}
+		if(hit.getType().equals("Player")){
+			Player player = (Player) hit;
+			player.reduceHealth(myDamage);
 		}
 		removeProjectile();
 	}
