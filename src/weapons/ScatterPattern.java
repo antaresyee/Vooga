@@ -5,7 +5,7 @@ public class ScatterPattern extends ShotPattern{
 	int forwardspeed;
 	double widthblast;
 	
-	ScatterPattern(int shots, int speed, double width){
+	public ScatterPattern(int shots, int speed, double width){
 		numshots = shots;
 		forwardspeed = speed;
 		widthblast = width;

@@ -4,7 +4,7 @@ public class SidePattern extends ShotPattern{
 	int forwardspeed;
 	int sidespeed;
 	
-	SidePattern(int forward, int side){
+	public SidePattern(int forward, int side){
 		forwardspeed = forward;
 		sidespeed = side;
 	}

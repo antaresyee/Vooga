@@ -14,36 +14,52 @@ import com.golden.gamedev.GameLoader;
  * Example of combining all KComponents
  */
 public class GUIExample extends Game{
-	KPanel myPanel;
+	StartGUI start;
 	@Override
 	public void initResources() {
-		myPanel = new KPanel(this);
-		myPanel.add(new KTextBox(this, "Start Game"));
-		myPanel.add(new KTextBox(this, "Load/Save"));
-		KButton button = new KButton(this, "Confirm");
-		
-		//Define action to be listened by the developer. 
-		//If want to change button's behavior, no need to go to the original framework
-		button.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent ev) {
-				JOptionPane.showMessageDialog(new JFrame(), "Surprise suprise!!");
-			}
-		});
-		myPanel.add(button);
-		
+//		myPanel = new KPanel(null, this);
+//		myPanel.setGrid(new VerticalGrid());
+////		myPanel.setOrdering(KPanel.VERTICAL);
+//		KButton load = new KButton(myPanel, this, "Load Level");
+//		KButton help = new KButton(myPanel, this, "Help");
+//		KButton button = new KButton(myPanel, this, "Quit");
+//		
+//		//Define action to be listened by the developer. 
+//		//If want to change button's behavior, no need to go to the original framework
+//		load.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent ev) {
+//				JOptionPane.showMessageDialog(new JFrame(), "Surprise suprise!!");
+//			}
+//		});
+//
+//		help.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent ev) {
+//				JOptionPane.showMessageDialog(new JFrame(), "Surprise suprise!!");
+//			}
+//		});
+//		
+//		button.addActionListener(new ActionListener(){
+//			public void actionPerformed(ActionEvent ev) {
+//				finish();
+//			}
+//		});
+//		myPanel.add(load);
+//		myPanel.add(help);
+//		myPanel.add(button);
+		start = new StartGUI(this);
 		
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
 		
-		myPanel.render(pen);
+		start.render(pen);
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 		// TODO Auto-generated method stub
-		myPanel.update(elapsedTime);
+		start.update(elapsedTime);
 	}
 	
 	public static void main(String[] arg0)

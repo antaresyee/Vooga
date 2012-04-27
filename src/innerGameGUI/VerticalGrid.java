@@ -18,7 +18,7 @@ public class VerticalGrid extends Grid {
 	
 	@Override
 	public int[] getGridXYCoordinate(int index) {
-		int[] xy = {0, (int) (cellHeight*index), (int) cellWidth, (int) cellHeight};
+		int[] xy = {(int) (cellWidth/2), (int) (cellHeight*(index+0.5)), (int) cellWidth, (int) cellHeight};
 		return xy;
 	}
 }

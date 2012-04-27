@@ -17,6 +17,8 @@ import java.util.Properties;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import weapons.UnlimitedGun;
+
 import levelLoadSave.LevelSaver;
 import maps.Map;
 
@@ -40,7 +42,6 @@ public class LevelEditorGUI extends Game {
 	private double[] toRemove=null;
 	
 	private Sprite player;
-	private Sprite line;
 	
 	private int count = 0;
 	private int time = 0;
@@ -48,11 +49,13 @@ public class LevelEditorGUI extends Game {
 	private int totalSprites = 1;
 	private int backHeight;
 	
-	private int adjust =40;
+	private int adjust = 40;
 	private int playerX = 30;
 	
 	public List<GameObjectData> level;
-	private String myPlayer = "Player";
+	private String playerStr = "Player";
+	private String enemyStr = "Enemy";
+	private String pathStr = "Path";
 	
 	private Map myMap;
 	private BufferedImage myBackImage;
@@ -78,7 +81,7 @@ public class LevelEditorGUI extends Game {
 		factory.add(new PowerUpSprite.Factory());
 		factory.add(new PlayerSprite.Factory());
 		for (Sprites.Factory check : factory){
-			if (!check.getType().equals("Player")) createNewSprite(check.makeSprite(),true);			
+			if (!check.getType().equals(playerStr)) createNewSprite(check.makeSprite(),true);			
 		}
 		
 		
@@ -92,11 +95,7 @@ public class LevelEditorGUI extends Game {
 		player = new Sprite(getImage(prop.getProperty("playerImgPath")), playerX, backHeight
 				- getImage(prop.getProperty("playerImgPath")).getHeight() - adjust);
 
-		// create line sprite
-		line = new Sprite(getImage(prop.getProperty("lineImgPath")), 0, backHeight - 100);
-
 		ALL.add(player);
-		ALL.add(line);
 		ALL.setBackground(myBackground);
 
 		list.add(player);
@@ -145,7 +144,7 @@ public class LevelEditorGUI extends Game {
 		myBackground.update(elapsedTime);
 		
 	
-	if(askQ.equals("Path")){
+	if(askQ.equals(pathStr)){
 			 setPath();
 		}
 	else{
@@ -199,7 +198,7 @@ public class LevelEditorGUI extends Game {
 			pathCoord.clear();
 			writeFile= writeFile + " ";
 			finalFile=q.getFileData();
-			String path=q.addState(writeFile, this);
+			String path=q.addState(writeFile);
 			System.out.println(path);
 			finalFile.add(path);
 			q.writeEnemy(finalFile);
@@ -207,6 +206,7 @@ public class LevelEditorGUI extends Game {
 			JOptionPane
 			.showMessageDialog(new JFrame(),
 					"Finished Enemy Path. Back to LevelEditor.");
+//			q.enemyWeapon();
 		}
 	}
 
@@ -227,8 +227,8 @@ public class LevelEditorGUI extends Game {
 				
 				mapData.put(loc,newSpr);
 				
-				if (check.getType().equals(myPlayer)) {
-					newSpr.askQuestions(q, this);
+				if (check.getType().equals(playerStr)) {
+					newSpr.askQuestions(q);
 					break;
 				}
 				//create and place new Sprite on background
@@ -244,7 +244,7 @@ public class LevelEditorGUI extends Game {
 		double[] loc = new double[3];
 		loc[0]=current.getX();
 		loc[1]=current.getY();
-		if (spr.getType().equals("Enemy")) {
+		if (spr.getType().equals(enemyStr)) {
 			loc[2]=EnemySprite.enemyCount;
 			System.out.println(EnemySprite.enemyCount);
 		}
@@ -263,7 +263,7 @@ public class LevelEditorGUI extends Game {
 			Sprite new1 = new Sprite(getImage(newSpr.getPath()), newSpr.getStartX(), newSpr.getStartY());
 			new1.setBackground(myBackground);
 			if (!initial) {
-				str = newSpr.askQuestions(q,this);
+				str = newSpr.askQuestions(q);
 			}
 			ALL.add(new1);
 			list.add(new1);
@@ -308,7 +308,8 @@ public class LevelEditorGUI extends Game {
 		Sprite temp = null;
 
 		for (Sprite elem : list) {
-			if (click() && (checkPosMouse(elem, true))) {
+			if (click() && (checkPosMouse(elem, true)))
+			{
 				temp = elem;
 				break;
 			}
@@ -319,15 +320,23 @@ public class LevelEditorGUI extends Game {
 	// makes a list of GameObjectData after the user presses "control" and "s"
 	private List<GameObjectData> makeGODList() {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
+//		ArrayList<UnlimitedGun> guns = new ArrayList<UnlimitedGun>();
+//		guns = q.getWeapons();
 		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
 			god.setX(pt[0]);
 			god.setY(pt[1]);
 			god.setImgPath(mapData.get(pt).getPath());			
-			if (mapData.get(pt).getType().equals("Enemy")) {
+			if (mapData.get(pt).getType().equals(enemyStr)) {
 				int enemyNum = (int) pt[2];
 				System.out.println(enemyNum);
 				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
+//				god.setWeapon(guns.get(enemyNum-1));
+			}
+			if (mapData.get(pt).getType().equals(playerStr)){
+				PlayerSprite ps = (PlayerSprite)mapData.get(pt);
+				System.out.println(ps.getDecor().size());
+				god.setDecorations(ps.getDecor());
 			}
 			temp.add(god);
 		}

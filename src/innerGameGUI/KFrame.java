@@ -6,8 +6,8 @@ import com.golden.gamedev.Game;
  */
 public class KFrame extends KComponent {
 	
-	public KFrame(Game game) {
-		super(game);
+	public KFrame(KComponent parent, Game game) {
+		super(parent, game);
 		// TODO Auto-generated constructor stub
 	}
 	

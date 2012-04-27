@@ -23,10 +23,13 @@ public class EnemySprite extends Sprites {
 	}
 
 	@Override
-	public String askQuestions(Question q, Game g) {
+	public String askQuestions(Question q) {
 		// TODO Auto-generated method stub
-		String str =q.enemyQuestion(g);
-		if (!str.equals("Path")) q.writeEnemy(q.getFileData());
+		String str =q.enemyMovement();
+		if (!str.equals("Path")) {
+			q.writeEnemy(q.getFileData());
+//			q.enemyWeapon();
+		}
 		enemyCount++;
 
 		

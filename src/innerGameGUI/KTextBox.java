@@ -22,18 +22,19 @@ public class KTextBox extends KComponent {
 	private boolean displayTextOn, enabled;
 	private Game myGame;
 	
-	public KTextBox(Game game, String info){
-		super(game);
+	public KTextBox(KComponent parent, Game game, String info){
+		super(parent, game);
 		myInfo = info;
 		myMsg = "";
 		myGame = game;
 		displayTextOn = true;
 		myFont = new SystemFont(new Font("Comic Sans MS", Font.PLAIN, 18),
 				Color.BLUE);
+		this.setWidthHeight(myFont.getWidth(info), myFont.getHeight());
 	}
 	
-	public KTextBox(Game game){
-		this(game, "");
+	public KTextBox(KComponent parent, Game game){
+		this(parent, game, "");
 		displayTextOn = false;
 	}
 	
