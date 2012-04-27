@@ -24,8 +24,10 @@ public class Question {
 	private String movement=null;
 	public static ArrayList<String>fileData;
 	public static ArrayList<UnlimitedGun> weapons;
+	public static ArrayList<String> playerMove;
 	int count =1;
 	int count1 =1;
+	int count2 =1;
 	public boolean done;
 	public String enemyMovement(){
 		done =false;
@@ -96,32 +98,32 @@ public class Question {
 		return move +state;
 	}
 	
-	public void enemyWeapon(){
-		if (count1==1) weapons = new ArrayList<UnlimitedGun>();
-		count1++;
-		DamagingProjectile proj = new DamagingProjectile("resources/fire.png", null, 3);
-		Object[] options = {"Straight", "Side", "Scatter"};
-		String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
-				"Pick Weapon Pattern:", "Enemy Weapon",
-				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-		if (input1.equals("Straight")) {
-			SinglePattern single = new SinglePattern(-1);
-			UnlimitedGun ug = new UnlimitedGun(1, proj, single);
-			weapons.add(ug);
-		}
-		if (input1.equals("Side")) {
-			SidePattern side = new SidePattern(1,1);
-			UnlimitedGun ug = new UnlimitedGun(1, proj, side);
-			weapons.add(ug);
-		}
-		if (input1.equals("Scatter")) {
-			ScatterPattern scatter = new ScatterPattern(1,1,100);
-			UnlimitedGun ug = new UnlimitedGun(1, proj, scatter);
-			weapons.add(ug);
-		}
-		
-		
-	}
+//	public void enemyWeapon(){
+//		if (count1==1) weapons = new ArrayList<UnlimitedGun>();
+//		count1++;
+//		DamagingProjectile proj = new DamagingProjectile("resources/fire.png", null, 3);
+//		Object[] options = {"Straight", "Side", "Scatter"};
+//		String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
+//				"Pick Weapon Pattern:", "Enemy Weapon",
+//				JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+//		if (input1.equals("Straight")) {
+//			SinglePattern single = new SinglePattern(-1);
+//			UnlimitedGun ug = new UnlimitedGun(1, proj, single);
+//			weapons.add(ug);
+//		}
+//		if (input1.equals("Side")) {
+//			SidePattern side = new SidePattern(1,1);
+//			UnlimitedGun ug = new UnlimitedGun(1, proj, side);
+//			weapons.add(ug);
+//		}
+//		if (input1.equals("Scatter")) {
+//			ScatterPattern scatter = new ScatterPattern(1,1,100);
+//			UnlimitedGun ug = new UnlimitedGun(1, proj, scatter);
+//			weapons.add(ug);
+//		}
+//		
+//		
+//	}
 	
 	public void writeEnemy(ArrayList<String> data){
 		
@@ -140,6 +142,33 @@ public class Question {
 			  }
 			  enemies++;
 		}
+	
+	public ArrayList<String> playerMovement(){
+		if (count2==1) playerMove = new ArrayList<String>();
+		count2++;
+		playerMove.add(playerDecor());
+		addAnotherPlayerMovement();
+		return playerMove;
+		
+		
+	}
+	public int addAnotherPlayerMovement() {
+		String[] yon = { "yes", "no" };
+		int ans = JOptionPane.showOptionDialog(new JFrame(),
+				"Do you want to add another Movement?","Level Editor", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE, null, yon, yon[1]);
+		if (ans==0) playerMovement();
+		return ans;
+	}
+	public String playerDecor(){
+		 Object[] options1 = {"Vertical", "Horizontal"};
+			String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
+					"Pick Decorator:", "Player Movement",
+					JOptionPane.PLAIN_MESSAGE, null, options1, options1[0]);
+		 if (input1.equals("Vertical")) return "VerticalDecorator";
+		 else 
+			 return "HorizontalDecorator";
+	}
 	
 	public ArrayList<String> getFileData() {
 		return fileData;

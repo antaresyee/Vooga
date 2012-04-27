@@ -42,7 +42,6 @@ public class LevelEditorGUI extends Game {
 	private double[] toRemove=null;
 	
 	private Sprite player;
-	private Sprite line;
 	
 	private int count = 0;
 	private int time = 0;
@@ -50,7 +49,7 @@ public class LevelEditorGUI extends Game {
 	private int totalSprites = 1;
 	private int backHeight;
 	
-	private int adjust =40;
+	private int adjust = 40;
 	private int playerX = 30;
 	
 	public List<GameObjectData> level;
@@ -207,7 +206,7 @@ public class LevelEditorGUI extends Game {
 			JOptionPane
 			.showMessageDialog(new JFrame(),
 					"Finished Enemy Path. Back to LevelEditor.");
-			q.enemyWeapon();
+//			q.enemyWeapon();
 		}
 	}
 
@@ -323,7 +322,6 @@ public class LevelEditorGUI extends Game {
 		ArrayList<GameObjectData> temp = new ArrayList<GameObjectData>();
 		ArrayList<UnlimitedGun> guns = new ArrayList<UnlimitedGun>();
 		guns = q.getWeapons();
-		System.out.println(guns.size());
 		for (double[] pt: mapData.keySet()){
 			GameObjectData god = new GameObjectData(mapData.get(pt).getType());
 			god.setX(pt[0]);
@@ -334,6 +332,11 @@ public class LevelEditorGUI extends Game {
 				System.out.println(enemyNum);
 				god.setEnemyConfigFile("StateInfo"+enemyNum+".txt");
 				god.setWeapon(guns.get(enemyNum-1));
+			}
+			if (mapData.get(pt).getType().equals(playerStr)){
+				PlayerSprite ps = (PlayerSprite)mapData.get(pt);
+				System.out.println(ps.getDecor().size());
+				god.setDecorations(ps.getDecor());
 			}
 			temp.add(god);
 		}

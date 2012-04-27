@@ -69,6 +69,7 @@ public class TopDownDemo extends Game {
 	private PlayField myPlayfield;
 	private PlayerInfo playerInfo;
 	private int enemySize;
+	private Player myPlayer;
 
 	private BufferedImage myBackImage;
 	private Map myMap;
@@ -119,7 +120,7 @@ public class TopDownDemo extends Game {
 		decCompanion = new ConstantlyMoveDecorator(new SimpleShip()); 
 
 		myShip.setBackground(myBackground);
-		myPlayerGroup.add(myShip);
+//		myPlayerGroup.add(myShip);
 		
 		//intit weapons
 		Projectile p = new DamagingProjectile("resources/fire.png",myProjectileGroup,1);
@@ -200,17 +201,16 @@ public class TopDownDemo extends Game {
 			return;
 		}
 		myMap.moveMap(elapsedTime);
-		
 		myMap.movePlayer(elapsedTime, myShip);
 		playerMovement();
-
+		myPlayer.move(this);
 		myPlayfield.update(elapsedTime); 
 
 //		decorations.move(this, myShip);
 		
 		
 
-		//myShip.move(this); 
+		myShip.move(this); 
 		
 		if(myShip != null){
 		myShip.fire(this, elapsedTime);
@@ -257,7 +257,7 @@ public class TopDownDemo extends Game {
 	}
 
 	public void setPlayer(Player g) {
-		myShip = g;
+		myPlayer = g;
 	}
 	
 

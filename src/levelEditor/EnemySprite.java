@@ -28,7 +28,7 @@ public class EnemySprite extends Sprites {
 		String str =q.enemyMovement();
 		if (!str.equals("Path")) {
 			q.writeEnemy(q.getFileData());
-			q.enemyWeapon();
+//			q.enemyWeapon();
 		}
 		enemyCount++;
 
