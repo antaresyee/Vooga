@@ -2,21 +2,12 @@ package game;
 
 import gameObjects.Enemy;
 import gameObjects.Player;
-
 import innerGameGUI.StartGUI;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
-
-import weapons.DamagingProjectile;
-import weapons.Projectile;
-import weapons.ShotPattern;
-import weapons.SinglePattern;
-import weapons.UnlimitedGun;
-import weapons.Weapon;
 
 import levelLoadSave.EnemyLoadObserver;
 import levelLoadSave.HorizontalShipLoadObserver;
@@ -25,7 +16,12 @@ import levelLoadSave.LoadObserver;
 import levelLoadSave.PlayerLoadObserver;
 import levelLoadSave.SimpleLoadObserver;
 import maps.Map;
-
+import weapons.DamagingProjectile;
+import weapons.Projectile;
+import weapons.ShotPattern;
+import weapons.SinglePattern;
+import weapons.UnlimitedGun;
+import weapons.Weapon;
 import bars.HealthBar;
 
 import com.golden.gamedev.Game;
@@ -36,15 +32,12 @@ import com.golden.gamedev.object.SpriteGroup;
 
 import decorator.CompanionDecorator;
 import decorator.ConstantlyMoveDecorator;
-import decorator.DecoratorManager;
-import decorator.HorizontalDecorator;
+import decorator.DecoratedShip;
 import decorator.InvisibilityDecorator;
 import decorator.PowerUp;
 import decorator.PowerUpDecorator;
 import decorator.SimplePowerUp;
 import decorator.SimpleShip;
-import decorator.DecoratedShip;
-import decorator.VerticalDecorator;
 
 public class TopDownDemo extends Game {
 
@@ -243,7 +236,7 @@ public class TopDownDemo extends Game {
 			e.updateEnemy(elapsedTime);
 			count++;
 		}
-		playerInfo.updatePlayerPosition(myShip.getX(), myShip.getY());
+		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
 	}
 
 	public void playerMovement() {
