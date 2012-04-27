@@ -129,6 +129,10 @@ public class TopDownDemo extends Game {
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
+		myPlayfield.addCollisionGroup(myProjectileGroup, myEnemyGroup, new ProjectileAnythingCollision());
+		myPlayfield.addCollisionGroup(myProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
+		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myPlayerGroup, new ProjectileAnythingCollision());
+		myPlayfield.addCollisionGroup(myEnemyProjectileGroup, myBarrierGroup, new ProjectileAnythingCollision());
 
 		// load level data
 		loadLevelData();
@@ -225,5 +229,7 @@ public class TopDownDemo extends Game {
 	public void setPlayer(Player g) {
 		myPlayer = g;
 	}
+	
+	
 
 }

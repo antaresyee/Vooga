@@ -31,15 +31,17 @@ public class Enemy extends GameObject {
 	private EnemyDataLoader loader;
 	private int currentHealth = 3;
 	private List<Status> myStatuses;
-	private Weapon myWeapon;
+	private List<Weapon> myWeapons;
+	private Weapon myActiveWeapon;
 
-	public Enemy(double x, double y, String imgPath, String filename, Weapon w) {
+	public Enemy(double x, double y, String imgPath, String filename) {
 		myX = x;
 		myY = y;
 		myImgPath = imgPath;
 		myType = "Enemy";
 		myStatuses = new ArrayList<Status>();
-		myWeapon = w;
+		myWeapons = new ArrayList<Weapon>();
+		
 		setLocation(myX, myY);
 		System.out.println(filename);
 		try {
@@ -54,7 +56,7 @@ public class Enemy extends GameObject {
 	}
 
 	public void addWeapon(Weapon w) {
-	    myWeapon = w;
+	    myWeapons.add(w);
 	}
 	
 	@Override
@@ -66,8 +68,8 @@ public class Enemy extends GameObject {
 		currentState.move();
 	}
 	
-	public void setWeapon(Weapon w){
-		myWeapon = w;
+	public void setWeapon(int slot){
+		myActiveWeapon = myWeapons.get(slot);
 	}
 
 	public void updateEnemy(long elapsedTime) {
@@ -77,8 +79,8 @@ public class Enemy extends GameObject {
 		for (Status s : myStatuses) {
 			s.iterate(this);
 		}
-		if(myWeapon != null){
-			myWeapon.fire(elapsedTime, myX, myY);
+		if(myActiveWeapon != null){
+			myActiveWeapon.fire(elapsedTime, myX, myY);
 		}
 	}
 
@@ -153,8 +155,8 @@ public class Enemy extends GameObject {
 		Double y = god.getY();
 		String imgPath = god.getImgPath();
 		String filename = god.getEnemyConfigFile();
-		Weapon w = god.getWeapon();
-		return new Enemy(x, y, imgPath, filename, w);
+		//Weapon w = god.getWeapon();
+		return new Enemy(x, y, imgPath, filename);
 
 	}
 
