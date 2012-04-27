@@ -113,6 +113,10 @@ public class Enemy extends GameObject {
 	public void addStatus(Status status) {
 		myStatuses.add(status);
 	}
+	
+	public List<Status> getStatuses(){
+		return myStatuses;
+	}
 
 	private ArrayList<Movement> parseMovementTypes() {
 		ArrayList<MovementFactory> movementFactories = loader

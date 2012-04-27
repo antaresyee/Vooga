@@ -6,7 +6,7 @@ import gameObjects.GameObject;
 public class DamageStatus extends Status{
 	int damage;
 	DamageStatus(int dur, int dam) {
-		super(dur);
+		super(dur, "Damage");
 		damage = dam;
 		
 	}
