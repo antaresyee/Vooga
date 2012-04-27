@@ -20,7 +20,7 @@ public class PowerUpSprite extends Sprites {
 	}
 
 	@Override
-	public String askQuestions(Question q, Game g) {
+	public String askQuestions(Question q) {
 		String str = " ";
 		return " ";		
 	}

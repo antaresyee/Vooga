@@ -13,7 +13,7 @@ import com.golden.gamedev.object.Sprite;
  *
  */
 
-public abstract class Sprites {
+public abstract class Sprites extends Sprite{
 
 	private String pngPath;
 	private int x;
@@ -35,7 +35,7 @@ public abstract class Sprites {
 		return y;
 	}
 	
-	public abstract String askQuestions(Question q, Game g);
+	public abstract String askQuestions(Question q);
 	
 	public abstract String getType();
 	

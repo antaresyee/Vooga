@@ -2,7 +2,6 @@ package game;
 
 import gameObjects.Enemy;
 import gameObjects.Player;
-import gameObjects.Player;
 
 import innerGameGUI.StartGUI;
 
