@@ -17,7 +17,7 @@ public class HorizontalShip extends Player {
 	protected ArrayList<Weapon> myWeapons;
 
 	public HorizontalShip(double x, double y, String imgPath) {
-		super(x, y, imgPath);
+		super(x, y, imgPath, null);
 		/*
 		 * Sets the default speed and health users can later use the set methods
 		 * to alter speed and health

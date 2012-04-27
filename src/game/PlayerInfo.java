@@ -8,6 +8,7 @@ public class PlayerInfo {
 	private static boolean movingDown = false;
 	private static boolean movingLeft = false;
 	private static boolean movingRight = false;
+	private static int playerHealth = 10;
 	
 	public PlayerInfo(){
 	}
@@ -56,5 +57,9 @@ public class PlayerInfo {
     
     public boolean getRightwardMovement(){
     	return movingRight;
+    }
+    
+    public void setPlayerHealth(){
+    	
     }
 }

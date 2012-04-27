@@ -21,6 +21,19 @@ public class Player extends GameObject {
 	protected int myHealth; 
 	protected ArrayList<Weapon> myWeapons;
     
+	public Player(double x, double y, String imgPath){
+        myX = x;
+        myY = y;
+        myImgPath = imgPath;
+        myType = "Player";
+        setLocation(myX, myY);
+        myWeapons = new ArrayList<Weapon>();
+        myHealth = 10;
+        this.createDecorator(); 
+        //myDecs = startDecorations; 
+        this.addDecorationCollection(myDecs); 
+    }
+	
     public Player(double x, double y, String imgPath, ArrayList<String> startDecorations){
         myX = x;
         myY = y;

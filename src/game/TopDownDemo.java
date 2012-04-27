@@ -41,16 +41,16 @@ import decorator.SimpleShip;
 
 public class TopDownDemo extends Game {
 
-	private Enemy myEnemy;	
+	private Enemy myEnemy;
 	private HealthBar myHealthBar;
 	private Weapon myWeapon;
-	
-	private Player myShip; 
-	private Player myCompanion; 
 
-	private DecoratedShip decCompanion; 
+	private Player myShip;
+	private Player myCompanion;
+
+	private DecoratedShip decCompanion;
 	private PowerUp decoratedPowerUp;
-	
+
 	private PowerUpDecorator myPowerUpDecorator;
 
 	private SpriteGroup myPlayerGroup;
@@ -69,7 +69,7 @@ public class TopDownDemo extends Game {
 	private Map myMap;
 	private int count = 0;
 	private List<LoadObserver> myLoadObservers;
-	
+
 	private StartGUI start;
 	private boolean initialScreen;
 
@@ -78,13 +78,12 @@ public class TopDownDemo extends Game {
 		initialScreen = true;
 		myBarrierGroup = new SpriteGroup("barrier");
 		myPlayerGroup = new SpriteGroup("player");
-		
+
 		myEnemyGroup = new SpriteGroup("enemy");
 		myProjectileGroup = new SpriteGroup("projectile");
 		myEnemyProjectileGroup = new SpriteGroup("enemy projectile");
 		myCompanionGroup = new SpriteGroup("companion");
 
-		
 		// init background using the new Map class
 		myBackImage = getImage("resources/BackFinal.png");
 		myMap = new Map(myBackImage, getWidth(), getHeight());
@@ -96,15 +95,13 @@ public class TopDownDemo extends Game {
 
 		myBarrierGroup.setBackground(myBackground);
 		myEnemyGroup.setBackground(myBackground);
-		myCompanionGroup.setBackground(myBackground); 
+		myCompanionGroup.setBackground(myBackground);
 		myProjectileGroup.setBackground(myBackground);
 		myEnemyProjectileGroup.setBackground(myBackground);
 
-//		myShip = new Player(200, 2700, "resources/ship.png");
-//		myShip.setImage(getImage("resources/ship.png"));
-//		System.out.println ("1"); 
-//		myShip.addDecoration("VerticalDecorator");
-//		myShip.addDecoration("HorizontalDecorator");
+		//myShip = new Player(200, 2700, "resources/ship.png");
+		//myShip.setImage(getImage("resources/ship.png"));
+		System.out.println("1");
 
 		start = new StartGUI(this);
 		
@@ -121,25 +118,24 @@ public class TopDownDemo extends Game {
 		ShotPattern s = new SinglePattern(-1);
 		myWeapon = new UnlimitedGun(300,p,s);
 
+
 		// init playfield
 		myPlayfield = new PlayField(myBackground);
 		myPlayfield.addGroup(myPlayerGroup);
 		myPlayfield.addGroup(myBarrierGroup);
 		myPlayfield.addGroup(myEnemyGroup);
 		myPlayfield.addGroup(myProjectileGroup);
-		myPlayfield.addGroup(myCompanionGroup); 
+		myPlayfield.addGroup(myCompanionGroup);
 		myPlayfield.addGroup(myEnemyProjectileGroup);
 
 		myPlayfield.addCollisionGroup(myPlayerGroup, myBarrierGroup,
 				new PlayerBarrierCollision());
-		
 
 		// load level data
-//		loadLevelData();
+		// loadLevelData();
 
 		// initializing PlayerInfo
-		playerInfo = new PlayerInfo();
-		
+		playerInfo = new PlayerInfo();		
 		//HealthBar
 		myHealthBar = new HealthBar(myPlayer); 
 
@@ -150,15 +146,14 @@ public class TopDownDemo extends Game {
 		myLoadObservers = new ArrayList<LoadObserver>();
 		myLoadObservers
 				.add(new HorizontalShipLoadObserver(myPlayerGroup, this));
-		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup, myProjectileGroup, this));
+		myLoadObservers.add(new PlayerLoadObserver(myPlayerGroup,
+				myProjectileGroup, this));
 		myLoadObservers.add(new SimpleLoadObserver(myBarrierGroup));
 
-		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup, myEnemyProjectileGroup));
+		myLoadObservers.add(new EnemyLoadObserver(myEnemyGroup,
+				myEnemyProjectileGroup));
 
 		LevelLoader l = new LevelLoader(myLoadObservers);
-	
-		l.loadLevelData("serializeTest.ser");
-		
 		enemySize = myEnemyGroup.getSize();
 
 		// initializing PlayerInfo
@@ -167,57 +162,57 @@ public class TopDownDemo extends Game {
 		//HealthBar
 		myHealthBar = new HealthBar(myPlayer); 
 
-
 	}
 
 	@Override
 	public void render(Graphics2D pen) {
-		if(initialScreen){
+		if (initialScreen) {
 			start.render(pen);
 			return;
 		}
 		myPlayfield.render(pen);
-		myHealthBar.render(pen); 
+		if (myPlayer != null) {
+			myHealthBar.render(pen);
+		}
 
 	}
 
 	@Override
 	public void update(long elapsedTime) {
 
-		if(initialScreen){
+		if (initialScreen) {
 			start.update(elapsedTime);
 			String path = start.getLoadPath();
-//			System.out.println(path);
-			if(path != null && path.length()>0){
+			// System.out.println(path);
+			if (path != null && path.length() > 0) {
 				initialScreen = false;
 				loadLevelData(path);
 			}
 			return;
 		}
 		myMap.moveMap(elapsedTime);
+		System.out.println(myPlayer);
 		myMap.movePlayer(elapsedTime, myPlayer);
 		playerMovement();
 		myPlayer.move();
-		myPlayfield.update(elapsedTime); 
-		
-		
+		myPlayfield.update(elapsedTime);
 
-
-		
-		if(myPlayer != null){
-		myPlayer.fire(this, elapsedTime);
+		if (myPlayer != null) {
+			myPlayer.fire(this, elapsedTime);
 		}
-		
+
 		// this is for testing enemy movement
-		count =0;
-		for (Sprite elem:myEnemyGroup.getSprites()){
-			if (count>=enemySize) break;
+		count = 0;
+		for (Sprite elem : myEnemyGroup.getSprites()) {
+			if (count >= enemySize)
+				break;
 			Enemy e = (Enemy) elem;
 
 			e.updateEnemy(elapsedTime);
 			count++;
 		}
 		playerInfo.updatePlayerPosition(myPlayer.getX(), myPlayer.getY());
+
 	}
 
 	public void playerMovement() {
@@ -232,7 +227,5 @@ public class TopDownDemo extends Game {
 	public void setPlayer(Player g) {
 		myPlayer = g;
 	}
-	
-
 
 }
