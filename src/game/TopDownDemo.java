@@ -182,8 +182,8 @@ public class TopDownDemo extends Game {
 
 	@Override
 	public void update(long elapsedTime) {
-		System.out.println(myPlayerGroup.getSize());
-		System.out.println(myProjectileGroup.getSize());
+		//System.out.println(myPlayerGroup.getSize());
+		//System.out.println(myProjectileGroup.getSize());
 
 		if (initialScreen) {
 			start.update(elapsedTime);
@@ -231,7 +231,7 @@ public class TopDownDemo extends Game {
 
 	public void setPlayer(Player g) {
 		myPlayer = g;
-		System.out.println("here");
+		//System.out.println("here");
 		myPlayerGroup.add(g);
 	}
 	
