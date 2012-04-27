@@ -53,6 +53,10 @@ public class Enemy extends GameObject {
 		currentState = possibleStates.get(0);
 	}
 
+	public void addWeapon(Weapon w) {
+	    myWeapon = w;
+	}
+	
 	@Override
 	public String getImgPath() {
 		return myImgPath;
