@@ -161,13 +161,17 @@ public class Question {
 		return ans;
 	}
 	public String playerDecor(){
-		 Object[] options1 = {"Vertical", "Horizontal"};
+		 Object[] options1 = {"Vertical", "Horizontal", "Fast Vertical"};
 			String input1 = (String) JOptionPane.showInputDialog(new JFrame(),
 					"Pick Decorator:", "Player Movement",
 					JOptionPane.PLAIN_MESSAGE, null, options1, options1[0]);
-		 if (input1.equals("Vertical")) return "VerticalDecorator";
-		 else 
+		 if (input1.equals("Vertical")) 
+			 return "VerticalDecorator";
+		 else if(input1.equals("Horizontal"))
 			 return "HorizontalDecorator";
+		 else
+			 return "MoveUpFastDecorator";
+			 
 	}
 	
 	public ArrayList<String> getFileData() {

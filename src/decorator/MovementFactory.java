@@ -19,7 +19,8 @@ public class MovementFactory {
 		myDecorators = new HashMap<String, Class<?>>(); 
 		myDecorators.put("HorizontalDecorator", Class.forName("decorator.HorizontalDecorator")); 
 		myDecorators.put("VerticalDecorator", Class.forName("decorator.VerticalDecorator")); 
-		
+		myDecorators.put("MoveUpFastDecorator", Class.forName("decorator.MoveUpFastDecorator")); 
+
 	}
 	
 	
